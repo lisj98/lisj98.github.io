@@ -273,7 +273,7 @@
 
 <h5 id="运行用户注册模块"><a href="#运行用户注册模块" class="headerlink" title="运行用户注册模块"></a>运行用户注册模块</h5><p>​    将用户模块部署到 Web 服务器中，Web 服务器服务端口为8080，部署根路径为&#x2F;，通过 <a class="link"   target="_blank" rel="noopener" href="http://localhost:8080/user/register.html" >http://localhost:8080/user/register.html<i class="fas fa-external-link-alt"></i></a> 即可访问用户注册页面，填写用户注册信息，将表单提交到 <a class="link"   target="_blank" rel="noopener" href="http://localhost:8080/user.html" >http://localhost:8080/user.html<i class="fas fa-external-link-alt"></i></a> 地址中，UserController 控制器的 createUser() 方法响应这个请求，并导向 createSuccess.jsp 页面中。</p>
 <p>​    对于用户注册表单提交直到返回响应这一过程，用实物对象对组件接口进行替换，可得到交互图如下：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E5%A4%84%E7%90%86/user.html%E8%A1%A8%E5%8D%95%E6%8F%90%E4%BA%A4%E7%9A%84%E6%95%B4%E4%BD%93%E8%BF%87%E7%A8%8B.2vkct291ena0.webp" alt="user"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/user.html%E6%8F%90%E4%BA%A4%E8%A1%A8%E5%8D%95%E7%9A%84%E6%95%B4%E4%BD%93%E8%BF%87%E7%A8%8B.3yg4bkoe1ms0.webp" alt="user"></p>
 <p>​    简要描述一下 Spring MVC 处理 &#x2F;user.html 的整个过程：</p>
 <ol>
 <li>DispatcherServlet 接收到客户端的 &#x2F;user.html 请求。</li>
@@ -310,6 +310,21 @@
 
         
             <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2022/04/06/Spring-MVC%E9%94%99%E8%AF%AF%E9%9B%86/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Spring MVC错误集</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
                 
                 
                     <div class="article-next">
