@@ -36,8 +36,7 @@
   <entry>
     <title>精通SpringMVC(一)-SpringMVC体系结构概述</title>
     <url>/2022/04/06/%E7%B2%BE%E9%80%9ASpringMVC-%E4%B8%80-SpringMVC%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/</url>
-    <content><![CDATA[<p>b    </p>
-<p>​    本系列笔记所有代码地址：<a class="link"   href="https://github.com/lisj98/SpringMVCSource.git" >https://github.com/lisj98/SpringMVCSource.git<i class="fas fa-external-link-alt"></i></a></p>
+    <content><![CDATA[<p>​    本系列笔记所有代码地址：<a class="link"   href="https://github.com/lisj98/SpringMVCSource.git" >https://github.com/lisj98/SpringMVCSource.git<i class="fas fa-external-link-alt"></i></a></p>
 <p>​    Spring MVC 通过一套 MVC 注解，让 POJO 成为处理请求的控制器，而不用像原生 Spring 那样需要事先实现接口。</p>
 <p>​    Spring MVC 的核心是 <strong>DispatcherServlet</strong> ，DispatcherServlet 是Spring MVC的总导演、总策划，是Spring MVC的灵魂和心脏，它负责截获客户端发来的请求并协调好 Spring MVC 的各个组件来完成请求处理并返回响应的过程。</p>
 <h4 id="1-1-体系结构"><a href="#1-1-体系结构" class="headerlink" title="1.1 体系结构"></a>1.1 体系结构</h4><p>​    Spring MVC，顾名思义，是 <strong>MVC(Model、View、Control)</strong> 的集中体现，它利用处理器来分离模型、视图和控制，达到不同层级间松散耦合的效果，是基于 <strong>Model 2</strong> 实现的技术框架，而 <strong>Model 1</strong> 就是把所有的展现逻辑和业务逻辑集中到一起，缺点自然就是紧耦合、复用性差、维护成本高。</p>
