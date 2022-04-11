@@ -51,6 +51,27 @@
       </categories>
   </entry>
   <entry>
+    <title>SpringMVC之applicationContext与xxx-servlet.xml的区别</title>
+    <url>/2022/04/11/SpringMVC%E4%B9%8BapplicationContext%E4%B8%8Exxx-servlet-xml%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<p>Spring 官方文档介绍如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Spring lets you define multiple contexts in a parent-child hierarchy.  　　The applicationContext.xml defines the beans for the &quot;root webapp context&quot;, i.e. the context associated with the webapp.  </span><br><span class="line">　　The spring-servlet.xml (or whatever else you call it) defines the beans for one servlet&#x27;s app context. There can be many of these in a webapp, one per Spring servlet (e.g. spring1-servlet.xml for servlet spring1, spring2-servlet.xml for servlet spring2).  </span><br><span class="line">　　Beans in spring-servlet.xml can reference beans in applicationContext.xml, but not vice versa.  </span><br><span class="line">　　All Spring MVC controllers must go in the spring-servlet.xml context.  </span><br><span class="line">　　In most simple cases, the applicationContext.xml context is unnecessary. It is generally used to contain beans that are shared between all servlets in a webapp. If you only have one servlet, then there&#x27;s not really much point, unless you have a specific use for it.</span><br></pre></td></tr></table></figure>
+
+<p>由此可得，applicationContext.xml 和 diapatcher-servlet.xml 形成了两个父子关系的上下文，区别在于：</p>
+<ol>
+<li>一个 bean 如果在两个文件中都被定义了（比如两个文件中都定义了 component-scan 扫描相同的 package），Spring 会在 application context 和 servlet  context 中都生成一个实例，它们处于不同的上下文中，他们的行为方式可能是不一样的。</li>
+<li>如果在 application context 和 servlet context 中都存在同一个 @Service 的实例，controller 通过 @Resource 引用时，会优先选择 servlet context 中的实例。</li>
+<li>servlet context 可以引用 applicaiton context 里的实例，反之不可以。</li>
+<li>多个 servlet 共享 application context 里的实例。</li>
+<li>在 applicationContext.xml 和 diapatcher-servlet.xml 中定义的 bean 最好不要重复，diapatcher-servlet 最好只扫描 controller，applicationContext 扫描其他。</li>
+<li>applicationContext.xml 是 Spring 全局配置文件，用来控制 Spring 特性的。</li>
+<li>diapatcher-servlet.xml 是 Spring MVC 里面的，主要用来配置控制器、拦截器、视图等 Spring MVC 特有组件。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>SpringMVC</category>
+      </categories>
+  </entry>
+  <entry>
     <title>数据结构与算法分析(十)-算法设计技巧</title>
     <url>/2022/03/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90-%E5%8D%81-%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7/</url>
     <content><![CDATA[<h1 id="（待补充）"><a href="#（待补充）" class="headerlink" title="（待补充）"></a>（待补充）</h1><p>当一个算法给定时，具体的数据结构无需指定。为使运行时间尽可能地少，需要由编程人员来选择适当的数据结构。</p>
@@ -167,6 +188,55 @@
 <li>DispatcherServlet 使用&#x2F;WEB-INF&#x2F;view&#x2F;user&#x2F;createSuccess.jsp 对模型中的 user 模型对象进行渲染。</li>
 <li>返回相应页面给客户端。</li>
 </ol>
+]]></content>
+      <categories>
+        <category>SpringMVC</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>精通SpringMVC(七)-WebSocket支持</title>
+    <url>/2022/04/11/%E7%B2%BE%E9%80%9ASpringMVC-%E4%B8%83-WebSocket%E6%94%AF%E6%8C%81/</url>
+    <content><![CDATA[<p>本系列笔记所有代码地址：<a class="link"   href="https://github.com/lisj98/SpringMVCSource.git" >https://github.com/lisj98/SpringMVCSource.git<i class="fas fa-external-link-alt"></i></a></p>
+<h4 id="7-1-使用-WebSocket"><a href="#7-1-使用-WebSocket" class="headerlink" title="7.1 使用 WebSocket"></a>7.1 使用 WebSocket</h4><p>通常应用程序之间发送消息会使用诸如 JMS、AMQP 等技术，但是如果实现浏览器和服务器的全双工通信，则以上技术是不适用的。但是这样的需求又是普遍存在的，因此诞生了一项新的技术，这便是 <strong>WebSocket</strong> 协议，它很好地<strong>解决了浏览器与服务器全双工通信的问题</strong>，而且能更好地节省服务器资源和带宽并达到实时通信。</p>
+<p>Spring 4.0 主要为 WebSocket 通信提供了以下几个方面的支持：</p>
+<ul>
+<li>发送和接收消息的 API。</li>
+<li>用来发送消息的模板。</li>
+<li>支持 SockJS，用来解决浏览器、服务器及代理不支持 WebSocket 的问题。</li>
+</ul>
+<p>WebSocket 可以用在任何类型的应用中，其最简单的形式是在两个应用之间建立通信的通道。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E5%BA%94%E7%94%A8%E4%B9%8B%E9%97%B4%E7%9A%84WebSocket%E9%80%9A%E4%BF%A1.7e2lekcc7dc0.webp" alt="应用之间的WebSocket通信"></p>
+<p>位于 WebSocket 一端的应用发送消息，而另一端的应用处理消息，因为它是全双工通信的，所以每一端既可以发送又可以处理消息。但是 WebSocket 最为常见的应用场景是实现服务器和基于浏览器的应用之间的通信。在浏览器中使用 JavaScript 开启一个到达服务器的连接，服务器通过这个连接发送更新到浏览器中。相对于传统的在 Web 端轮询服务器及使用 Flash 中的 Socket 和 XMLSocket，这种方式更加高效、便捷。</p>
+<p>下面通过一个在 Web 端使用 JavaScript 与服务器端相互传递“Hello World!”文本信息的例子来展示 WebSocket 的用法。</p>
+<p>Spring 提供了一个 <strong>WebSocketHandler</strong> 接口，该接口定义了 5 个 WebSocket 相关的接口方法。</p>
+<p>Spring 拥有一个 WebSocketHandler 接口的抽象实现类 <strong>AbstractWebSocketHandler</strong> 继承该类便可以选择性地实现感兴趣的方法。</p>
+<p>编写 MyWebSocketHandler：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyWebSocketHandler</span> <span class="keyword">extends</span> <span class="title class_">AbstractWebSocketHandler</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">afterConnectionEstablished</span><span class="params">(WebSocketSession session)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;建立连接&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">handleTextMessage</span><span class="params">(WebSocketSession session, TextMessage message)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="comment">//处理文本消息</span></span><br><span class="line">        System.out.println(<span class="string">&quot;收到消息&quot;</span> + message.getPayload());</span><br><span class="line">        <span class="comment">//模拟延时</span></span><br><span class="line">        Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">        <span class="comment">//发送文本消息</span></span><br><span class="line">        System.out.println(<span class="string">&quot;发送消息：hello world!&quot;</span>);</span><br><span class="line">        session.sendMessage(<span class="keyword">new</span> <span class="title class_">TextMessage</span>(<span class="string">&quot;hello world!&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">afterConnectionClosed</span><span class="params">(WebSocketSession session, CloseStatus status)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;关闭连接&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>AbstractWebSocketHandler 还定义了以下 3 个方法：</p>
+<ul>
+<li>**handleTextMessage()**：处理文本消息类型的方法。</li>
+<li>handleBinaryMessage()：处理二进制消息类型的方法。</li>
+<li>**handlePongMessage()**：处理Pong消息类型的方法。</li>
+</ul>
+<p>希望 WebSocketHandler 处理什么类型的消息就可以只重载对应的消息类型的方法，而不必重载所有方法。</p>
+<p>通过上述代码，一个简单的消息处理类就完成了，需要在 Spring 上下文中增加相关的配置：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--将helloHandler映射到&quot;/hello&quot;请求--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">websocket:handlers</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">websocket:mapping</span> <span class="attr">path</span>=<span class="string">&quot;/hello&quot;</span> <span class="attr">handler</span>=<span class="string">&quot;helloHandler&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">websocket:handlers</span>&gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">&lt;!--声明MyWebSocketHandler Bean--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;helloHandler&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.smart.MyWebSocketHandler&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>以上是使用配置文件的形式。</p>
+<p>还能通过编码的形式（但是推荐使用配置文件）装配 WebSocketHandler，编写 MyWebSoketConfig：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@EnableWebSocket</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyWebSoketConfig</span> <span class="keyword">implements</span> <span class="title class_">WebSocketConfigurer</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">registerWebSocketHandlers</span><span class="params">(WebSocketHandlerRegistry webSocketHandlerRegistry)</span> &#123;</span><br><span class="line">        webSocketHandlerRegistry.addHandler(helloHandler(),<span class="string">&quot;/chapter17/hello&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> MyWebSocketHandler <span class="title function_">helloHandler</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">MyWebSocketHandler</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同样需要在 applicationContext.xml 中装配：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;helloHandler&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.smart.web.MyWebSoketConfig&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>服务器端搭建完毕，接下来便是客户端的实现了：</p>
+<figure class="highlight jsp"><table><tr><td class="code"><pre><span class="line">&lt;%--</span><br><span class="line">  Created by IntelliJ IDEA.</span><br><span class="line">  User: LiSJ</span><br><span class="line">  Date: <span class="number">2022</span>/<span class="number">4</span>/<span class="number">11</span></span><br><span class="line">  Time: <span class="number">14</span>:<span class="number">42</span></span><br><span class="line">  To change <span class="built_in">this</span> template use File | Settings | File Templates.</span><br><span class="line">--%&gt;</span><br><span class="line">&lt;%@ page contentType=<span class="string">&quot;text/html;charset=UTF-8&quot;</span> language=<span class="string">&quot;java&quot;</span> %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;WebSocket测试&lt;/title&gt;</span><br><span class="line">    &lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line">        <span class="comment">/* url使用“ws://”前缀，表示这是一个WebSocket连接 */</span></span><br><span class="line">        <span class="type">var</span> <span class="variable">url</span> <span class="operator">=</span> <span class="string">&#x27;ws://&#x27;</span> + window.location.host + <span class="string">&#x27;&lt;%=request.getContextPath()%&gt;/hello&#x27;</span>;</span><br><span class="line">        <span class="type">var</span> <span class="variable">sock</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">WebSocket</span>(url);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">/* opopen事件对应于WebSocketHandler的afterConnectionEstablished()方法 */</span></span><br><span class="line">        sock.onopen = function () &#123;</span><br><span class="line">            console.log(<span class="string">&#x27;开启WebSocket连接&#x27;</span>);</span><br><span class="line">            sayHello();</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">/* onmessage事件对应于WebSocketHandler的handleTextMessage()方法 */</span></span><br><span class="line">        sock.onmessage = function (e)&#123;</span><br><span class="line">            console.log(<span class="string">&#x27;接收消息：&#x27;</span>, e.data);</span><br><span class="line">            setTimeout(function ()&#123;sayHello()&#125;, <span class="number">2000</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* onclose事件对应于WebSocketHandler的afterConnectionClosed()方法 */</span></span><br><span class="line">        sock.onclose = function () &#123;</span><br><span class="line">            console.log(<span class="string">&#x27;关闭WebSocket连接&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        function <span class="title function_">sayHello</span><span class="params">()</span> &#123;</span><br><span class="line">            console.log(<span class="string">&#x27;发送消息：hello world!&#x27;</span>);</span><br><span class="line">            sock.send(<span class="string">&#x27;hello world!&#x27;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    hello world!</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在 onopen 事件中会调用 sayHello() 方法，在该 WebSocket 上发送“hello world!”消息，通过发送这个消息，这个双向通信即建立起来。服务器端的 MyWebSocketHandler 作为响应将“hello world!”发送回来，当客户端收到来自服务器端的消息后，onmessage 事件又会发送一个“hello world!”给服务器端，如此循环往复。</p>
+<p>最终结果：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/WebSocket%E6%B6%88%E6%81%AF%E5%8F%91%E9%80%81.sob9gy5bdi8.webp" alt="WebSocket消息发送"></p>
+<h4 id="7-2-WebSocket-的限制"><a href="#7-2-WebSocket-的限制" class="headerlink" title="7.2 WebSocket 的限制"></a>7.2 WebSocket 的限制</h4><p>不同的浏览器和应用服务器对 WebSocket 的支持程度不同。通过 SockJS，就可以模拟对 WebSocket 的支持，这样即使浏览器和服务器不支持 WebSocket，SockJS 也可以让它们支持 WebSocket。</p>
 ]]></content>
       <categories>
         <category>SpringMVC</category>
@@ -444,46 +514,6 @@
       </categories>
   </entry>
   <entry>
-    <title>精通SpringMVC(五)-本地化解析</title>
-    <url>/2022/04/11/%E7%B2%BE%E9%80%9ASpringMVC-%E4%BA%94-%E6%9C%AC%E5%9C%B0%E5%8C%96%E8%A7%A3%E6%9E%90/</url>
-    <content><![CDATA[<p>本系列笔记所有代码地址：<a class="link"   href="https://github.com/lisj98/SpringMVCSource.git" >https://github.com/lisj98/SpringMVCSource.git<i class="fas fa-external-link-alt"></i></a></p>
-<h4 id="5-1-本地化的概念"><a href="#5-1-本地化的概念" class="headerlink" title="5.1 本地化的概念"></a>5.1 本地化的概念</h4><p>一般情况下，Web 应用根据客户端浏览器的设置判断客户端的本地化类型，例如：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E8%AE%BE%E7%BD%AE%E8%AF%AD%E8%A8%80%E9%A6%96%E9%80%89%E9%A1%B9.3p1p68u0qbc0.webp" alt="设置语言首选项"></p>
-<p>浏览器中设置的<strong>本地化类型</strong>会包含在 HTML 请求报文头中发送给 Web 服务器，确切来说是通过<strong>报文头的 Accept-Language 参数</strong>将“语言首选项”对话框中选择的语言发送到服务器，成为服务器判别客户端本地化类型的依据。</p>
-<p>如果 Web 应用基于这种方式提供本地化页面，则用户只得通过改变浏览器的设置进行本地化类型的切换。也有一种其他的形式，比如浏览器右上角有一个转换语言的图标，这种语言切换功能不要求用户更改浏览器的设置，<strong>它们通过 Cookie、Session 或请求参数即可切换本地化类型</strong>，这种方式明显更为便利。</p>
-<p><strong>在默认情况下，Spring MVC 根据 Accept-Language 参数判断客户端的本地化类型。</strong>此外，它还提供了多种指定客户端本地化类型的方式，如<strong>通过设置 Cookie、Session 指定</strong>。</p>
-<p><strong>事实上，当收到请求时，Spring MVC 在上下文中寻找一个本地化解析器（LocaleResolver），找到后使用它获取请求所对应的本地化类型信息。</strong></p>
-<p><strong>除此之外，Spring MVC 还允许装配一个动态更改本地化类型的拦截器，这样通过指定一个请求参数就可以控制单个请求的本地化类型。</strong></p>
-<p>本地化解析器和拦截器都定义在 <code>org.springframework.web.servlet.i18n</code> 包中，用户可以在 DispatcherServlet 上下文中配置它们。</p>
-<p>Spring 提供了以下 4 个本地化解析器：</p>
-<ul>
-<li><strong>AcceptHeaderLocaleResolver</strong>：根据 HTTP 报文头的 Accept-Language 参数确定本地化类型。如果没有显式化定义本地化解析器，则 Spring MVC 默认采用该解析器。</li>
-<li><strong>CookieLocaleResolver</strong>：根据指定的 Cookie 值确定本地化类型。</li>
-<li><strong>SessionLocaleResolver</strong>：根据 Session 中特定的属性值确定本地化类型。</li>
-<li><strong>LocaleChangeInterceptor</strong>：从请求参数中获取本次请求对应的本地化类型。</li>
-</ul>
-<p>在 3.4 节的实例中，我们为表单校验错误信息提供了国家化支持，当表单数据校验存在错误时，Spring MVC 使用默认的 AcceptHeaderLocaleResolver 抽取请求报文头的 Accept-Language 属性以确定客户端本地化类型，并返回对应的本地化错误信息。</p>
-<h4 id="5-2-使用-CookieLocaleResolver"><a href="#5-2-使用-CookieLocaleResolver" class="headerlink" title="5.2 使用 CookieLocaleResolver"></a>5.2 使用 CookieLocaleResolver</h4><p>要使用 Cookie 保存本地化类型信息，只需在 Spring MVC 上下文中配置一个 CookieLocaleResolver 就可以了，DispatcherServlet 会自动识别本地化解析器并装配它。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/CookieLocaleResolver%E9%85%8D%E7%BD%AE.1k24u9zbr0ow.webp" alt="CookieLocaleResolver配置"></p>
-<h4 id="5-3-使用-SessionLocaleResolver"><a href="#5-3-使用-SessionLocaleResolver" class="headerlink" title="5.3 使用 SessionLocaleResolver"></a>5.3 使用 SessionLocaleResolver</h4><p>SessionLocaleResolver 查找 Session 中属性名为 <strong>SessionLocaleResolver.LOCALE.SESSION_ATTRIBUTE_NAME</strong> 的属性，并将其转换为 Locale 对象，以此作为客户端的本地化类型。</p>
-<p>配置过程如 CookieLocaleResolver 一样：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;localeResolver&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.i18n.SessionLocaleResolver&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>SessionLocaleResolver 和 CookieLocaleResolver 的区别是，前者一般要求用户登录后产生相应的用户会话才有效，而后者只要浏览器有 Cookie 存在即可生效。</p>
-<h4 id="5-4-使用-LocaleChangeInterceptor"><a href="#5-4-使用-LocaleChangeInterceptor" class="headerlink" title="5.4 使用 LocaleChangeInterceptor"></a>5.4 使用 LocaleChangeInterceptor</h4><p>很多国际化网站都允许通过一个请求参数控制网站的本地化，如 <a class="link"   href="http://www.xxx.com/?locale=zh_CN" >www.xxx.com?locale=zh_CN<i class="fas fa-external-link-alt"></i></a> 返回对应中国大陆的本地化网页，而 <a class="link"   href="http://www.xxx.com/?locale=en_US" >www.xxx.com?locale=en_US<i class="fas fa-external-link-alt"></i></a> 返回本地化为英语的网页。这样，网页使用者可以通过对 URL 的控制返回不同本地化的页面。</p>
-<p>在 Spring MVC 中，可以通过 LocaleChangeInterceptor 过滤器来完成这一需求。</p>
-<p>在 Spring MVC 上下文中通过 <strong>&lt;mvc:interceptors&gt;</strong> 配置过滤器：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;localeResolver&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.i18n.CookieLocaleResolver&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:cookieName</span>=<span class="string">&quot;clientLanguage&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:cookieMaxAge</span>=<span class="string">&quot;100000&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:cookiePath</span>=<span class="string">&quot;/&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:defaultLocale</span>=<span class="string">&quot;zh_CN&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mvc:interceptors</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.i18n.LocaleChangeInterceptor&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">mvc:interceptors</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>LocaleChangeInterceptor 的角色类似于 ContentNegotiatingViewResolver，相当于一个中介。</strong></p>
-<p>LocaleChangeInterceptor 在默认情况下通过 locale 请求参数获取本次请求对应的本地化类型，用户可以通过其 paramName 属性指定一个其他参数名。由于 LocaleChangeInterceptor 的主要任务是从请求中获取本地化类型并将其设置给真正的本地化解析器，所以在配置 LocaleChangeInterceptor 之前，必须在上下文中先配置一个本地化解析器，如 AcceptHeaderLocaleResolver、CookieLocaleResolver、SessionLocaleResolver 等。</p>
-<p>值得注意的是，由于 AcceptHeaderLocaleResolver 是从请求报文头中获取本地化信息的，因此不能被动态更改，<strong>如果配置了 LocaleChangeInterceptor，则只能选择 CookieLocaleResolver 或 SessionLocaleResolver</strong>。</p>
-]]></content>
-      <categories>
-        <category>SpringMVC</category>
-      </categories>
-  </entry>
-  <entry>
     <title>精通SpringMVC(二)-注解驱动的控制器</title>
     <url>/2022/04/06/%E7%B2%BE%E9%80%9ASpringMVC-%E4%BA%8C-%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E7%9A%84%E6%8E%A7%E5%88%B6%E5%99%A8/</url>
     <content><![CDATA[<p>本系列笔记所有代码地址：<a class="link"   href="https://github.com/lisj98/SpringMVCSource.git" >https://github.com/lisj98/SpringMVCSource.git<i class="fas fa-external-link-alt"></i></a></p>
@@ -722,6 +752,46 @@
       </categories>
   </entry>
   <entry>
+    <title>精通SpringMVC(五)-本地化解析</title>
+    <url>/2022/04/11/%E7%B2%BE%E9%80%9ASpringMVC-%E4%BA%94-%E6%9C%AC%E5%9C%B0%E5%8C%96%E8%A7%A3%E6%9E%90/</url>
+    <content><![CDATA[<p>本系列笔记所有代码地址：<a class="link"   href="https://github.com/lisj98/SpringMVCSource.git" >https://github.com/lisj98/SpringMVCSource.git<i class="fas fa-external-link-alt"></i></a></p>
+<h4 id="5-1-本地化的概念"><a href="#5-1-本地化的概念" class="headerlink" title="5.1 本地化的概念"></a>5.1 本地化的概念</h4><p>一般情况下，Web 应用根据客户端浏览器的设置判断客户端的本地化类型，例如：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E8%AE%BE%E7%BD%AE%E8%AF%AD%E8%A8%80%E9%A6%96%E9%80%89%E9%A1%B9.3p1p68u0qbc0.webp" alt="设置语言首选项"></p>
+<p>浏览器中设置的<strong>本地化类型</strong>会包含在 HTML 请求报文头中发送给 Web 服务器，确切来说是通过<strong>报文头的 Accept-Language 参数</strong>将“语言首选项”对话框中选择的语言发送到服务器，成为服务器判别客户端本地化类型的依据。</p>
+<p>如果 Web 应用基于这种方式提供本地化页面，则用户只得通过改变浏览器的设置进行本地化类型的切换。也有一种其他的形式，比如浏览器右上角有一个转换语言的图标，这种语言切换功能不要求用户更改浏览器的设置，<strong>它们通过 Cookie、Session 或请求参数即可切换本地化类型</strong>，这种方式明显更为便利。</p>
+<p><strong>在默认情况下，Spring MVC 根据 Accept-Language 参数判断客户端的本地化类型。</strong>此外，它还提供了多种指定客户端本地化类型的方式，如<strong>通过设置 Cookie、Session 指定</strong>。</p>
+<p><strong>事实上，当收到请求时，Spring MVC 在上下文中寻找一个本地化解析器（LocaleResolver），找到后使用它获取请求所对应的本地化类型信息。</strong></p>
+<p><strong>除此之外，Spring MVC 还允许装配一个动态更改本地化类型的拦截器，这样通过指定一个请求参数就可以控制单个请求的本地化类型。</strong></p>
+<p>本地化解析器和拦截器都定义在 <code>org.springframework.web.servlet.i18n</code> 包中，用户可以在 DispatcherServlet 上下文中配置它们。</p>
+<p>Spring 提供了以下 4 个本地化解析器：</p>
+<ul>
+<li><strong>AcceptHeaderLocaleResolver</strong>：根据 HTTP 报文头的 Accept-Language 参数确定本地化类型。如果没有显式化定义本地化解析器，则 Spring MVC 默认采用该解析器。</li>
+<li><strong>CookieLocaleResolver</strong>：根据指定的 Cookie 值确定本地化类型。</li>
+<li><strong>SessionLocaleResolver</strong>：根据 Session 中特定的属性值确定本地化类型。</li>
+<li><strong>LocaleChangeInterceptor</strong>：从请求参数中获取本次请求对应的本地化类型。</li>
+</ul>
+<p>在 3.4 节的实例中，我们为表单校验错误信息提供了国家化支持，当表单数据校验存在错误时，Spring MVC 使用默认的 AcceptHeaderLocaleResolver 抽取请求报文头的 Accept-Language 属性以确定客户端本地化类型，并返回对应的本地化错误信息。</p>
+<h4 id="5-2-使用-CookieLocaleResolver"><a href="#5-2-使用-CookieLocaleResolver" class="headerlink" title="5.2 使用 CookieLocaleResolver"></a>5.2 使用 CookieLocaleResolver</h4><p>要使用 Cookie 保存本地化类型信息，只需在 Spring MVC 上下文中配置一个 CookieLocaleResolver 就可以了，DispatcherServlet 会自动识别本地化解析器并装配它。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/CookieLocaleResolver%E9%85%8D%E7%BD%AE.1k24u9zbr0ow.webp" alt="CookieLocaleResolver配置"></p>
+<h4 id="5-3-使用-SessionLocaleResolver"><a href="#5-3-使用-SessionLocaleResolver" class="headerlink" title="5.3 使用 SessionLocaleResolver"></a>5.3 使用 SessionLocaleResolver</h4><p>SessionLocaleResolver 查找 Session 中属性名为 <strong>SessionLocaleResolver.LOCALE.SESSION_ATTRIBUTE_NAME</strong> 的属性，并将其转换为 Locale 对象，以此作为客户端的本地化类型。</p>
+<p>配置过程如 CookieLocaleResolver 一样：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;localeResolver&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.i18n.SessionLocaleResolver&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>SessionLocaleResolver 和 CookieLocaleResolver 的区别是，前者一般要求用户登录后产生相应的用户会话才有效，而后者只要浏览器有 Cookie 存在即可生效。</p>
+<h4 id="5-4-使用-LocaleChangeInterceptor"><a href="#5-4-使用-LocaleChangeInterceptor" class="headerlink" title="5.4 使用 LocaleChangeInterceptor"></a>5.4 使用 LocaleChangeInterceptor</h4><p>很多国际化网站都允许通过一个请求参数控制网站的本地化，如 <a class="link"   href="http://www.xxx.com/?locale=zh_CN" >www.xxx.com?locale=zh_CN<i class="fas fa-external-link-alt"></i></a> 返回对应中国大陆的本地化网页，而 <a class="link"   href="http://www.xxx.com/?locale=en_US" >www.xxx.com?locale=en_US<i class="fas fa-external-link-alt"></i></a> 返回本地化为英语的网页。这样，网页使用者可以通过对 URL 的控制返回不同本地化的页面。</p>
+<p>在 Spring MVC 中，可以通过 LocaleChangeInterceptor 过滤器来完成这一需求。</p>
+<p>在 Spring MVC 上下文中通过 <strong>&lt;mvc:interceptors&gt;</strong> 配置过滤器：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;localeResolver&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.i18n.CookieLocaleResolver&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:cookieName</span>=<span class="string">&quot;clientLanguage&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:cookieMaxAge</span>=<span class="string">&quot;100000&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:cookiePath</span>=<span class="string">&quot;/&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:defaultLocale</span>=<span class="string">&quot;zh_CN&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mvc:interceptors</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.i18n.LocaleChangeInterceptor&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">mvc:interceptors</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>LocaleChangeInterceptor 的角色类似于 ContentNegotiatingViewResolver，相当于一个中介。</strong></p>
+<p>LocaleChangeInterceptor 在默认情况下通过 locale 请求参数获取本次请求对应的本地化类型，用户可以通过其 paramName 属性指定一个其他参数名。由于 LocaleChangeInterceptor 的主要任务是从请求中获取本地化类型并将其设置给真正的本地化解析器，所以在配置 LocaleChangeInterceptor 之前，必须在上下文中先配置一个本地化解析器，如 AcceptHeaderLocaleResolver、CookieLocaleResolver、SessionLocaleResolver 等。</p>
+<p>值得注意的是，由于 AcceptHeaderLocaleResolver 是从请求报文头中获取本地化信息的，因此不能被动态更改，<strong>如果配置了 LocaleChangeInterceptor，则只能选择 CookieLocaleResolver 或 SessionLocaleResolver</strong>。</p>
+]]></content>
+      <categories>
+        <category>SpringMVC</category>
+      </categories>
+  </entry>
+  <entry>
     <title>精通SpringMVC(六)-文件上传</title>
     <url>/2022/04/11/%E7%B2%BE%E9%80%9ASpringMVC-%E5%85%AD-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/</url>
     <content><![CDATA[<p>本系列笔记所有代码地址：<a class="link"   href="https://github.com/lisj98/SpringMVCSource.git" >https://github.com/lisj98/SpringMVCSource.git<i class="fas fa-external-link-alt"></i></a></p>
@@ -754,6 +824,101 @@
 <p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E4%B8%8A%E4%BC%A0%E9%A1%B5%E9%9D%A2.1xgpfp5u2aao.webp" alt="上传页面"></p>
 <p>上传成功，对应文件夹下已有文件：</p>
 <p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E4%B8%8A%E4%BC%A0%E6%88%90%E5%8A%9F.4z9g1f88fh80.webp" alt="上传成功"></p>
+]]></content>
+      <categories>
+        <category>SpringMVC</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>精通SpringMVC(八)-杂项</title>
+    <url>/2022/04/11/%E7%B2%BE%E9%80%9ASpringMVC-%E5%85%AB-%E6%9D%82%E9%A1%B9/</url>
+    <content><![CDATA[<p>本系列笔记所有代码地址：<a class="link"   href="https://github.com/lisj98/SpringMVCSource.git" >https://github.com/lisj98/SpringMVCSource.git<i class="fas fa-external-link-alt"></i></a></p>
+<h4 id="8-1-静态资源处理"><a href="#8-1-静态资源处理" class="headerlink" title="8.1 静态资源处理"></a>8.1 静态资源处理</h4><p>优雅 REST 风格的资源 URL 不希望带 .html 或 .do 等后缀，然而对 Spring MVC 来说，如果将 DispatcherServlet 请求映射配置为“&#x2F;”，则 Spring MVC 将捕获 Web 容器所有的请求，包括静态资源的请求，Spring MVC 会将它们当成一个普通请求来处理，因找不到对应的处理器而导致错误。</p>
+<p>如何让 Spring 框架能够捕获所有 URL 的请求，同时又将静态资源的请求转由 Web 容器处理，是可将 DispatcherServlet 的请求映射配置成“&#x2F;”的前提。有两种解决方案。</p>
+<p>首先需要调整 web.xml 中 DispatcherServlet 的配置，使其可以捕获所有的请求：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>smart<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>1<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>smart<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--只配置一个“/”可以保证所有请求都被DispatcherServlet捕获--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="1-采用-lt-mvc-default-servlet-handler-x2F-gt"><a href="#1-采用-lt-mvc-default-servlet-handler-x2F-gt" class="headerlink" title="1. 采用 &lt;mvc:default-servlet-handler&#x2F;&gt;"></a>1. 采用 &lt;mvc:default-servlet-handler&#x2F;&gt;</h5><p>在 smart-servlet.xml 中配置 &lt;mvc:default-servlet-handler&#x2F;&gt; 后，会在 Spring MVC 上下文中定义一个 <code>org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler</code>，它将对进入 DispatcherServlet 的 URL 进行筛查。如果发现是静态资源的请求，就将该请求转由 Web 应用服务器默认的 Servlet 处理；如果不是静态资源，则由 DispatcherServlet 继续处理。</p>
+<p>一般 Web 应用服务器默认的 Servlet 名称都是 default，因此，DefaultServletHttpRequestHandler 可以找到它。如果用户所使用的 Web 服务器的默认 Servlet 名称不是 default，则需要通过 default-servlet-name 属性显式指定：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mvc:default-servlet-handler</span> <span class="attr">default-servlet-name</span>=<span class="string">&quot;yourServletName&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="2-采用-lt-mvc-resources-x2F-gt"><a href="#2-采用-lt-mvc-resources-x2F-gt" class="headerlink" title="2. 采用 &lt;mvc:resources&#x2F;&gt;"></a>2. 采用 &lt;mvc:resources&#x2F;&gt;</h5><p>&lt;mvc:default-servlet-handler&#x2F;&gt; 将静态资源的处理经由 Spring MVC 框架交回 Web 应用服务器。而 &lt;mvc:resources&#x2F;&gt; 更进一步，由 Spring MVC 框架自己处理静态资源，并添加一些有用的附加功能。</p>
+<p>&lt;mvc:resources&#x2F;&gt; 允许静态资源放置在任何地方，如 WEB-INF 目录下、类路径下等，甚至可以将 JavaScript 等静态文件打包到 JAR 包中。通过 location 属性指定静态资源的位置，由于 location 属性是 Resource 属性，因此可以使用诸如“classpath:”等的资源前缀指定资源位置。传统 Web 容器的静态资源只能放在 Web 容器的根路径下，&lt;mvc:resources&#x2F;&gt; 则完全打破了这个规则。</p>
+<p>在 smart-servlet.xml 中添加以下配置：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mvc:resources</span> <span class="attr">mapping</span>=<span class="string">&quot;/resources/**&quot;</span> <span class="attr">location</span>=<span class="string">&quot;/,classpath:/META-INF/publicResources/&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p> 以上配置将 Web 根路径“&#x2F;“及类路径 &#x2F;META-INF&#x2F;publicResources&#x2F; 下的目录映射为 &#x2F;resources 路径。假设 Web 根路径下拥有 images 和 js 这两个资源目录，则可以通过下图所示的方式引用静态资源：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84%E6%98%A0%E5%B0%84.1hzw4tt4lzds.webp" alt="静态资源路径映射"></p>
+<p>类路径下的资源同样如此。</p>
+<p>由于 &lt;mvc:resources&#x2F;&gt; 可以将多个物理路径映射为一个逻辑路径，因此，一个用逻辑路径表示的资源在多个物理路径下都存在。对于这个问题，&lt;mvc:resources&#x2F;&gt; 的处理机制是，只要在一个物理路径下找到匹配的资源后就返回，查找的顺序和物理路径在 location 中的配置顺序一致。</p>
+<p>那么既然将 Web 根路径”&#x2F;“映射为”&#x2F;resources&#x2F;**“，那么是否可以在网页中通过 ”&#x2F;resources&#x2F;WEB-INF&#x2F;web.xml“ 访问这个敏感的文件呢？答案是否定的。Spring MVC 在处理映射的静态资源时，会查看引用路径是否包含 WEB-INF 或 META-INF，如果包括，则直接返回 null 值，以保护文件不泄露出去。当然，如果将 &#x2F;WEB-INF&#x2F; 设置在 location 属性中，则可以通过 &#x2F;resources&#x2F;web.xml 的 URL 查看到 web.xml。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mvc:resources</span> <span class="attr">mapping</span>=<span class="string">&quot;/resources/**&quot;</span> <span class="attr">location</span>=<span class="string">&quot;/WEB-INF/&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>所以使用 &lt;mvc:resources&#x2F;&gt; 时应该小心，只暴露应该暴露的资源，而保护好不应该暴露的资源。</p>
+<p>通过使用 &lt;mvc:resources&#x2F;&gt; 的 cache-period 属性可以设置静态资源在客户端浏览器中的缓存有效时间。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mvc:resources</span> <span class="attr">mapping</span>=<span class="string">&quot;/resources/**&quot;</span> <span class="attr">location</span>=<span class="string">&quot;/,classpath:/META-INF/publicResources&quot;</span> <span class="attr">cache-period</span>=<span class="string">&quot;3153600&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在发布新版本的应用时，即使服务器端的 JavaScript、CSS 等静态资源文件已经发生了变化，但是由于客户端浏览器本身缓存管理机制的问题，客户端并不会从服务器端下载新的静态资源。一个好的解决方法是：网页中引用静态资源的路径添加应用的发布版本号，这样在发布新的版本时，由于版本号的变更造成网页中静态资源路径发生更改，从而使这些静态资源成为“新的资源”，客户端浏览器就会下载这个“新的资源”，而不会使用缓存中的数据。针对这个解决思路，可以通过 &lt;mvc:resources&#x2F;&gt; 的静态资源逻辑路径给出一个通用的解决方案。</p>
+<p>将发布版本号包含到 &lt;mvc:resources&#x2F;&gt; 的静态资源逻辑路径中，首先创建一个 ServletContextAware 实现类：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ResourcePathExposer</span> <span class="keyword">implements</span> <span class="title class_">ServletContextAware</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> ServletContext servletContext;</span><br><span class="line">    <span class="keyword">private</span> String resourceRoot;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">init</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="comment">//在实际应用中，可以在外部属性文件或数据库中保存应用的发布版本号，在此处获取之，此处仅仅提供了一个模拟值</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">version</span> <span class="operator">=</span> <span class="string">&quot;1.2.1&quot;</span>;</span><br><span class="line">        <span class="comment">//资源逻辑路径带上应用的发布版本号</span></span><br><span class="line">        resourceRoot = <span class="string">&quot;/resources-&quot;</span> + version;</span><br><span class="line">        <span class="comment">//将资源逻辑路径暴露到ServletContext的属性列表中</span></span><br><span class="line">        getServletContext().setAttribute(<span class="string">&quot;resourceRoot&quot;</span>, getServletContext().getContextPath() + resourceRoot);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setServletContext</span><span class="params">(ServletContext servletContext)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.servletContext = servletContext;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getResourceRoot</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> resourceRoot;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> ServletContext <span class="title function_">getServletContext</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> servletContext;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 ResourcePathExposer 中获取应用程序的发布版本号，产生一个带版本号的静态资源路径 resourceRoot，同时将其值发布到 ServletContext 中，这样 JSP 文件就可以通过 ${resourceRoot} 引用其值了。</p>
+<p>接下来要调整 smart-servlet.xml 的配置，以便使用带版本的静态资源逻辑路径：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--配置好ResourcePathExposer，并指定初始化方法为init()，以便在容器启动时让其初始化resourceRoot的值，由于其实现了ServletContextAware接口，因此，Spring会在初始化该Bean时将ServletContext引用注入进来--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;rpe&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.smart.web.ResourcePathExposer&quot;</span> <span class="attr">init-method</span>=<span class="string">&quot;init&quot;</span>/&gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">&lt;!--通过Spring EL表达式引用ResourcePathExposer的resourceRoot属性值，生成动态的静态资源逻辑路径--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mvc:resources</span> <span class="attr">mapping</span>=<span class="string">&quot;#&#123;rpe.resourceRoot&#125;/**&quot;</span> <span class="attr">location</span>=<span class="string">&quot;/&quot;</span> <span class="attr">cache-period</span>=<span class="string">&quot;31536000&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>最后修正网页中引用静态资源的方式：</p>
+<figure class="highlight jsp"><table><tr><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span> pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;%@ taglib prefix=<span class="string">&quot;c&quot;</span>      uri=<span class="string">&quot;http://java.sun.com/jsp/jstl/core&quot;</span> %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;title&gt;静态资源测试&lt;/title&gt;</span><br><span class="line">    &lt;script src=<span class="string">&quot;$&#123;resourceRoot&#125;/js/test.js&quot;</span> type=<span class="string">&quot;text/javascript&quot;</span>&gt; &lt;/script&gt;</span><br><span class="line">  &lt;/head&gt; </span><br><span class="line">  &lt;body&gt;</span><br><span class="line">    hello!!</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">       test();    </span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>由于静态资源中引用的 resourceRoot 值和 &lt;mvc:resources&#x2F;&gt; 通过 #{rpe.resourceRoot} 引用的值是一样的，所以可以正确访问到物理静态资源。这样，每次发布新版本后，随着发布版本号的更改，客户端就会自动下载新的静态资源。</p>
+<h4 id="8-2-装配拦截器"><a href="#8-2-装配拦截器" class="headerlink" title="8.2 装配拦截器"></a>8.2 装配拦截器</h4><p>当收到请求时，DispatcherServlet 将请求交给处理器映射（HandlerMapping）,让它找出对应该请求的 HandlerExecutionChain 对象。</p>
+<p>HandlerExecutionChain 顾名思义是一个执行链，它包含一个处理该请求的处理器（Handler），同时包括若干个对该请求实施拦截的拦截器（HandleInterceptor）。当 HandlerMapping 返回 HandlerExecutionChain 后，DispatcherServlet 将请求交给定义在 HandlerExecutionChain 中的拦截器和处理器一并处理。</p>
+<p>HandlerExecutionChain 是负责处理请求并返回 ModelAndView 的处理执行链，请求在被 Handler 执行的前后，链中装配的 HandlerInterceptor 会实施拦截操作。</p>
+<p>HandlerExecutionChain 的结构如图所示：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/HandlerExecutionChain%E7%BB%93%E6%9E%84%E5%9B%BE.6spvwdh0qlk0.webp" alt="HandlerExecutionChain结构图"></p>
+<p>拦截器到底做了什么事？我们通过考察拦截器的几个接口方法进行了解：</p>
+<ul>
+<li>boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)：在请求到达 Handler 之前，先执行这个前置处理方法。当该方法返回 false 时，请求直接返回，不会传递到链中的下一个拦截器，更不会传递到处理器链末端的 Handler 中。只有返回 true 时，请求才向链中的下一个处理节点传递。</li>
+<li>void postHandler(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)：在请求被 HandlerAdapter 执行后，执行这个后置处理方法。</li>
+<li>void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)：在响应已经被渲染后，执行该方法。</li>
+</ul>
+<p>位于处理器链末端的是一个 Handler，DispatcherServlet 通过 HandlerAdapter 适配器对 Handler 进行疯转，并按统一的适配器接口对 Handler 处理方法进行调用。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mvc:interceptors</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mvc:interceptor</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mvc:mapping</span> <span class="attr">path</span>=<span class="string">&quot;/secure/*&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;com.smart.web.MyInterceptor&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">mvc:interceptor</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mvc:interceptors</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以在 smart-servlet.xml 中配置多个拦截器，每个拦截器都可以指定一个匹配的映射路径，以限制拦截器的作用范围。</p>
+<h4 id="8-3-异常处理"><a href="#8-3-异常处理" class="headerlink" title="8.3 异常处理"></a>8.3 异常处理</h4><p>Spring MVC 通过 HandlerExceptionResolver 处理程序的异常，包括处理器映射、数据绑定及处理器执行时发生的异常。HandlerExceptionResolver 仅有一个接口方法：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ModelAndView <span class="title function_">resolveException</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)</span></span><br></pre></td></tr></table></figure>
+
+<p>当发生异常时，Spring MVC 将调用 resolveException() 方法，并转到 ModelAndView 对应的视图中，作为一个异常报告页面反馈给用户。</p>
+<p>HandlerExceptionResolver 拥有 4 个实现类，分别是：</p>
+<ul>
+<li>DefaultHandlerExceptionResolver</li>
+<li>SimpleMappingExceptionResolver</li>
+<li>AnnotationMethodHandlerExceptionResolver</li>
+<li>ResponseStatusExceptionResolver</li>
+</ul>
+<h5 id="1-DefaultHandlerExceptionResolver"><a href="#1-DefaultHandlerExceptionResolver" class="headerlink" title="1. DefaultHandlerExceptionResolver"></a>1. DefaultHandlerExceptionResolver</h5><p>Spring MVC 默认装配了 DefaultHandlerExceptionResolver，它会将 Spring MVC 框架的异常转换为响应的响应状态码。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E5%BC%82%E5%B8%B8%E5%92%8C%E5%93%8D%E5%BA%94%E7%8A%B6%E6%80%81%E7%A0%81%E5%AF%B9%E5%BA%94%E8%A1%A81.3wld0fvful80.webp" alt="异常和响应状态码对应表1"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E5%BC%82%E5%B8%B8%E5%92%8C%E5%93%8D%E5%BA%94%E7%8A%B6%E6%80%81%E7%A0%81%E5%AF%B9%E5%BA%94%E8%A1%A82.1quwz4c0lmao.webp" alt="异常和响应状态码对应表2"></p>
+<p>也可以在 web.xml 中为响应状态码配置一个对应的页面，如;</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">error-page</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">error-code</span>&gt;</span>404<span class="tag">&lt;/<span class="name">error-code</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">location</span>&gt;</span>404.html<span class="tag">&lt;/<span class="name">location</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">error-page</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="2-AnnotationMethodHandlerExceptionResolver"><a href="#2-AnnotationMethodHandlerExceptionResolver" class="headerlink" title="2. AnnotationMethodHandlerExceptionResolver"></a>2. AnnotationMethodHandlerExceptionResolver</h5><p>Spring MVC 默认注册了 AnnotationMethodHandlerExceptionResolver，它允许通过 @ExceptionHandler 注解指定处理特定异常的方法。如：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/@ExceptionHandler%E7%94%A8%E6%B3%95.5kw73rnhdk00.webp" alt="@ExceptionHandler用法"></p>
+<p>@ExceptionHandler 可以指定多个不同类型的异常，如 @ExceptionHandler({AException.class, BException.class})，但是要注意，标注 @ExceptionHandler 的异常处理类只能对同一处理器中的其他方法进行异常响应处理，而不能处理其他控制器中的方法异常。</p>
+<h5 id="3-ResponseStatusExceptionResolver"><a href="#3-ResponseStatusExceptionResolver" class="headerlink" title="3. ResponseStatusExceptionResolver"></a>3. ResponseStatusExceptionResolver</h5><p>ResponseStatusExceptionResolver 和 DefaultHandlerExceptionResolver 类似，通过 @ResponseStatus 注解标注一个方法，用于处理特定类型的响应状态码。</p>
+<h5 id="4-SimpleMappingExceptionResolver"><a href="#4-SimpleMappingExceptionResolver" class="headerlink" title="4. SimpleMappingExceptionResolver"></a>4. SimpleMappingExceptionResolver</h5><p>如果希望对所有的异常进行统一处理，则可以使用 SimpleMappingExceptionResolver，它将异常类名映射为视图名，即发生异常时使用对应的视图报告异常。</p>
+<p>如以下异常映射配置片段：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;handlerExceptionResolver&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.handler.SimpleMappingExceptionResolver&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;exceptionMappings&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">props</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">&quot;org.springframework.dao.DataAccessException&quot;</span>&gt;</span>dataAccessFailure1<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">&quot;org.springframework.transaction.TransactionException&quot;</span>&gt;</span>dataAccessFailure2<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">props</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>当控制器发生 DataAccessException 异常时，使用 dataAccessFailure1 视图显示。</p>
+<p>当控制器发生 TransactionException 异常时，使用 dataAccessFailure2 视图显示。</p>
+<p>当然，也可以自己实现 ExceptionResolver 覆盖 resolveException() 接口方法，编写自己的异常解析器，执行一些特定的工作。</p>
+<h4 id="8-4-RequestContextHolder-的使用"><a href="#8-4-RequestContextHolder-的使用" class="headerlink" title="8.4 RequestContextHolder 的使用"></a>8.4 RequestContextHolder 的使用</h4><p>RequestContextHolder 能够在 Controller 中获取 request 和 session 对象，其使用方法如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">HttpServletRequest</span> <span class="variable">request</span> <span class="operator">=</span> ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，如果直接使用该工具类，会抛出一个空指针异常，原因是还需要在 web.xml 中配置一个监听器：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">listener</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">listener-class</span>&gt;</span></span><br><span class="line">    	org.springframework.web.context.request.RequestContextListener</span><br><span class="line">    <span class="tag">&lt;/<span class="name">listener-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">listener</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
         <category>SpringMVC</category>
@@ -951,48 +1116,6 @@
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;contentNegotiationManager&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.accept.ContentNegotiationManagerFactoryBean&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:ignoreAcceptHeader</span>=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:favorPathExtension</span>=<span class="string">&quot;false&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:favorParameter</span>=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:parameterName</span>=<span class="string">&quot;format&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:defaultContentType</span>=<span class="string">&quot;text/html&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;mediaTypes&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">value</span>&gt;</span></span><br><span class="line">                html=text/html</span><br><span class="line">                xml=application/xml</span><br><span class="line">                json=application/json</span><br><span class="line">            <span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 协商多种视图解析器 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.view.ContentNegotiatingViewResolver&quot;</span> <span class="attr">p:order</span>=<span class="string">&quot;0&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;contentNegotiationManager&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;contentNegotiationManager&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;defaultViews&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">list</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.view.json.MappingJackson2JsonView&quot;</span></span></span><br><span class="line"><span class="tag">                      <span class="attr">p:modelKeys</span>=<span class="string">&quot;userList&quot;</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.view.xml.MarshallingView&quot;</span></span></span><br><span class="line"><span class="tag">                      <span class="attr">p:modelKey</span>=<span class="string">&quot;userList&quot;</span> <span class="attr">p:marshaller-ref</span>=<span class="string">&quot;xmlMarshaller&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">list</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">加上之前配置的视图解析器</span><br></pre></td></tr></table></figure>
 
 <p>ContentNegotiatingViewResolver 会在上下文中查找和 MIME 类型匹配的视图解析器，并委托它们进行视图解析。这样通过 content 请求参数就可以控制资源的输出格式了。</p>
-]]></content>
-      <categories>
-        <category>SpringMVC</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>精通SpringMVC(七)-WebSocket支持</title>
-    <url>/2022/04/11/%E7%B2%BE%E9%80%9ASpringMVC-%E4%B8%83-WebSocket%E6%94%AF%E6%8C%81/</url>
-    <content><![CDATA[<p>本系列笔记所有代码地址：<a class="link"   href="https://github.com/lisj98/SpringMVCSource.git" >https://github.com/lisj98/SpringMVCSource.git<i class="fas fa-external-link-alt"></i></a></p>
-<h4 id="7-1-使用-WebSocket"><a href="#7-1-使用-WebSocket" class="headerlink" title="7.1 使用 WebSocket"></a>7.1 使用 WebSocket</h4><p>通常应用程序之间发送消息会使用诸如 JMS、AMQP 等技术，但是如果实现浏览器和服务器的全双工通信，则以上技术是不适用的。但是这样的需求又是普遍存在的，因此诞生了一项新的技术，这便是 <strong>WebSocket</strong> 协议，它很好地<strong>解决了浏览器与服务器全双工通信的问题</strong>，而且能更好地节省服务器资源和带宽并达到实时通信。</p>
-<p>Spring 4.0 主要为 WebSocket 通信提供了以下几个方面的支持：</p>
-<ul>
-<li>发送和接收消息的 API。</li>
-<li>用来发送消息的模板。</li>
-<li>支持 SockJS，用来解决浏览器、服务器及代理不支持 WebSocket 的问题。</li>
-</ul>
-<p>WebSocket 可以用在任何类型的应用中，其最简单的形式是在两个应用之间建立通信的通道。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E5%BA%94%E7%94%A8%E4%B9%8B%E9%97%B4%E7%9A%84WebSocket%E9%80%9A%E4%BF%A1.7e2lekcc7dc0.webp" alt="应用之间的WebSocket通信"></p>
-<p>位于 WebSocket 一端的应用发送消息，而另一端的应用处理消息，因为它是全双工通信的，所以每一端既可以发送又可以处理消息。但是 WebSocket 最为常见的应用场景是实现服务器和基于浏览器的应用之间的通信。在浏览器中使用 JavaScript 开启一个到达服务器的连接，服务器通过这个连接发送更新到浏览器中。相对于传统的在 Web 端轮询服务器及使用 Flash 中的 Socket 和 XMLSocket，这种方式更加高效、便捷。</p>
-<p>下面通过一个在 Web 端使用 JavaScript 与服务器端相互传递“Hello World!”文本信息的例子来展示 WebSocket 的用法。</p>
-<p>Spring 提供了一个 <strong>WebSocketHandler</strong> 接口，该接口定义了 5 个 WebSocket 相关的接口方法。</p>
-<p>Spring 拥有一个 WebSocketHandler 接口的抽象实现类 <strong>AbstractWebSocketHandler</strong> 继承该类便可以选择性地实现感兴趣的方法。</p>
-<p>编写 MyWebSocketHandler：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyWebSocketHandler</span> <span class="keyword">extends</span> <span class="title class_">AbstractWebSocketHandler</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">afterConnectionEstablished</span><span class="params">(WebSocketSession session)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;建立连接&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">handleTextMessage</span><span class="params">(WebSocketSession session, TextMessage message)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="comment">//处理文本消息</span></span><br><span class="line">        System.out.println(<span class="string">&quot;收到消息&quot;</span> + message.getPayload());</span><br><span class="line">        <span class="comment">//模拟延时</span></span><br><span class="line">        Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">        <span class="comment">//发送文本消息</span></span><br><span class="line">        System.out.println(<span class="string">&quot;发送消息：hello world!&quot;</span>);</span><br><span class="line">        session.sendMessage(<span class="keyword">new</span> <span class="title class_">TextMessage</span>(<span class="string">&quot;hello world!&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">afterConnectionClosed</span><span class="params">(WebSocketSession session, CloseStatus status)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;关闭连接&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>AbstractWebSocketHandler 还定义了以下 3 个方法：</p>
-<ul>
-<li>**handleTextMessage()**：处理文本消息类型的方法。</li>
-<li>handleBinaryMessage()：处理二进制消息类型的方法。</li>
-<li>**handlePongMessage()**：处理Pong消息类型的方法。</li>
-</ul>
-<p>希望 WebSocketHandler 处理什么类型的消息就可以只重载对应的消息类型的方法，而不必重载所有方法。</p>
-<p>通过上述代码，一个简单的消息处理类就完成了，需要在 Spring 上下文中增加相关的配置;</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--将helloHandler映射到&quot;/hello&quot;请求--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">websocket:handlers</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">websocket:mapping</span> <span class="attr">path</span>=<span class="string">&quot;/hello&quot;</span> <span class="attr">handler</span>=<span class="string">&quot;helloHandler&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">websocket:handlers</span>&gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">&lt;!--声明MyWebSocketHandler Bean--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;helloHandler&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.smart.MyWebSocketHandler&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>服务器端搭建完毕，接下来便是客户端的实现了：</p>
-<figure class="highlight jsp"><table><tr><td class="code"><pre><span class="line">&lt;%--</span><br><span class="line">  Created by IntelliJ IDEA.</span><br><span class="line">  User: LiSJ</span><br><span class="line">  Date: <span class="number">2022</span>/<span class="number">4</span>/<span class="number">11</span></span><br><span class="line">  Time: <span class="number">14</span>:<span class="number">42</span></span><br><span class="line">  To change <span class="built_in">this</span> template use File | Settings | File Templates.</span><br><span class="line">--%&gt;</span><br><span class="line">&lt;%@ page contentType=<span class="string">&quot;text/html;charset=UTF-8&quot;</span> language=<span class="string">&quot;java&quot;</span> %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;WebSocket测试&lt;/title&gt;</span><br><span class="line">    &lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line">        <span class="comment">/* url使用“ws://”前缀，表示这是一个WebSocket连接 */</span></span><br><span class="line">        <span class="type">var</span> <span class="variable">url</span> <span class="operator">=</span> <span class="string">&#x27;ws://&#x27;</span> + window.location.host + <span class="string">&#x27;&lt;%=request.getContextPath()%&gt;/hello&#x27;</span>;</span><br><span class="line">        <span class="type">var</span> <span class="variable">sock</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">WebSocket</span>(url);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">/* opopen事件对应于WebSocketHandler的afterConnectionEstablished()方法 */</span></span><br><span class="line">        sock.onopen = function () &#123;</span><br><span class="line">            console.log(<span class="string">&#x27;开启WebSocket连接&#x27;</span>);</span><br><span class="line">            sayHello();</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">/* onmessage事件对应于WebSocketHandler的handleTextMessage()方法 */</span></span><br><span class="line">        sock.onmessage = function (e)&#123;</span><br><span class="line">            console.log(<span class="string">&#x27;接收消息：&#x27;</span>, e.data);</span><br><span class="line">            setTimeout(function ()&#123;sayHello()&#125;, <span class="number">2000</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* onclose事件对应于WebSocketHandler的afterConnectionClosed()方法 */</span></span><br><span class="line">        sock.onclose = function () &#123;</span><br><span class="line">            console.log(<span class="string">&#x27;关闭WebSocket连接&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        function <span class="title function_">sayHello</span><span class="params">()</span> &#123;</span><br><span class="line">            console.log(<span class="string">&#x27;发送消息：hello world!&#x27;</span>);</span><br><span class="line">            sock.send(<span class="string">&#x27;hello world!&#x27;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    hello world!</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
-
-<p>在 onopen 事件中会调用 sayHello() 方法，在该 WebSocket 上发送“hello world!”消息，通过发送这个消息，这个双向通信即建立起来。服务器端的 MyWebSocketHandler 作为响应将“hello world!”发送回来，当客户端收到来自服务器端的消息后，onmessage 事件又会发送一个“hello world!”给服务器端，如此循环往复。</p>
-<p>最终结果：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/WebSocket%E6%B6%88%E6%81%AF%E5%8F%91%E9%80%81.sob9gy5bdi8.webp" alt="WebSocket消息发送"></p>
-<h4 id="7-2-WebSocket-的限制"><a href="#7-2-WebSocket-的限制" class="headerlink" title="7.2 WebSocket 的限制"></a>7.2 WebSocket 的限制</h4><p>不同的浏览器和应用服务器对 WebSocket 的支持程度不同。通过 SockJS，就可以模拟对 WebSocket 的支持，这样即使浏览器和服务器不支持 WebSocket，SockJS 也可以让它们支持 WebSocket。</p>
 ]]></content>
       <categories>
         <category>SpringMVC</category>
