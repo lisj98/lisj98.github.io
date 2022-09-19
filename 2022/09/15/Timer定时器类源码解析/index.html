@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Java、数据结构">
+    <meta name="description" content="所见即所得">
+    <meta name="author" content="Lisj">
+    
+    <title>
+        
+            Timer定时器类源码解析 |
+        
+        BlogOfLisj
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/l-solid.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"lisj98.github.io","root":"/","language":"en","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#FF00FF","avatar":"/images/Neymar.jpg","favicon":"/images/l-solid.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"What you see is what you get."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"trigger":"auto","unescape":false,"preload":true},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":true},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 6.0.0"><link rel="alternate" href="/atom.xml" title="BlogOfLisj" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                BlogOfLisj
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                TAGS
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">CATEGORIES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">TAGS</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Timer定时器类源码解析</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/Neymar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Lisj</span>
+                        
+                            <span class="author-label">中忍</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-09-15 21:50:58</span>
+        <span class="mobile">2022-09-15 21:50</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Timer%E5%AE%9A%E6%97%B6%E5%99%A8%E7%B1%BB/">Timer定时器类</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>5k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>21 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>Timer定时器流程总览：</p>
+<p><img src="https://cdn.staticaly.com/gh/lisj98/image-hosting@master/%E5%A4%9A%E7%BA%BF%E7%A8%8B/Timer%E5%AE%9A%E6%97%B6%E5%99%A8/Timer%E5%AE%9A%E6%97%B6%E5%99%A8%E6%B5%81%E7%A8%8B%E5%9B%BE.2j8ktwirkia0.webp" alt="Timer定时器流程图"></p>
+<h1 id="Timer"><a href="#Timer" class="headerlink" title="Timer"></a>Timer</h1><p>定时器类。</p>
+<p>线程安全，线程安全的原因就是类中凡涉及到任务队列的操作就对队列加锁，凡涉及到具体任务的操作就对具体任务加锁(synchronized)。</p>
+<p>可定时单次执行，也可定时重复执行。</p>
+<p>一个定时器(Timer)对应一个任务队列(TaskQueue)以及一个任务线程(TimerThread)。</p>
+<p>一个任务队列(TaskQueue)中可包含多个任务(TimerTask)。</p>
+<p>生产者-消费者模式。</p>
+<h2 id="1-源码解析"><a href="#1-源码解析" class="headerlink" title="1. 源码解析"></a>1. 源码解析</h2><h3 id="1-1-属性"><a href="#1-1-属性" class="headerlink" title="1.1. 属性"></a>1.1. 属性</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//任务队列</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="type">TaskQueue</span> <span class="variable">queue</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TaskQueue</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">//执行任务的线程</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="type">TimerThread</span> <span class="variable">thread</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TimerThread</span>(queue);</span><br><span class="line"></span><br><span class="line"><span class="comment">//线程编号，原子类，线程安全</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="type">AtomicInteger</span> <span class="variable">nextSerialNumber</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AtomicInteger</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//垃圾回收线程在回收垃圾时会调用此方法回收线程资源，是一种默认机制，防止程序开发人员忘记调用cancel()方法而使得线程资源无法释放</span></span><br><span class="line"><span class="comment">//私有方法，由垃圾回收器调用</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="type">Object</span> <span class="variable">threadReaper</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Object</span>() &#123;</span><br><span class="line">	<span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">finalize</span><span class="params">()</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">		<span class="keyword">synchronized</span>(queue) &#123;</span><br><span class="line">			thread.newTasksMayBeScheduled = <span class="literal">false</span>;</span><br><span class="line">			queue.notify(); <span class="comment">// In case queue is empty.</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-方法"><a href="#1-2-方法" class="headerlink" title="1.2. 方法"></a>1.2. 方法</h3><h4 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h4><p>构造方法中会初始化TimerThread对象，并启动线程，同时TimerThread对象的初始化又会引起TaskQueue的初始化</p>
+<p>这样就初步创建了一个TaskQueue(其本质为长度为128的TimerTask[]数组)，并且启动了TimerThread线程类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1.创建一个定时器，任务执行线程不能作为守护线程</span></span><br><span class="line"><span class="keyword">public</span> <span class="title function_">Timer</span><span class="params">()</span> &#123;</span><br><span class="line">	<span class="built_in">this</span>(<span class="string">&quot;Timer-&quot;</span> + serialNumber());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//2.创建一个定时器，并指定任务执行线程的名称，任务执行线程不能作为守护线程</span></span><br><span class="line"><span class="keyword">public</span> <span class="title function_">Timer</span><span class="params">(String name)</span> &#123;</span><br><span class="line">	thread.setName(name);</span><br><span class="line">	thread.start();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//3.创建一个定时器，任务执行线程能作为守护线程</span></span><br><span class="line"><span class="keyword">public</span> <span class="title function_">Timer</span><span class="params">(<span class="type">boolean</span> isDaemon)</span> &#123;</span><br><span class="line">	<span class="built_in">this</span>(<span class="string">&quot;Timer-&quot;</span> + serialNumber(), isDaemon);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//4.创建一个定时器，并指定任务执行线程的名称，任务执行线程能作为守护线程</span></span><br><span class="line"><span class="keyword">public</span> <span class="title function_">Timer</span><span class="params">(String name, <span class="type">boolean</span> isDaemon)</span> &#123;</span><br><span class="line">	thread.setName(name);</span><br><span class="line">	thread.setDaemon(isDaemon);</span><br><span class="line">	thread.start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="schedule方法"><a href="#schedule方法" class="headerlink" title="schedule方法"></a>schedule方法</h4><p>下列方法为“固定延迟(fixed-delay)”类任务，即重复任务每次执行的间隔时间都是固定的，不管任务是否被推迟或提前，反正就隔那么长时间。它不关心执行时间，只关心是否和前一个任务间隔了指定时间。适用于短期需要定时任务的场景，或者不关注绝对时间的场景。</p>
+<p>举个例子，A(10:00)，B(11:00)，C(12:00)，D(13:00)，每个任务完成需要10min，间隔时间1h执行，而A由于某些原因到12:30才执行完，那么B会推迟到13:30执行，C会推迟到14:30执行，D会推迟到15:30执行，也就是说它更关注间隔时间，真正执行时间是上一次任务结束时间+时间间隔。</p>
+<p>a. 指定任务与执行时间，用于单次执行任务</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">schedule</span><span class="params">(TimerTask task, Date time)</span> &#123;</span><br><span class="line">	sched(task, time.getTime(), <span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>b. 指定任务、首次执行时间、重复执行间隔时间，用于间隔一段时间重复执行任务。若period为0则是单次任务</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">schedule</span><span class="params">(TimerTask task, Date firstTime, <span class="type">long</span> period)</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> (period &lt;= <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Non-positive period.&quot;</span>);</span><br><span class="line">	sched(task, firstTime.getTime(), -period);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>c. 从当前时间开始延迟一段时间后执行，用于单次执行任务</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">schedule</span><span class="params">(TimerTask task, <span class="type">long</span> delay)</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> (delay &lt; <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Negative delay.&quot;</span>);</span><br><span class="line">	sched(task, System.currentTimeMillis()+delay, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>d. 从当前时间开始延迟一段时间后，按间隔时间重复执行。若period为0则是单次任务，和c情况一致</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">schedule</span><span class="params">(TimerTask task, <span class="type">long</span> delay, <span class="type">long</span> period)</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> (delay &lt; <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Negative delay.&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span> (period &lt;= <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Non-positive period.&quot;</span>);</span><br><span class="line">	sched(task, System.currentTimeMillis()+delay, -period);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="scheduleAtFixedRate方法"><a href="#scheduleAtFixedRate方法" class="headerlink" title="scheduleAtFixedRate方法"></a>scheduleAtFixedRate方法</h4><p>下列方法为“固定速率(fixed-rate)”类任务，即若某个任务延迟了，那么后面的任务将迅速赶上，也就是连续执行，在追上任务自己的指定执行时间之前不会再有间隔。它不关心间隔时间，只关心自己的执行时间。适用于长期需要定时任务的场景，或者关注绝对时间的场景。</p>
+<p>举个例子，A(10:00)，B(11:00)，C(12:00)，D(13:00)，每个任务完成需要10min，间隔时间1h执行，而A由于某些原因到12:30才执行完，那么B、C将立即执行，然后再等到13:00执行D，也就是说它更关注执行时间，严格按照预期时间来。</p>
+<p>a. 指定任务、首次执行时间、重复执行间隔时间，用于间隔一段时间重复执行任务。若period为0则是单次任务</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">scheduleAtFixedRate</span><span class="params">(TimerTask task, Date firstTime,</span></span><br><span class="line"><span class="params">                                <span class="type">long</span> period)</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> (period &lt;= <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Non-positive period.&quot;</span>);</span><br><span class="line">	sched(task, firstTime.getTime(), period);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>b. 从当前时间开始延迟一段时间后，按间隔时间重复执行。若period为0则是单次任务，和a情况一致</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">scheduleAtFixedRate</span><span class="params">(TimerTask task, <span class="type">long</span> delay, <span class="type">long</span> period)</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> (delay &lt; <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Negative delay.&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span> (period &lt;= <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Non-positive period.&quot;</span>);</span><br><span class="line">	sched(task, System.currentTimeMillis()+delay, period);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="sched方法"><a href="#sched方法" class="headerlink" title="sched方法"></a>sched方法<a id="sched"></a></h4><p>设定好任务各项参数后，将其添加到任务队列中，并通知线程来消费任务</p>
+<p>注意，<code>schedule()</code>方法传到本方法中的period是个负数，<code>scheduleAtFixedRate()</code>方法传到本方法中的period是个正数，为什么要这样处理呢，要结合TimerThread的<a href="#mainLoop">mainLoop方法</a>来分析：</p>
+<p>①<code>schedule()</code>方法传进来的period是个负数，那么<code>TimerThread.mainLoop()</code>方法中<code>task.period&lt;0 ? currentTime - task.period : executionTime + task.period);</code>就会执行<code>currentTime - task.period</code>部分，也就是“当前时间+间隔时间”，这和<code>schedule()</code>方法的理念一致；</p>
+<p>②<code>scheduleAtFixedRate()</code>方法传进来的period是个正数，那么<code>TimerThread.mainLoop()</code>方法中<code>task.period&lt;0 ? currentTime - task.period : executionTime + task.period);</code>就会执行<code>executionTime + task.period</code>部分，也就是“预期执行时间+间隔时间”，这和scheduleAtFixedRate()方法的理念一致。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">sched</span><span class="params">(TimerTask task, <span class="type">long</span> time, <span class="type">long</span> period)</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> (time &lt; <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Illegal execution time.&quot;</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (Math.abs(period) &gt; (Long.MAX_VALUE &gt;&gt; <span class="number">1</span>))</span><br><span class="line">		period &gt;&gt;= <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//先锁队列再锁具体任务</span></span><br><span class="line">	<span class="keyword">synchronized</span>(queue) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!thread.newTasksMayBeScheduled)</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalStateException</span>(<span class="string">&quot;Timer already cancelled.&quot;</span>);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">synchronized</span>(task.lock) &#123;</span><br><span class="line">            <span class="comment">//VIRGIN：初始任务，还没设定执行时间</span></span><br><span class="line">			<span class="keyword">if</span> (task.state != TimerTask.VIRGIN)</span><br><span class="line">				<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalStateException</span>(</span><br><span class="line">				    <span class="string">&quot;Task already scheduled or cancelled&quot;</span>);</span><br><span class="line">			<span class="comment">//设置任务的执行时间，间隔时间，同时将任务的状态设置为SCHEDULED，表示已就绪</span></span><br><span class="line">            task.nextExecutionTime = time;</span><br><span class="line">			task.period = period;</span><br><span class="line">			task.state = TimerTask.SCHEDULED;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//将任务添加到任务队列中</span></span><br><span class="line">		queue.add(task);</span><br><span class="line">		<span class="keyword">if</span> (queue.getMin() == task)</span><br><span class="line">            <span class="comment">//对应着TimerThread.mainLoop()的queue.wait()，即这边添加任务成功，那边线程就可以开始消费任务了</span></span><br><span class="line">			queue.notify();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="cancel方法"><a href="#cancel方法" class="headerlink" title="cancel方法"></a>cancel方法</h4><p>终止本定时器，并移除任务队列中的所有任务，正在执行的任务不受影响。本方法可以被多次调用，多次调用没影响。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">cancel</span><span class="params">()</span> &#123;</span><br><span class="line">	<span class="keyword">synchronized</span>(queue) &#123;</span><br><span class="line">		thread.newTasksMayBeScheduled = <span class="literal">false</span>;</span><br><span class="line">		queue.clear();</span><br><span class="line">        <span class="comment">//这里调用notify()方法的作用是，当队列已经为空的时候，TimerThread.mainLoop()那里还在wait，这里清空队列之后newTasksMayBeScheduled为false，那边的循环就进去不了，然后直接break了，线程资源也得以释放</span></span><br><span class="line">		queue.notify();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="purge方法"><a href="#purge方法" class="headerlink" title="purge方法"></a>purge方法</h4><p>移除任务队列中所有已取消的任务并返回已取消任务总数。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">purge</span><span class="params">()</span> &#123;</span><br><span class="line">	<span class="type">int</span> <span class="variable">result</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">synchronized</span>(queue) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> queue.size(); i &gt; <span class="number">0</span>; i--) &#123;</span><br><span class="line">			<span class="keyword">if</span> (queue.get(i).state == TimerTask.CANCELLED) &#123;</span><br><span class="line">				queue.quickRemove(i);</span><br><span class="line">				result++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//维护二叉堆</span></span><br><span class="line">		<span class="keyword">if</span> (result != <span class="number">0</span>)</span><br><span class="line">			queue.heapify();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="serialNumber方法"><a href="#serialNumber方法" class="headerlink" title="serialNumber方法"></a>serialNumber方法</h4><p>计算线程编号值。</p>
+<p>私有方法，由构造函数调用。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">serialNumber</span><span class="params">()</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> nextSerialNumber.getAndIncrement();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="TimerThread"><a href="#TimerThread" class="headerlink" title="TimerThread"></a>TimerThread</h1><p>定时器的任务执行线程类，执行任务的载体。</p>
+<h2 id="1-源码解析-1"><a href="#1-源码解析-1" class="headerlink" title="1. 源码解析"></a>1. 源码解析</h2><h3 id="1-1-属性-1"><a href="#1-1-属性-1" class="headerlink" title="1.1. 属性"></a>1.1. 属性</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//为false表示没有对定时器Timer的引用了，这时就可以终止定时器了</span></span><br><span class="line"><span class="comment">//为true并且任务队列中已无任务时，该标志位会被置为false</span></span><br><span class="line"><span class="type">boolean</span> <span class="variable">newTasksMayBeScheduled</span> <span class="operator">=</span> <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//任务执行线程绑定的任务队列</span></span><br><span class="line"><span class="keyword">private</span> TaskQueue queue;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-方法-1"><a href="#1-2-方法-1" class="headerlink" title="1.2. 方法"></a>1.2. 方法</h3><h4 id="构造方法-1"><a href="#构造方法-1" class="headerlink" title="构造方法"></a>构造方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//仅绑定任务队列</span></span><br><span class="line">TimerThread(TaskQueue queue) &#123;</span><br><span class="line">	<span class="built_in">this</span>.queue = queue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="run方法"><a href="#run方法" class="headerlink" title="run方法"></a>run方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//和普通线程一样，调用start()方法后会进到这个run()方法里来，Timer的构造函数里会调用start()方法</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		mainLoop();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">finally</span> &#123;</span><br><span class="line">		<span class="comment">// Someone killed this Thread, behave as if Timer cancelled</span></span><br><span class="line">		<span class="keyword">synchronized</span>(queue) &#123;</span><br><span class="line">			newTasksMayBeScheduled = <span class="literal">false</span>;</span><br><span class="line">			queue.clear();  <span class="comment">// Eliminate obsolete references</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="mainLoop方法"><a href="#mainLoop方法" class="headerlink" title="mainLoop方法"></a>mainLoop方法<a id="mainLoop"></a></h4><p>私有方法，由run()方法调用。</p>
+<p>真正的定时器循环实现逻辑。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">mainLoop</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">//死循环，除非主动退出，否则无法退出</span></span><br><span class="line">    <span class="comment">//这里就是“定时”的核心所在，只有一个线程在不断操作任务队列</span></span><br><span class="line">	<span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			TimerTask task;</span><br><span class="line">			<span class="type">boolean</span> taskFired;</span><br><span class="line">			<span class="keyword">synchronized</span>(queue) &#123;</span><br><span class="line">				<span class="comment">//等待任务队列非空</span></span><br><span class="line">				<span class="keyword">while</span> (queue.isEmpty() &amp;&amp; newTasksMayBeScheduled)</span><br><span class="line">                    <span class="comment">//任务队列中没有任务，则等待Timer.sched()方法添加任务，若添加成功，则会调用queue.notify()</span></span><br><span class="line">					queue.wait();</span><br><span class="line">				<span class="keyword">if</span> (queue.isEmpty())</span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">				<span class="type">long</span> currentTime, executionTime;</span><br><span class="line">                <span class="comment">//获取队列中第一个任务</span></span><br><span class="line">				task = queue.getMin();</span><br><span class="line">				<span class="keyword">synchronized</span>(task.lock) &#123;</span><br><span class="line">					<span class="keyword">if</span> (task.state == TimerTask.CANCELLED) &#123;</span><br><span class="line">						queue.removeMin();</span><br><span class="line">						<span class="keyword">continue</span>;</span><br><span class="line">					&#125;</span><br><span class="line">					currentTime = System.currentTimeMillis();	<span class="comment">//当前时间</span></span><br><span class="line">					executionTime = task.nextExecutionTime;		<span class="comment">//这个时候任务还没有开始执行，所以这个executionTime指的是任务即将开始执行的时间，或者说预期时间，不要被next迷惑了</span></span><br><span class="line">                    <span class="comment">//任务预期执行时间在当前时间之前，即前面有个任务超时了，导致后面的任务无法在指定时间执行</span></span><br><span class="line">					<span class="keyword">if</span> (taskFired = (executionTime&lt;=currentTime)) &#123;</span><br><span class="line">						<span class="keyword">if</span> (task.period == <span class="number">0</span>) &#123;		<span class="comment">//单次任务</span></span><br><span class="line">							queue.removeMin();</span><br><span class="line">							task.state = TimerTask.EXECUTED;</span><br><span class="line">						&#125; <span class="keyword">else</span> &#123;		<span class="comment">//重复任务，这里的rescheduleMin()方法会重新计算nextExecutionTime(下一次执行时间)，然后进行fixDown操作，这个时候做的事情就是计算当前任务下一次应该什么时候执行，在堆中应该处于什么位置，也就是堆化操作。因为上一次循环已经堆化好了，拿到的task一定是应该最先执行的，所以不用关心当前任务的顺序是否正确</span></span><br><span class="line">							queue.rescheduleMin(		<span class="comment">//这里的+-逻辑可见Timer.sched()方法处的分析</span></span><br><span class="line">							    task.period&lt;<span class="number">0</span> ? currentTime   - task.period</span><br><span class="line">							    : executionTime + task.period);</span><br><span class="line">						&#125;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">                <span class="comment">//任务预期执行时间在当前时间之后，也就是正常情况，等时间到重新进入循环执行第一个任务即可，因为进了本if语句就绝对不会进下一个if语句</span></span><br><span class="line">				<span class="keyword">if</span> (!taskFired)</span><br><span class="line">					queue.wait(executionTime - currentTime);</span><br><span class="line">			&#125;</span><br><span class="line">            <span class="comment">//任务预期执行时间在当前时间之前，立即执行任务</span></span><br><span class="line">            <span class="comment">//进入这个if语句之前，当前任务的nextExecutionTime，也就是真正的下一次执行时间已经通过queue.rescheduleMin()方法计算好了，而且堆也通过该方法维护好了，堆中的该任务已经代表下一次的任务了，所以这个时候应该执行task，而不是queue[1]，task可能已经不在queue[1]这个位置了</span></span><br><span class="line">			<span class="keyword">if</span> (taskFired)</span><br><span class="line">				task.run();</span><br><span class="line">		&#125; <span class="keyword">catch</span>(InterruptedException e) &#123;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>本方法的逻辑是，你那边通过sched()方法add了一大堆task到queue里，而add方法会fixUp维护堆，也就是堆的根节点一定是最小的，至于兄弟节点的顺序我不关心，我这里会处理；我这边线程开始执行，先拿到第一个task，也就是根节点，一定是最小的，一开始还没到执行时间，也就是会进入<code>if (!taskFired)</code>这个判断语句，然后等待一段时间，时间到继续执行，而进入了<code>if (!taskFired)</code>就不会进<code>if (taskFired)</code>，所以重新进入while循环，而这时<code>executionTime&lt;=currentTime</code>，所以<code>queue.rescheduleMin()</code>计算第一个任务的下一次执行时间，并fixDown重构堆结构，然后执行第一个task；好，执行完，再一次进入循环，这个时候的堆已经经过上一次循环的<code>queue.rescheduleMin()</code>重构好了，也就是第一个任务一定是时间最近的那个，所以再次循环上述操作，就这样实现定时循环。</p>
+<h1 id="TaskQueue"><a href="#TaskQueue" class="headerlink" title="TaskQueue"></a>TaskQueue</h1><p>定时器的任务队列，是一个优先级队列，按执行时间(nextExecutionTime)排序。</p>
+<p>队列本质是一个二叉堆(最小堆)，而二叉堆或者树只是一个逻辑结构，在Java中要么用数组实现，要么用链表实现，这里的TaskQueue是用数组实现的。</p>
+<p>最小堆的特点：①完全二叉树；②父节点的值小于子节点的值。</p>
+<p>由于最小堆是完全二叉树的特性，每个节点的下标值一定是连续的，因此为了方便，根节点从1开始计数，从0开始也不利于取模，所以任务队列中的任务也是从queue[1]开始的，queue[0]不存值。</p>
+<p><img src="https://cdn.staticaly.com/gh/lisj98/image-hosting@master/%E5%A4%9A%E7%BA%BF%E7%A8%8B/Timer%E5%AE%9A%E6%97%B6%E5%99%A8/%E6%9C%80%E5%B0%8F%E5%A0%86%E7%A4%BA%E4%BE%8B.66i29sutfh40.webp" alt="最小堆示例"></p>
+<h2 id="1-源码解析-2"><a href="#1-源码解析-2" class="headerlink" title="1. 源码解析"></a>1. 源码解析</h2><h3 id="1-1-属性-2"><a href="#1-1-属性-2" class="headerlink" title="1.1. 属性"></a>1.1. 属性</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//任务队列</span></span><br><span class="line"><span class="keyword">private</span> TimerTask[] queue = <span class="keyword">new</span> <span class="title class_">TimerTask</span>[<span class="number">128</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">//队列长度</span></span><br><span class="line"><span class="keyword">private</span> <span class="type">int</span> <span class="variable">size</span> <span class="operator">=</span> <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-方法-2"><a href="#1-2-方法-2" class="headerlink" title="1.2. 方法"></a>1.2. 方法</h3><h4 id="构造方法-2"><a href="#构造方法-2" class="headerlink" title="构造方法"></a>构造方法</h4><p>无构造方法，调用默认构造方法并创建一个长度为128的TimerTask[]数组。</p>
+<h4 id="add方法"><a href="#add方法" class="headerlink" title="add方法"></a>add方法</h4><p>增加一个任务到任务队列中。</p>
+<p>默认方法，由<code>Timer.sched()</code>方法调用，每调用一个<code>schedule()</code>或<code>scheduleAtFixedRate()</code>方法就有一个任务添加到任务队列中。</p>
+<p>堆添加元素，①只能尾插，②然后逐层向上父子节点比较；</p>
+<p>本方法是步骤①，<code>fixUp()</code>方法是步骤②。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> <span class="title function_">add</span><span class="params">(TimerTask task)</span> &#123;</span><br><span class="line">	<span class="comment">//队列中实际长度超过数组长度则两倍扩容</span></span><br><span class="line">    <span class="keyword">if</span> (size + <span class="number">1</span> == queue.length)</span><br><span class="line">		queue = Arrays.copyOf(queue, <span class="number">2</span>*queue.length);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//任务从queue[1]开始，size不断++</span></span><br><span class="line">	queue[++size] = task;</span><br><span class="line">	fixUp(size);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="fixUp方法"><a href="#fixUp方法" class="headerlink" title="fixUp方法"></a>fixUp方法</h4><p>用于在添加任务到TimerTask数组中后，维护数组中任务的顺序(上浮)。</p>
+<p>私有方法，由<code>TaskQueue.add()</code>方法调用。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">fixUp</span><span class="params">(<span class="type">int</span> k)</span> &#123;</span><br><span class="line">    <span class="comment">//从数组最末端，也就是堆的最后一个叶子节点开始</span></span><br><span class="line">	<span class="keyword">while</span> (k &gt; <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="comment">//右移两位即除2，也就是j是k的父节点</span></span><br><span class="line">		<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> k &gt;&gt; <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span> (queue[j].nextExecutionTime &lt;= queue[k].nextExecutionTime)</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//父节点nextExecutionTime&gt;子节点nextExecutionTime则交换</span></span><br><span class="line">        <span class="comment">//因为最小堆并不需要维护整棵树的顺序，所以只关心本节点所在子树，逐层父子节点比较就可以了</span></span><br><span class="line">		<span class="type">TimerTask</span> <span class="variable">tmp</span> <span class="operator">=</span> queue[j];</span><br><span class="line">		queue[j] = queue[k];</span><br><span class="line">		queue[k] = tmp;</span><br><span class="line">		k = j;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="removeMin方法"><a href="#removeMin方法" class="headerlink" title="removeMin方法"></a>removeMin方法</h4><p>移除任务队列中第一个任务。</p>
+<p>默认方法，由<code>TimerThread.mainLoop()</code>调用。</p>
+<p>堆删除元素，①只能删除根节点，删除根节点后，将最后一个叶子节点作为根节点，②然后跟子结点中较小的值进行比较(因为是最小堆)，就这样逐层向下比较；</p>
+<p>本方法是步骤①，<code>fixDown()</code>方法是步骤②。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//把任务队列中最后一个任务赋值给queue[1]，然后把最后一个任务置空，size--，并通过fixDown()方法维护堆</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">removeMin</span><span class="params">()</span> &#123;</span><br><span class="line">	queue[<span class="number">1</span>] = queue[size];</span><br><span class="line">	queue[size--] = <span class="literal">null</span>;</span><br><span class="line">	fixDown(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="quickRemove方法"><a href="#quickRemove方法" class="headerlink" title="quickRemove方法"></a>quickRemove方法</h4><p>将指定位置的元素置空，即移除指定位置的任务。</p>
+<p>默认方法，由<code>Timer.purge()</code>方法调用。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> <span class="title function_">quickRemove</span><span class="params">(<span class="type">int</span> i)</span> &#123;</span><br><span class="line">	<span class="keyword">assert</span> i &lt;= size;</span><br><span class="line"></span><br><span class="line">	queue[i] = queue[size];</span><br><span class="line">	queue[size--] = <span class="literal">null</span>;  <span class="comment">// Drop extra ref to prevent memory leak</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="rescheduleMin方法"><a href="#rescheduleMin方法" class="headerlink" title="rescheduleMin方法"></a>rescheduleMin方法</h4><p>重新计算第一个任务的nextExecutionTime，并在有必要的情况下对数组重新最小堆化。</p>
+<p>默认方法，由<code>TimerThread.mainLoop()</code>方法调用。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> <span class="title function_">rescheduleMin</span><span class="params">(<span class="type">long</span> newTime)</span> &#123;</span><br><span class="line">	queue[<span class="number">1</span>].nextExecutionTime = newTime;</span><br><span class="line">	fixDown(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="fixDown方法"><a href="#fixDown方法" class="headerlink" title="fixDown方法"></a>fixDown方法</h4><p>用于在删除任务后，维护数组中任务的顺序(下沉)。</p>
+<p>私有方法，由<code>TaskQueue.removeMin()</code>、<code>TaskQueue.rescheduleMin()</code>和<code>TaskQueue.heapify()</code>方法调用。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">fixDown</span><span class="params">(<span class="type">int</span> k)</span> &#123;</span><br><span class="line">	<span class="type">int</span> j;</span><br><span class="line">	<span class="keyword">while</span> ((j = k &lt;&lt; <span class="number">1</span>) &lt;= size &amp;&amp; j &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">//找子节点中的较小值</span></span><br><span class="line">		<span class="keyword">if</span> (j &lt; size &amp;&amp;</span><br><span class="line">		        queue[j].nextExecutionTime &gt; queue[j+<span class="number">1</span>].nextExecutionTime)</span><br><span class="line">			j++;</span><br><span class="line">		<span class="keyword">if</span> (queue[k].nextExecutionTime &lt;= queue[j].nextExecutionTime)</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">        <span class="comment">//交换父子节点</span></span><br><span class="line">		<span class="type">TimerTask</span> <span class="variable">tmp</span> <span class="operator">=</span> queue[j];</span><br><span class="line">		queue[j] = queue[k];</span><br><span class="line">		queue[k] = tmp;</span><br><span class="line">		k = j;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="heapify方法"><a href="#heapify方法" class="headerlink" title="heapify方法"></a>heapify方法</h4><p>在删除CANCELED的任务后对数组重新最小堆化。</p>
+<p>默认方法，由<code>Timer.purge()</code>方法调用。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> <span class="title function_">heapify</span><span class="params">()</span> &#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> size/<span class="number">2</span>; i &gt;= <span class="number">1</span>; i--)</span><br><span class="line">		fixDown(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="get方法"><a href="#get方法" class="headerlink" title="get方法"></a>get方法</h4><p>返回任务队列中具体某个任务。</p>
+<p>默认方法，由<code>Timer.purge()</code>方法调用。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">TimerTask <span class="title function_">get</span><span class="params">(<span class="type">int</span> i)</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> queue[i];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="getMin方法"><a href="#getMin方法" class="headerlink" title="getMin方法"></a>getMin方法</h4><p>返回任务队列中第一个任务。</p>
+<p>默认方法，由<code>TimerThread.mainLoop()</code>和<code>Timer.sched()</code>方法调用。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">TimerTask <span class="title function_">getMin</span><span class="params">()</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> queue[<span class="number">1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="clear方法"><a href="#clear方法" class="headerlink" title="clear方法"></a>clear方法</h4><p>清空任务队列。</p>
+<p>默认方法，由<code>Timer.cancel()</code>方法或<code>TimerThread.run()</code>方法调用。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> <span class="title function_">clear</span><span class="params">()</span> &#123;</span><br><span class="line">	<span class="comment">// Null out task references to prevent memory leak</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i=<span class="number">1</span>; i&lt;=size; i++)</span><br><span class="line">		queue[i] = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">	size = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="isEmpty方法"><a href="#isEmpty方法" class="headerlink" title="isEmpty方法"></a>isEmpty方法</h4><p>判断任务队列中任务数量是否为空。</p>
+<p>由<code>TimerThread.mainLoop()</code>方法调用。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">boolean</span> <span class="title function_">isEmpty</span><span class="params">()</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> size==<span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="size方法"><a href="#size方法" class="headerlink" title="size方法"></a>size方法</h4><p>返回任务队列中的任务数量。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">size</span><span class="params">()</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> size;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="TimerTask"><a href="#TimerTask" class="headerlink" title="TimerTask"></a>TimerTask</h1><p>定时器任务类，表示一个具体的任务。</p>
+<p>是个抽象类，实现了Runnable接口。</p>
+<h2 id="1-源码解析-3"><a href="#1-源码解析-3" class="headerlink" title="1. 源码解析"></a>1. 源码解析</h2><h3 id="1-1-属性-3"><a href="#1-1-属性-3" class="headerlink" title="1.1. 属性"></a>1.1. 属性</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//用来给定时任务TimerTask对象加锁</span></span><br><span class="line"><span class="keyword">final</span> <span class="type">Object</span> <span class="variable">lock</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Object</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">//定时任务的状态</span></span><br><span class="line"><span class="type">int</span> <span class="variable">state</span> <span class="operator">=</span> VIRGIN;</span><br><span class="line"></span><br><span class="line"><span class="comment">//初始状态，还没有设定执行时间</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">VIRGIN</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//已设定执行时间，等待执行</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">SCHEDULED</span>   <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//正在执行中</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">EXECUTED</span>    <span class="operator">=</span> <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//已取消</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">CANCELLED</span>   <span class="operator">=</span> <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//重复任务的周期(以毫秒为单位)</span></span><br><span class="line"><span class="type">long</span> <span class="variable">period</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//任务下一次执行的时间(System.currentTimeMillis格式)</span></span><br><span class="line"><span class="type">long</span> nextExecutionTime;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-方法-3"><a href="#1-2-方法-3" class="headerlink" title="1.2. 方法"></a>1.2. 方法</h3><h4 id="构造方法-3"><a href="#构造方法-3" class="headerlink" title="构造方法"></a>构造方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//无参构造，什么都不干</span></span><br><span class="line"><span class="keyword">protected</span> <span class="title function_">TimerTask</span><span class="params">()</span> &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="run方法-1"><a href="#run方法-1" class="headerlink" title="run方法"></a>run方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//抽象方法，什么都不干</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="cancel方法-1"><a href="#cancel方法-1" class="headerlink" title="cancel方法"></a>cancel方法</h4><p>取消任务。</p>
+<ul>
+<li>如果是仅执行一次的任务并且还没有开始执行，或者连定时执行时间都没有设定，直接取消；</li>
+<li>如果是重复执行的任务，在调用本方法后任务将不再执行；</li>
+<li>如果任务正在执行，则等其执行完后便不再执行。</li>
+</ul>
+<p>本方法可以执行多次，后续执行不会影响第一次执行的效果。</p>
+<p>返回true的情况：①仅执行一次的任务并设定了定时执行时间，只要它还没开始执行就返回true；②重复执行的任务调用本方法后都返回true。</p>
+<p>返回false的情况：①仅执行一次的任务已经开始执行了(即在执行的过程中调用此方法)；②任务还没有设定执行时间；③任务已经被取消了。</p>
+<p>一句话总结：已初始化还没开始执行的(SCHEDULED)就返回true；未初始化(VIRGIN)、已经开始执行(EXECUTED)、已取消的(CANCELLED)就返回false。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">cancel</span><span class="params">()</span> &#123;</span><br><span class="line">	<span class="keyword">synchronized</span>(lock) &#123;</span><br><span class="line">		<span class="type">boolean</span> <span class="variable">result</span> <span class="operator">=</span> (state == SCHEDULED);</span><br><span class="line">		state = CANCELLED;</span><br><span class="line">		<span class="keyword">return</span> result;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="scheduledExecutionTime方法"><a href="#scheduledExecutionTime方法" class="headerlink" title="scheduledExecutionTime方法"></a>scheduledExecutionTime方法</h4><p>返回任务最近一次执行的时间(<code>Date.getTime()</code>格式)。</p>
+<p>如果任务正在执行，则返回其开始执行的时间；</p>
+<p>如果任务未开始执行，则返回null。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">long</span> <span class="title function_">scheduledExecutionTime</span><span class="params">()</span> &#123;</span><br><span class="line">	<span class="keyword">synchronized</span>(lock) &#123;</span><br><span class="line">		<span class="keyword">return</span> (period &lt; <span class="number">0</span> ? nextExecutionTime + period</span><br><span class="line">		        : nextExecutionTime - period);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h1><p>代码示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="keyword">import</span> java.util.Timer;</span><br><span class="line"><span class="keyword">import</span> java.util.TimerTask;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyTimer</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">Timer</span> <span class="variable">timer</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Timer</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">            <span class="type">MyTimerTask</span> <span class="variable">tt</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MyTimerTask</span>(<span class="string">&quot;Task&quot;</span> + i);</span><br><span class="line">            timer.schedule(tt, <span class="number">5000</span>, <span class="number">10000</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyTimerTask</span> <span class="keyword">extends</span> <span class="title class_">TimerTask</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    MyTimerTask(String name)&#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;name:&quot;</span> + name + <span class="string">&quot; startDate:&quot;</span> + <span class="keyword">new</span> <span class="title class_">Date</span>());</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">3000</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;name:&quot;</span> + name + <span class="string">&quot; endDate:&quot;</span> + <span class="keyword">new</span> <span class="title class_">Date</span>());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">name:Task0 startDate:Thu Sep <span class="number">15</span> <span class="number">22</span>:<span class="number">00</span>:<span class="number">54</span> CST <span class="number">2022</span></span><br><span class="line">name:Task0 endDate:Thu Sep <span class="number">15</span> <span class="number">22</span>:<span class="number">00</span>:<span class="number">57</span> CST <span class="number">2022</span></span><br><span class="line">name:Task1 startDate:Thu Sep <span class="number">15</span> <span class="number">22</span>:<span class="number">00</span>:<span class="number">57</span> CST <span class="number">2022</span></span><br><span class="line">name:Task1 endDate:Thu Sep <span class="number">15</span> <span class="number">22</span>:<span class="number">01</span>:<span class="number">00</span> CST <span class="number">2022</span></span><br><span class="line">name:Task2 startDate:Thu Sep <span class="number">15</span> <span class="number">22</span>:<span class="number">01</span>:<span class="number">00</span> CST <span class="number">2022</span></span><br><span class="line">name:Task2 endDate:Thu Sep <span class="number">15</span> <span class="number">22</span>:<span class="number">01</span>:<span class="number">03</span> CST <span class="number">2022</span></span><br><span class="line">name:Task0 startDate:Thu Sep <span class="number">15</span> <span class="number">22</span>:<span class="number">01</span>:<span class="number">04</span> CST <span class="number">2022</span></span><br><span class="line">name:Task0 endDate:Thu Sep <span class="number">15</span> <span class="number">22</span>:<span class="number">01</span>:<span class="number">07</span> CST <span class="number">2022</span></span><br><span class="line">name:Task1 startDate:Thu Sep <span class="number">15</span> <span class="number">22</span>:<span class="number">01</span>:<span class="number">07</span> CST <span class="number">2022</span></span><br><span class="line">name:Task1 endDate:Thu Sep <span class="number">15</span> <span class="number">22</span>:<span class="number">01</span>:<span class="number">10</span> CST <span class="number">2022</span></span><br><span class="line">name:Task2 startDate:Thu Sep <span class="number">15</span> <span class="number">22</span>:<span class="number">01</span>:<span class="number">10</span> CST <span class="number">2022</span></span><br><span class="line">name:Task2 endDate:Thu Sep <span class="number">15</span> <span class="number">22</span>:<span class="number">01</span>:<span class="number">13</span> CST <span class="number">2022</span></span><br><span class="line">name:Task0 startDate:Thu Sep <span class="number">15</span> <span class="number">22</span>:<span class="number">01</span>:<span class="number">14</span> CST <span class="number">2022</span></span><br><span class="line">name:Task0 endDate:Thu Sep <span class="number">15</span> <span class="number">22</span>:<span class="number">01</span>:<span class="number">17</span> CST <span class="number">2022</span></span><br><span class="line">name:Task1 startDate:Thu Sep <span class="number">15</span> <span class="number">22</span>:<span class="number">01</span>:<span class="number">17</span> CST <span class="number">2022</span></span><br><span class="line">name:Task1 endDate:Thu Sep <span class="number">15</span> <span class="number">22</span>:<span class="number">01</span>:<span class="number">20</span> CST <span class="number">2022</span></span><br><span class="line">name:Task2 startDate:Thu Sep <span class="number">15</span> <span class="number">22</span>:<span class="number">01</span>:<span class="number">20</span> CST <span class="number">2022</span></span><br><span class="line">name:Task2 endDate:Thu Sep <span class="number">15</span> <span class="number">22</span>:<span class="number">01</span>:<span class="number">23</span> CST <span class="number">2022</span></span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：Timer定时器类源码解析</li>
+        <li>Post author：Lisj</li>
+        <li>Create time：2022-09-15 21:50:58</li>
+        <li>
+            Post link：https://lisj98.github.io/2022/09/15/Timer定时器类源码解析/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/Timer%E5%AE%9A%E6%97%B6%E5%99%A8%E7%B1%BB/">#Timer定时器类</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2022/09/19/Executors%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Executors源码解析</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/09/13/Thread%E7%B1%BB%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Thread类源码解析</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Lisj</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Timer"><span class="nav-text">Timer</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90"><span class="nav-text">1. 源码解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%B1%9E%E6%80%A7"><span class="nav-text">1.1. 属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E6%96%B9%E6%B3%95"><span class="nav-text">1.2. 方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95"><span class="nav-text">构造方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#schedule%E6%96%B9%E6%B3%95"><span class="nav-text">schedule方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#scheduleAtFixedRate%E6%96%B9%E6%B3%95"><span class="nav-text">scheduleAtFixedRate方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sched%E6%96%B9%E6%B3%95"><span class="nav-text">sched方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cancel%E6%96%B9%E6%B3%95"><span class="nav-text">cancel方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#purge%E6%96%B9%E6%B3%95"><span class="nav-text">purge方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#serialNumber%E6%96%B9%E6%B3%95"><span class="nav-text">serialNumber方法</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TimerThread"><span class="nav-text">TimerThread</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-1"><span class="nav-text">1. 源码解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%B1%9E%E6%80%A7-1"><span class="nav-text">1.1. 属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E6%96%B9%E6%B3%95-1"><span class="nav-text">1.2. 方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95-1"><span class="nav-text">构造方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#run%E6%96%B9%E6%B3%95"><span class="nav-text">run方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mainLoop%E6%96%B9%E6%B3%95"><span class="nav-text">mainLoop方法</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TaskQueue"><span class="nav-text">TaskQueue</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-2"><span class="nav-text">1. 源码解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%B1%9E%E6%80%A7-2"><span class="nav-text">1.1. 属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E6%96%B9%E6%B3%95-2"><span class="nav-text">1.2. 方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95-2"><span class="nav-text">构造方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#add%E6%96%B9%E6%B3%95"><span class="nav-text">add方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fixUp%E6%96%B9%E6%B3%95"><span class="nav-text">fixUp方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#removeMin%E6%96%B9%E6%B3%95"><span class="nav-text">removeMin方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#quickRemove%E6%96%B9%E6%B3%95"><span class="nav-text">quickRemove方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rescheduleMin%E6%96%B9%E6%B3%95"><span class="nav-text">rescheduleMin方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fixDown%E6%96%B9%E6%B3%95"><span class="nav-text">fixDown方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#heapify%E6%96%B9%E6%B3%95"><span class="nav-text">heapify方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#get%E6%96%B9%E6%B3%95"><span class="nav-text">get方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getMin%E6%96%B9%E6%B3%95"><span class="nav-text">getMin方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#clear%E6%96%B9%E6%B3%95"><span class="nav-text">clear方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#isEmpty%E6%96%B9%E6%B3%95"><span class="nav-text">isEmpty方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#size%E6%96%B9%E6%B3%95"><span class="nav-text">size方法</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TimerTask"><span class="nav-text">TimerTask</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-3"><span class="nav-text">1. 源码解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%B1%9E%E6%80%A7-3"><span class="nav-text">1.1. 属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E6%96%B9%E6%B3%95-3"><span class="nav-text">1.2. 方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95-3"><span class="nav-text">构造方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#run%E6%96%B9%E6%B3%95-1"><span class="nav-text">run方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cancel%E6%96%B9%E6%B3%95-1"><span class="nav-text">cancel方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#scheduledExecutionTime%E6%96%B9%E6%B3%95"><span class="nav-text">scheduledExecutionTime方法</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A1%A5%E5%85%85"><span class="nav-text">补充</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Java、数据结构">
+    <meta name="description" content="所见即所得">
+    <meta name="author" content="Lisj">
+    
+    <title>
+        
+            精通SpringMVC(五)-本地化解析 |
+        
+        BlogOfLisj
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/l-solid.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"lisj98.github.io","root":"/","language":"en","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#FF00FF","avatar":"/images/Neymar.jpg","favicon":"/images/l-solid.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"What you see is what you get."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"trigger":"auto","unescape":false,"preload":true},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":true},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 6.0.0"><link rel="alternate" href="/atom.xml" title="BlogOfLisj" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                BlogOfLisj
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                TAGS
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">CATEGORIES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">TAGS</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">精通SpringMVC(五)-本地化解析</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/Neymar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Lisj</span>
+                        
+                            <span class="author-label">中忍</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-04-11 11:15:11</span>
+        <span class="mobile">2022-04-11 11:15</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/SpringMVC/">SpringMVC</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>1.2k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>4 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>本系列笔记所有代码地址：<a class="link"   target="_blank" rel="noopener" href="https://github.com/lisj98/SpringMVCSource.git" >https://github.com/lisj98/SpringMVCSource.git<i class="fas fa-external-link-alt"></i></a></p>
+<h4 id="5-1-本地化的概念"><a href="#5-1-本地化的概念" class="headerlink" title="5.1 本地化的概念"></a>5.1 本地化的概念</h4><p>一般情况下，Web 应用根据客户端浏览器的设置判断客户端的本地化类型，例如：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E8%AE%BE%E7%BD%AE%E8%AF%AD%E8%A8%80%E9%A6%96%E9%80%89%E9%A1%B9.3p1p68u0qbc0.webp" alt="设置语言首选项"></p>
+<p>浏览器中设置的<strong>本地化类型</strong>会包含在 HTML 请求报文头中发送给 Web 服务器，确切来说是通过<strong>报文头的 Accept-Language 参数</strong>将“语言首选项”对话框中选择的语言发送到服务器，成为服务器判别客户端本地化类型的依据。</p>
+<p>如果 Web 应用基于这种方式提供本地化页面，则用户只得通过改变浏览器的设置进行本地化类型的切换。也有一种其他的形式，比如浏览器右上角有一个转换语言的图标，这种语言切换功能不要求用户更改浏览器的设置，<strong>它们通过 Cookie、Session 或请求参数即可切换本地化类型</strong>，这种方式明显更为便利。</p>
+<p><strong>在默认情况下，Spring MVC 根据 Accept-Language 参数判断客户端的本地化类型。</strong>此外，它还提供了多种指定客户端本地化类型的方式，如<strong>通过设置 Cookie、Session 指定</strong>。</p>
+<p><strong>事实上，当收到请求时，Spring MVC 在上下文中寻找一个本地化解析器（LocaleResolver），找到后使用它获取请求所对应的本地化类型信息。</strong></p>
+<p><strong>除此之外，Spring MVC 还允许装配一个动态更改本地化类型的拦截器，这样通过指定一个请求参数就可以控制单个请求的本地化类型。</strong></p>
+<p>本地化解析器和拦截器都定义在 <code>org.springframework.web.servlet.i18n</code> 包中，用户可以在 DispatcherServlet 上下文中配置它们。</p>
+<p>Spring 提供了以下 4 个本地化解析器：</p>
+<ul>
+<li><strong>AcceptHeaderLocaleResolver</strong>：根据 HTTP 报文头的 Accept-Language 参数确定本地化类型。如果没有显式化定义本地化解析器，则 Spring MVC 默认采用该解析器。</li>
+<li><strong>CookieLocaleResolver</strong>：根据指定的 Cookie 值确定本地化类型。</li>
+<li><strong>SessionLocaleResolver</strong>：根据 Session 中特定的属性值确定本地化类型。</li>
+<li><strong>LocaleChangeInterceptor</strong>：从请求参数中获取本次请求对应的本地化类型。</li>
+</ul>
+<p>在 3.4 节的实例中，我们为表单校验错误信息提供了国家化支持，当表单数据校验存在错误时，Spring MVC 使用默认的 AcceptHeaderLocaleResolver 抽取请求报文头的 Accept-Language 属性以确定客户端本地化类型，并返回对应的本地化错误信息。</p>
+<h4 id="5-2-使用-CookieLocaleResolver"><a href="#5-2-使用-CookieLocaleResolver" class="headerlink" title="5.2 使用 CookieLocaleResolver"></a>5.2 使用 CookieLocaleResolver</h4><p>要使用 Cookie 保存本地化类型信息，只需在 Spring MVC 上下文中配置一个 CookieLocaleResolver 就可以了，DispatcherServlet 会自动识别本地化解析器并装配它。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/CookieLocaleResolver%E9%85%8D%E7%BD%AE.1k24u9zbr0ow.webp" alt="CookieLocaleResolver配置"></p>
+<h4 id="5-3-使用-SessionLocaleResolver"><a href="#5-3-使用-SessionLocaleResolver" class="headerlink" title="5.3 使用 SessionLocaleResolver"></a>5.3 使用 SessionLocaleResolver</h4><p>SessionLocaleResolver 查找 Session 中属性名为 <strong>SessionLocaleResolver.LOCALE.SESSION_ATTRIBUTE_NAME</strong> 的属性，并将其转换为 Locale 对象，以此作为客户端的本地化类型。</p>
+<p>配置过程如 CookieLocaleResolver 一样：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;localeResolver&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.i18n.SessionLocaleResolver&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>SessionLocaleResolver 和 CookieLocaleResolver 的区别是，前者一般要求用户登录后产生相应的用户会话才有效，而后者只要浏览器有 Cookie 存在即可生效。</p>
+<h4 id="5-4-使用-LocaleChangeInterceptor"><a href="#5-4-使用-LocaleChangeInterceptor" class="headerlink" title="5.4 使用 LocaleChangeInterceptor"></a>5.4 使用 LocaleChangeInterceptor</h4><p>很多国际化网站都允许通过一个请求参数控制网站的本地化，如 <a class="link"   target="_blank" rel="noopener" href="http://www.xxx.com/?locale=zh_CN" >www.xxx.com?locale=zh_CN<i class="fas fa-external-link-alt"></i></a> 返回对应中国大陆的本地化网页，而 <a class="link"   target="_blank" rel="noopener" href="http://www.xxx.com/?locale=en_US" >www.xxx.com?locale=en_US<i class="fas fa-external-link-alt"></i></a> 返回本地化为英语的网页。这样，网页使用者可以通过对 URL 的控制返回不同本地化的页面。</p>
+<p>在 Spring MVC 中，可以通过 LocaleChangeInterceptor 过滤器来完成这一需求。</p>
+<p>在 Spring MVC 上下文中通过 <strong>&lt;mvc:interceptors&gt;</strong> 配置过滤器：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;localeResolver&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.i18n.CookieLocaleResolver&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:cookieName</span>=<span class="string">&quot;clientLanguage&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:cookieMaxAge</span>=<span class="string">&quot;100000&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:cookiePath</span>=<span class="string">&quot;/&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:defaultLocale</span>=<span class="string">&quot;zh_CN&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mvc:interceptors</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.i18n.LocaleChangeInterceptor&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">mvc:interceptors</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>LocaleChangeInterceptor 的角色类似于 ContentNegotiatingViewResolver，相当于一个中介。</strong></p>
+<p>LocaleChangeInterceptor 在默认情况下通过 locale 请求参数获取本次请求对应的本地化类型，用户可以通过其 paramName 属性指定一个其他参数名。由于 LocaleChangeInterceptor 的主要任务是从请求中获取本地化类型并将其设置给真正的本地化解析器，所以在配置 LocaleChangeInterceptor 之前，必须在上下文中先配置一个本地化解析器，如 AcceptHeaderLocaleResolver、CookieLocaleResolver、SessionLocaleResolver 等。</p>
+<p>值得注意的是，由于 AcceptHeaderLocaleResolver 是从请求报文头中获取本地化信息的，因此不能被动态更改，<strong>如果配置了 LocaleChangeInterceptor，则只能选择 CookieLocaleResolver 或 SessionLocaleResolver</strong>。</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：精通SpringMVC(五)-本地化解析</li>
+        <li>Post author：Lisj</li>
+        <li>Create time：2022-04-11 11:15:11</li>
+        <li>
+            Post link：https://lisj98.github.io/2022/04/11/精通SpringMVC-五-本地化解析/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2022/04/11/%E7%B2%BE%E9%80%9ASpringMVC-%E5%85%AD-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">精通SpringMVC(六)-文件上传</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/04/09/%E7%B2%BE%E9%80%9ASpringMVC-%E5%9B%9B-%E8%A7%86%E5%9B%BE%E5%92%8C%E8%A7%86%E5%9B%BE%E8%A7%A3%E6%9E%90%E5%99%A8/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">精通SpringMVC(四)-视图和视图解析器</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Lisj</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-%E6%9C%AC%E5%9C%B0%E5%8C%96%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="nav-text">5.1 本地化的概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-%E4%BD%BF%E7%94%A8-CookieLocaleResolver"><span class="nav-text">5.2 使用 CookieLocaleResolver</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-%E4%BD%BF%E7%94%A8-SessionLocaleResolver"><span class="nav-text">5.3 使用 SessionLocaleResolver</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-4-%E4%BD%BF%E7%94%A8-LocaleChangeInterceptor"><span class="nav-text">5.4 使用 LocaleChangeInterceptor</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

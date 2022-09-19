@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Java、数据结构">
+    <meta name="description" content="所见即所得">
+    <meta name="author" content="Lisj">
+    
+    <title>
+        
+            精通SpringMVC(八)-杂项 |
+        
+        BlogOfLisj
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/l-solid.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"lisj98.github.io","root":"/","language":"en","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#FF00FF","avatar":"/images/Neymar.jpg","favicon":"/images/l-solid.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"What you see is what you get."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"trigger":"auto","unescape":false,"preload":true},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":true},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 6.0.0"><link rel="alternate" href="/atom.xml" title="BlogOfLisj" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                BlogOfLisj
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                TAGS
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">CATEGORIES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">TAGS</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">精通SpringMVC(八)-杂项</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/Neymar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Lisj</span>
+                        
+                            <span class="author-label">中忍</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-04-11 15:44:29</span>
+        <span class="mobile">2022-04-11 15:44</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/SpringMVC/">SpringMVC</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>3k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>12 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>本系列笔记所有代码地址：<a class="link"   target="_blank" rel="noopener" href="https://github.com/lisj98/SpringMVCSource.git" >https://github.com/lisj98/SpringMVCSource.git<i class="fas fa-external-link-alt"></i></a></p>
+<h4 id="8-1-静态资源处理"><a href="#8-1-静态资源处理" class="headerlink" title="8.1 静态资源处理"></a>8.1 静态资源处理</h4><p>优雅 REST 风格的资源 URL 不希望带 .html 或 .do 等后缀，然而对 Spring MVC 来说，如果将 DispatcherServlet 请求映射配置为“&#x2F;”，则 Spring MVC 将捕获 Web 容器所有的请求，包括静态资源的请求，Spring MVC 会将它们当成一个普通请求来处理，因找不到对应的处理器而导致错误。</p>
+<p>如何让 Spring 框架能够捕获所有 URL 的请求，同时又将静态资源的请求转由 Web 容器处理，是可将 DispatcherServlet 的请求映射配置成“&#x2F;”的前提。有两种解决方案。</p>
+<p>首先需要调整 web.xml 中 DispatcherServlet 的配置，使其可以捕获所有的请求：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>smart<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>1<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>smart<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--只配置一个“/”可以保证所有请求都被DispatcherServlet捕获--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="1-采用-lt-mvc-default-servlet-handler-x2F-gt"><a href="#1-采用-lt-mvc-default-servlet-handler-x2F-gt" class="headerlink" title="1. 采用 &lt;mvc:default-servlet-handler&#x2F;&gt;"></a>1. 采用 &lt;mvc:default-servlet-handler&#x2F;&gt;</h5><p>在 smart-servlet.xml 中配置 &lt;mvc:default-servlet-handler&#x2F;&gt; 后，会在 Spring MVC 上下文中定义一个 <code>org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler</code>，它将对进入 DispatcherServlet 的 URL 进行筛查。如果发现是静态资源的请求，就将该请求转由 Web 应用服务器默认的 Servlet 处理；如果不是静态资源，则由 DispatcherServlet 继续处理。</p>
+<p>一般 Web 应用服务器默认的 Servlet 名称都是 default，因此，DefaultServletHttpRequestHandler 可以找到它。如果用户所使用的 Web 服务器的默认 Servlet 名称不是 default，则需要通过 default-servlet-name 属性显式指定：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mvc:default-servlet-handler</span> <span class="attr">default-servlet-name</span>=<span class="string">&quot;yourServletName&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="2-采用-lt-mvc-resources-x2F-gt"><a href="#2-采用-lt-mvc-resources-x2F-gt" class="headerlink" title="2. 采用 &lt;mvc:resources&#x2F;&gt;"></a>2. 采用 &lt;mvc:resources&#x2F;&gt;</h5><p>&lt;mvc:default-servlet-handler&#x2F;&gt; 将静态资源的处理经由 Spring MVC 框架交回 Web 应用服务器。而 &lt;mvc:resources&#x2F;&gt; 更进一步，由 Spring MVC 框架自己处理静态资源，并添加一些有用的附加功能。</p>
+<p>&lt;mvc:resources&#x2F;&gt; 允许静态资源放置在任何地方，如 WEB-INF 目录下、类路径下等，甚至可以将 JavaScript 等静态文件打包到 JAR 包中。通过 location 属性指定静态资源的位置，由于 location 属性是 Resource 属性，因此可以使用诸如“classpath:”等的资源前缀指定资源位置。传统 Web 容器的静态资源只能放在 Web 容器的根路径下，&lt;mvc:resources&#x2F;&gt; 则完全打破了这个规则。</p>
+<p>在 smart-servlet.xml 中添加以下配置：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mvc:resources</span> <span class="attr">mapping</span>=<span class="string">&quot;/resources/**&quot;</span> <span class="attr">location</span>=<span class="string">&quot;/,classpath:/META-INF/publicResources/&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p> 以上配置将 Web 根路径“&#x2F;“及类路径 &#x2F;META-INF&#x2F;publicResources&#x2F; 下的目录映射为 &#x2F;resources 路径。假设 Web 根路径下拥有 images 和 js 这两个资源目录，则可以通过下图所示的方式引用静态资源：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84%E6%98%A0%E5%B0%84.1hzw4tt4lzds.webp" alt="静态资源路径映射"></p>
+<p>类路径下的资源同样如此。</p>
+<p>由于 &lt;mvc:resources&#x2F;&gt; 可以将多个物理路径映射为一个逻辑路径，因此，一个用逻辑路径表示的资源在多个物理路径下都存在。对于这个问题，&lt;mvc:resources&#x2F;&gt; 的处理机制是，只要在一个物理路径下找到匹配的资源后就返回，查找的顺序和物理路径在 location 中的配置顺序一致。</p>
+<p>那么既然将 Web 根路径”&#x2F;“映射为”&#x2F;resources&#x2F;**“，那么是否可以在网页中通过 ”&#x2F;resources&#x2F;WEB-INF&#x2F;web.xml“ 访问这个敏感的文件呢？答案是否定的。Spring MVC 在处理映射的静态资源时，会查看引用路径是否包含 WEB-INF 或 META-INF，如果包括，则直接返回 null 值，以保护文件不泄露出去。当然，如果将 &#x2F;WEB-INF&#x2F; 设置在 location 属性中，则可以通过 &#x2F;resources&#x2F;web.xml 的 URL 查看到 web.xml。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mvc:resources</span> <span class="attr">mapping</span>=<span class="string">&quot;/resources/**&quot;</span> <span class="attr">location</span>=<span class="string">&quot;/WEB-INF/&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>所以使用 &lt;mvc:resources&#x2F;&gt; 时应该小心，只暴露应该暴露的资源，而保护好不应该暴露的资源。</p>
+<p>通过使用 &lt;mvc:resources&#x2F;&gt; 的 cache-period 属性可以设置静态资源在客户端浏览器中的缓存有效时间。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mvc:resources</span> <span class="attr">mapping</span>=<span class="string">&quot;/resources/**&quot;</span> <span class="attr">location</span>=<span class="string">&quot;/,classpath:/META-INF/publicResources&quot;</span> <span class="attr">cache-period</span>=<span class="string">&quot;3153600&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在发布新版本的应用时，即使服务器端的 JavaScript、CSS 等静态资源文件已经发生了变化，但是由于客户端浏览器本身缓存管理机制的问题，客户端并不会从服务器端下载新的静态资源。一个好的解决方法是：网页中引用静态资源的路径添加应用的发布版本号，这样在发布新的版本时，由于版本号的变更造成网页中静态资源路径发生更改，从而使这些静态资源成为“新的资源”，客户端浏览器就会下载这个“新的资源”，而不会使用缓存中的数据。针对这个解决思路，可以通过 &lt;mvc:resources&#x2F;&gt; 的静态资源逻辑路径给出一个通用的解决方案。</p>
+<p>将发布版本号包含到 &lt;mvc:resources&#x2F;&gt; 的静态资源逻辑路径中，首先创建一个 ServletContextAware 实现类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ResourcePathExposer</span> <span class="keyword">implements</span> <span class="title class_">ServletContextAware</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> ServletContext servletContext;</span><br><span class="line">    <span class="keyword">private</span> String resourceRoot;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">init</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="comment">//在实际应用中，可以在外部属性文件或数据库中保存应用的发布版本号，在此处获取之，此处仅仅提供了一个模拟值</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">version</span> <span class="operator">=</span> <span class="string">&quot;1.2.1&quot;</span>;</span><br><span class="line">        <span class="comment">//资源逻辑路径带上应用的发布版本号</span></span><br><span class="line">        resourceRoot = <span class="string">&quot;/resources-&quot;</span> + version;</span><br><span class="line">        <span class="comment">//将资源逻辑路径暴露到ServletContext的属性列表中</span></span><br><span class="line">        getServletContext().setAttribute(<span class="string">&quot;resourceRoot&quot;</span>, getServletContext().getContextPath() + resourceRoot);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setServletContext</span><span class="params">(ServletContext servletContext)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.servletContext = servletContext;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getResourceRoot</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> resourceRoot;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> ServletContext <span class="title function_">getServletContext</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> servletContext;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 ResourcePathExposer 中获取应用程序的发布版本号，产生一个带版本号的静态资源路径 resourceRoot，同时将其值发布到 ServletContext 中，这样 JSP 文件就可以通过 ${resourceRoot} 引用其值了。</p>
+<p>接下来要调整 smart-servlet.xml 的配置，以便使用带版本的静态资源逻辑路径：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--配置好ResourcePathExposer，并指定初始化方法为init()，以便在容器启动时让其初始化resourceRoot的值，由于其实现了ServletContextAware接口，因此，Spring会在初始化该Bean时将ServletContext引用注入进来--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;rpe&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.smart.web.ResourcePathExposer&quot;</span> <span class="attr">init-method</span>=<span class="string">&quot;init&quot;</span>/&gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">&lt;!--通过Spring EL表达式引用ResourcePathExposer的resourceRoot属性值，生成动态的静态资源逻辑路径--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mvc:resources</span> <span class="attr">mapping</span>=<span class="string">&quot;#&#123;rpe.resourceRoot&#125;/**&quot;</span> <span class="attr">location</span>=<span class="string">&quot;/&quot;</span> <span class="attr">cache-period</span>=<span class="string">&quot;31536000&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>最后修正网页中引用静态资源的方式：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span> pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;%@ taglib prefix=<span class="string">&quot;c&quot;</span>      uri=<span class="string">&quot;http://java.sun.com/jsp/jstl/core&quot;</span> %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;title&gt;静态资源测试&lt;/title&gt;</span><br><span class="line">    &lt;script src=<span class="string">&quot;$&#123;resourceRoot&#125;/js/test.js&quot;</span> type=<span class="string">&quot;text/javascript&quot;</span>&gt; &lt;/script&gt;</span><br><span class="line">  &lt;/head&gt; </span><br><span class="line">  &lt;body&gt;</span><br><span class="line">    hello!!</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">       test();    </span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>由于静态资源中引用的 resourceRoot 值和 &lt;mvc:resources&#x2F;&gt; 通过 #{rpe.resourceRoot} 引用的值是一样的，所以可以正确访问到物理静态资源。这样，每次发布新版本后，随着发布版本号的更改，客户端就会自动下载新的静态资源。</p>
+<h4 id="8-2-装配拦截器"><a href="#8-2-装配拦截器" class="headerlink" title="8.2 装配拦截器"></a>8.2 装配拦截器</h4><p>当收到请求时，DispatcherServlet 将请求交给处理器映射（HandlerMapping）,让它找出对应该请求的 HandlerExecutionChain 对象。</p>
+<p>HandlerExecutionChain 顾名思义是一个执行链，它包含一个处理该请求的处理器（Handler），同时包括若干个对该请求实施拦截的拦截器（HandleInterceptor）。当 HandlerMapping 返回 HandlerExecutionChain 后，DispatcherServlet 将请求交给定义在 HandlerExecutionChain 中的拦截器和处理器一并处理。</p>
+<p>HandlerExecutionChain 是负责处理请求并返回 ModelAndView 的处理执行链，请求在被 Handler 执行的前后，链中装配的 HandlerInterceptor 会实施拦截操作。</p>
+<p>HandlerExecutionChain 的结构如图所示：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/HandlerExecutionChain%E7%BB%93%E6%9E%84%E5%9B%BE.6spvwdh0qlk0.webp" alt="HandlerExecutionChain结构图"></p>
+<p>拦截器到底做了什么事？我们通过考察拦截器的几个接口方法进行了解：</p>
+<ul>
+<li>boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)：在请求到达 Handler 之前，先执行这个前置处理方法。当该方法返回 false 时，请求直接返回，不会传递到链中的下一个拦截器，更不会传递到处理器链末端的 Handler 中。只有返回 true 时，请求才向链中的下一个处理节点传递。</li>
+<li>void postHandler(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)：在请求被 HandlerAdapter 执行后，执行这个后置处理方法。</li>
+<li>void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)：在响应已经被渲染后，执行该方法。</li>
+</ul>
+<p>位于处理器链末端的是一个 Handler，DispatcherServlet 通过 HandlerAdapter 适配器对 Handler 进行疯转，并按统一的适配器接口对 Handler 处理方法进行调用。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mvc:interceptors</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mvc:interceptor</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mvc:mapping</span> <span class="attr">path</span>=<span class="string">&quot;/secure/*&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;com.smart.web.MyInterceptor&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">mvc:interceptor</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mvc:interceptors</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以在 smart-servlet.xml 中配置多个拦截器，每个拦截器都可以指定一个匹配的映射路径，以限制拦截器的作用范围。</p>
+<h4 id="8-3-异常处理"><a href="#8-3-异常处理" class="headerlink" title="8.3 异常处理"></a>8.3 异常处理</h4><p>Spring MVC 通过 HandlerExceptionResolver 处理程序的异常，包括处理器映射、数据绑定及处理器执行时发生的异常。HandlerExceptionResolver 仅有一个接口方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ModelAndView <span class="title function_">resolveException</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)</span></span><br></pre></td></tr></table></figure>
+
+<p>当发生异常时，Spring MVC 将调用 resolveException() 方法，并转到 ModelAndView 对应的视图中，作为一个异常报告页面反馈给用户。</p>
+<p>HandlerExceptionResolver 拥有 4 个实现类，分别是：</p>
+<ul>
+<li>DefaultHandlerExceptionResolver</li>
+<li>SimpleMappingExceptionResolver</li>
+<li>AnnotationMethodHandlerExceptionResolver</li>
+<li>ResponseStatusExceptionResolver</li>
+</ul>
+<h5 id="1-DefaultHandlerExceptionResolver"><a href="#1-DefaultHandlerExceptionResolver" class="headerlink" title="1. DefaultHandlerExceptionResolver"></a>1. DefaultHandlerExceptionResolver</h5><p>Spring MVC 默认装配了 DefaultHandlerExceptionResolver，它会将 Spring MVC 框架的异常转换为响应的响应状态码。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E5%BC%82%E5%B8%B8%E5%92%8C%E5%93%8D%E5%BA%94%E7%8A%B6%E6%80%81%E7%A0%81%E5%AF%B9%E5%BA%94%E8%A1%A81.3wld0fvful80.webp" alt="异常和响应状态码对应表1"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E5%BC%82%E5%B8%B8%E5%92%8C%E5%93%8D%E5%BA%94%E7%8A%B6%E6%80%81%E7%A0%81%E5%AF%B9%E5%BA%94%E8%A1%A82.1quwz4c0lmao.webp" alt="异常和响应状态码对应表2"></p>
+<p>也可以在 web.xml 中为响应状态码配置一个对应的页面，如;</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">error-page</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">error-code</span>&gt;</span>404<span class="tag">&lt;/<span class="name">error-code</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">location</span>&gt;</span>404.html<span class="tag">&lt;/<span class="name">location</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">error-page</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="2-AnnotationMethodHandlerExceptionResolver"><a href="#2-AnnotationMethodHandlerExceptionResolver" class="headerlink" title="2. AnnotationMethodHandlerExceptionResolver"></a>2. AnnotationMethodHandlerExceptionResolver</h5><p>Spring MVC 默认注册了 AnnotationMethodHandlerExceptionResolver，它允许通过 @ExceptionHandler 注解指定处理特定异常的方法。如：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/@ExceptionHandler%E7%94%A8%E6%B3%95.5kw73rnhdk00.webp" alt="@ExceptionHandler用法"></p>
+<p>@ExceptionHandler 可以指定多个不同类型的异常，如 @ExceptionHandler({AException.class, BException.class})，但是要注意，标注 @ExceptionHandler 的异常处理类只能对同一处理器中的其他方法进行异常响应处理，而不能处理其他控制器中的方法异常。</p>
+<h5 id="3-ResponseStatusExceptionResolver"><a href="#3-ResponseStatusExceptionResolver" class="headerlink" title="3. ResponseStatusExceptionResolver"></a>3. ResponseStatusExceptionResolver</h5><p>ResponseStatusExceptionResolver 和 DefaultHandlerExceptionResolver 类似，通过 @ResponseStatus 注解标注一个方法，用于处理特定类型的响应状态码。</p>
+<h5 id="4-SimpleMappingExceptionResolver"><a href="#4-SimpleMappingExceptionResolver" class="headerlink" title="4. SimpleMappingExceptionResolver"></a>4. SimpleMappingExceptionResolver</h5><p>如果希望对所有的异常进行统一处理，则可以使用 SimpleMappingExceptionResolver，它将异常类名映射为视图名，即发生异常时使用对应的视图报告异常。</p>
+<p>如以下异常映射配置片段：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;handlerExceptionResolver&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.handler.SimpleMappingExceptionResolver&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;exceptionMappings&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">props</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">&quot;org.springframework.dao.DataAccessException&quot;</span>&gt;</span>dataAccessFailure1<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">&quot;org.springframework.transaction.TransactionException&quot;</span>&gt;</span>dataAccessFailure2<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">props</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>当控制器发生 DataAccessException 异常时，使用 dataAccessFailure1 视图显示。</p>
+<p>当控制器发生 TransactionException 异常时，使用 dataAccessFailure2 视图显示。</p>
+<p>当然，也可以自己实现 ExceptionResolver 覆盖 resolveException() 接口方法，编写自己的异常解析器，执行一些特定的工作。</p>
+<h4 id="8-4-RequestContextHolder-的使用"><a href="#8-4-RequestContextHolder-的使用" class="headerlink" title="8.4 RequestContextHolder 的使用"></a>8.4 RequestContextHolder 的使用</h4><p>RequestContextHolder 能够在 Controller 中获取 request 和 session 对象，其使用方法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">HttpServletRequest</span> <span class="variable">request</span> <span class="operator">=</span> ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，如果直接使用该工具类，会抛出一个空指针异常，原因是还需要在 web.xml 中配置一个监听器：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">listener</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">listener-class</span>&gt;</span></span><br><span class="line">    	org.springframework.web.context.request.RequestContextListener</span><br><span class="line">    <span class="tag">&lt;/<span class="name">listener-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">listener</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：精通SpringMVC(八)-杂项</li>
+        <li>Post author：Lisj</li>
+        <li>Create time：2022-04-11 15:44:29</li>
+        <li>
+            Post link：https://lisj98.github.io/2022/04/11/精通SpringMVC-八-杂项/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2022/04/11/SpringMVC%E4%B9%8BapplicationContext%E4%B8%8Exxx-servlet-xml%E7%9A%84%E5%8C%BA%E5%88%AB/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">SpringMVC之applicationContext与xxx-servlet.xml的区别</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/04/11/%E7%B2%BE%E9%80%9ASpringMVC-%E4%B8%83-WebSocket%E6%94%AF%E6%8C%81/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">精通SpringMVC(七)-WebSocket支持</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Lisj</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#8-1-%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E5%A4%84%E7%90%86"><span class="nav-text">8.1 静态资源处理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E9%87%87%E7%94%A8-lt-mvc-default-servlet-handler-x2F-gt"><span class="nav-text">1. 采用 &lt;mvc:default-servlet-handler&#x2F;&gt;</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E9%87%87%E7%94%A8-lt-mvc-resources-x2F-gt"><span class="nav-text">2. 采用 &lt;mvc:resources&#x2F;&gt;</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-2-%E8%A3%85%E9%85%8D%E6%8B%A6%E6%88%AA%E5%99%A8"><span class="nav-text">8.2 装配拦截器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-3-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="nav-text">8.3 异常处理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-DefaultHandlerExceptionResolver"><span class="nav-text">1. DefaultHandlerExceptionResolver</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-AnnotationMethodHandlerExceptionResolver"><span class="nav-text">2. AnnotationMethodHandlerExceptionResolver</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-ResponseStatusExceptionResolver"><span class="nav-text">3. ResponseStatusExceptionResolver</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-SimpleMappingExceptionResolver"><span class="nav-text">4. SimpleMappingExceptionResolver</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-4-RequestContextHolder-%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-text">8.4 RequestContextHolder 的使用</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

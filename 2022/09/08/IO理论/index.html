@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Java、数据结构">
+    <meta name="description" content="所见即所得">
+    <meta name="author" content="Lisj">
+    
+    <title>
+        
+            IO理论 |
+        
+        BlogOfLisj
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/l-solid.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"lisj98.github.io","root":"/","language":"en","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#FF00FF","avatar":"/images/Neymar.jpg","favicon":"/images/l-solid.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"What you see is what you get."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"trigger":"auto","unescape":false,"preload":true},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":true},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 6.0.0"><link rel="alternate" href="/atom.xml" title="BlogOfLisj" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                BlogOfLisj
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                TAGS
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">CATEGORIES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">TAGS</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">IO理论</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/Neymar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Lisj</span>
+                        
+                            <span class="author-label">中忍</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-09-08 22:32:19</span>
+        <span class="mobile">2022-09-08 22:32</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/IO/">IO</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/IO%E7%90%86%E8%AE%BA/">IO理论</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>3.4k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>12 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="1-谈谈你对IO流的理解？"><a href="#1-谈谈你对IO流的理解？" class="headerlink" title="1.    谈谈你对IO流的理解？"></a>1.    谈谈你对IO流的理解？</h1><p>设备之间的传输需要媒介，流正是Java提供的媒介。在Java IO中读取和输入数据是面向流（Stream）的，流就像一条存在于各种输入输出设备之间的河流一样，这条河流永不停止的向前流动（普通IO流是单向的，NIO流是双向的），开发人员将程序运行过程中需要的各种数据从数据源写入到流中，这条河流带着数据不断向前流动，正如我们只能舀起河流中我们正前方的水一样，我们也只能触碰到流的一个横截面，程序需要数据时就可以直接从流中获取（字节流直接从河流中取数据，字符流需要先将河流中的数据取出来放到一个缓冲区中，再从缓冲区中取），也可将流中的数据写出到某些文本文件等媒体中。</p>
+<h1 id="2-Java中有几种类型的流？"><a href="#2-Java中有几种类型的流？" class="headerlink" title="2.    Java中有几种类型的流？"></a>2.    Java中有几种类型的流？</h1><ul>
+<li>按照流的方向分：<ul>
+<li><code>输入流</code>：写入，将数据从数据源读到流中；</li>
+<li><code>输出流</code>：写出，将数据从流中写出到数据源中；</li>
+</ul>
+</li>
+<li>按照实现功能分：<ul>
+<li><code>节点流</code>：即普通的输入输出流；</li>
+<li><code>处理流</code>（也可称为<code>过滤流</code>）：在节点流的基础上加以包装，提供一些新的功能的流；</li>
+</ul>
+</li>
+<li>按照传输数据的单位分：<ul>
+<li><code>字节流</code>：传输单位为字节，数据按照8位传输，不经过缓冲区（内存）；</li>
+<li><code>字符流</code>：传输单位为字符，数据按照16位传输，需要经过缓冲区。</li>
+</ul>
+</li>
+</ul>
+<h1 id="3-常见的IO流类型？"><a href="#3-常见的IO流类型？" class="headerlink" title="3.    常见的IO流类型？"></a>3.    常见的IO流类型？</h1><ul>
+<li>字节输入输出流</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left">类</th>
+<th align="left">功能</th>
+<th align="left">对应的OutputStream</th>
+<th align="left">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">&#x3D;&#x3D;节点流&#x3D;&#x3D;</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>ByteArrayInputStream</strong></td>
+<td align="left">将字符数组转换成InputStream</td>
+<td align="left"><strong>ByteArrayOutputStream</strong></td>
+<td align="left">将OutputStream写出为字符数组</td>
+</tr>
+<tr>
+<td align="left"><strong>StringBufferInputStream</strong></td>
+<td align="left">将String转换成InputStream</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>FileInputStream</strong></td>
+<td align="left">从文件中读取信息到流中</td>
+<td align="left"><strong>FileOutputStream</strong></td>
+<td align="left">将信息写至文件中</td>
+</tr>
+<tr>
+<td align="left"><strong>PipedInputStream</strong></td>
+<td align="left">用于多线程中的数据源，一个线程使用 PipedInputStream，另一个线程使用 PipedOutputStream，实现线程间通信</td>
+<td align="left"><strong>PipedOutputStream</strong></td>
+<td align="left">用于多线程中的数据源，一个线程使用 PipedInputStream，另一个线程使用 PipedOutputStream，实现线程间通信</td>
+</tr>
+<tr>
+<td align="left"><strong>SequenceInputStream</strong></td>
+<td align="left">用于顺序读取各个输入流</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>FilterInputStream</strong></td>
+<td align="left">处理流的抽象父类</td>
+<td align="left"><strong>FilterOutputStream</strong></td>
+<td align="left">处理流的抽象父类</td>
+</tr>
+<tr>
+<td align="left">&#x3D;&#x3D;处理流&#x3D;&#x3D;</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>DataInputStream</strong></td>
+<td align="left">用于读取基本Java数据类型</td>
+<td align="left"><strong>DataOutputStream</strong></td>
+<td align="left">用于输出基本Java数据类型</td>
+</tr>
+<tr>
+<td align="left"><strong>BufferedInputStream</strong></td>
+<td align="left">缓冲区</td>
+<td align="left"><strong>BufferedOutputStream</strong></td>
+<td align="left">缓冲区</td>
+</tr>
+<tr>
+<td align="left"><strong>LineNumberInputStream</strong></td>
+<td align="left">跟踪输入流中的行号</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>PushbackInputStream</strong></td>
+<td align="left">能弹出一个字节的缓冲区，因此可以将读到的最后一个字符回退</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"><strong>PrintStream</strong></td>
+<td align="left">用于产生格式化输出</td>
+</tr>
+</tbody></table>
+<ul>
+<li>字符输入输出流</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left">字节流</th>
+<th align="left">对应的字符流</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">&#x3D;&#x3D;节点流&#x3D;&#x3D;</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>InputStream</strong></td>
+<td align="left"><strong>Reader</strong>(适配器类：InputStreamReader，把InputStream转换为Reader)</td>
+</tr>
+<tr>
+<td align="left"><strong>OutputStream</strong></td>
+<td align="left"><strong>Writer</strong>(适配器类：OutputStreamWriter，把OutputStream转换为Writer)</td>
+</tr>
+<tr>
+<td align="left"><strong>FileInputStream</strong></td>
+<td align="left"><strong>FileReader</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>FileOutputStream</strong></td>
+<td align="left"><strong>FileWriter</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>StringBufferInputStream</strong>(已弃用)</td>
+<td align="left"><strong>StringReader</strong></td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"><strong>StringWriter</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>ByteArrayInputStream</strong></td>
+<td align="left"><strong>CharArrayReader</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>ByteArrayOutputStream</strong></td>
+<td align="left"><strong>CharArrayWriter</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>PipedInputStream</strong></td>
+<td align="left"><strong>PipedReader</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>PipedOutputStream</strong></td>
+<td align="left"><strong>PipedWriter</strong></td>
+</tr>
+<tr>
+<td align="left">&#x3D;&#x3D;处理流&#x3D;&#x3D;</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>FilterInputStream</strong></td>
+<td align="left"><strong>FilterReader</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>FilterOutputStream</strong></td>
+<td align="left"><strong>FilterWriter</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>BufferedInputStream</strong></td>
+<td align="left"><strong>BufferedReader</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>BufferedOutputStream</strong></td>
+<td align="left"><strong>BufferedWriter</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>DataInputStream</strong></td>
+<td align="left"><strong>DataInputStream</strong>(使用read()方法时)；<strong>BufferedReader</strong>(使用readLine()方法时)</td>
+</tr>
+<tr>
+<td align="left"><strong>PrintStream</strong></td>
+<td align="left"><strong>PrintWriter</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>LineNumberInputStream</strong>(已弃用)</td>
+<td align="left"><strong>LineNumberReader</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>StreamTokenizer</strong></td>
+<td align="left"><strong>StreamTokenizer</strong>(使用接受Reader的构造器)</td>
+</tr>
+<tr>
+<td align="left"><strong>PushbackInputStream</strong></td>
+<td align="left"><strong>PushbackReader</strong></td>
+</tr>
+</tbody></table>
+<p><code>补充</code>：最明智的做法是尽量尝试使用Reader和Writer，一旦发现程序无法成功编译，则转而使用InputStream和OutputStream。<br>InputStream实现了Closeable接口，含有close()方法，用于关闭流；<br>OutputStream实现了Closeable和Flushable接口，含有close()和flush()方法，用于关闭流和将数据刷新到文件中；<br>Reader实现了Readable和Closeable接口，含有read()和close()方法，用于读取资源到流中以及关闭流；<br>Writer实现了Appendable、Closeable和Flushable，含有append()、close()和flush()方法，用于向流中追加自定义字符序列，关闭流以及刷新数据到文件中。</p>
+<h1 id="4-RandomAccessFile类？"><a href="#4-RandomAccessFile类？" class="headerlink" title="4.    RandomAccessFile类？"></a>4.    RandomAccessFile类？</h1><p><code>不属于InputStream、OutputStream、Reader或Writer的继承体系，是一个独立的类</code>，由于实现了DataInput接口，因此具有<code>读</code>功能，实现了DataOutput接口，因此具有<code>写</code>功能，同时还具备<code>查询文件相关信息</code>如文件大小，编码等功能。</p>
+<h1 id="5-什么是缓冲区？"><a href="#5-什么是缓冲区？" class="headerlink" title="5.    什么是缓冲区？"></a>5.    什么是缓冲区？</h1><p><code>缓冲区</code>就是一段特殊的内存区域，当程序需要频繁地访问或操作某个资源，而这个资源位于外部文件或数据库中时，就可以将这个资源暂时读写到缓冲区，由于缓冲区是内存区域，因此读写会非常快，可以显著提高程序性能。对于Java字符流的操作都是在缓冲区进行的，如果我们想主动将缓冲区中的内容刷新到外部文件或者数据库中时，就可以使用flush()方法操作。</p>
+<h1 id="6-什么是阻塞IO，什么是非阻塞IO？"><a href="#6-什么是阻塞IO，什么是非阻塞IO？" class="headerlink" title="6.    什么是阻塞IO，什么是非阻塞IO？"></a>6.    什么是阻塞IO，什么是非阻塞IO？</h1><p>IO操作包含对硬盘的读写、对socket的读写以及对外设的读写。<br>当用户线程发起一个IO请求操作时，操作系统内核会去查看要读取的数据是否就绪，对于<code>阻塞IO</code>来说，如果数据没有就绪，线程就会一直在那里等待，直到数据就绪；对于<code>非阻塞IO</code>来说，如果数据没有就绪，就会返回一个标志信息告知用户线程当前要读的数据没有就绪，用户线程依旧可以执行其他任务，当数据就绪后，便将数据拷贝到用户线程，这样才完成了一个完整的IO请求操作。<br><code>一个完整的IO请求操作</code>包括两个阶段：①查看数据是否就绪；②操作系统内核将数据拷贝到用户线程。阻塞IO和非阻塞IO的差别就在第一个阶段时，用户线程是否会阻塞在那里一直等待。</p>
+<h1 id="7-如何实现对象克隆？"><a href="#7-如何实现对象克隆？" class="headerlink" title="7.    如何实现对象克隆？"></a>7.    如何实现对象克隆？</h1><ul>
+<li>实现Cloneable接口并重写clone()方法；</li>
+<li>实现Serializable接口，通过对象的序列化和反序列化实现。</li>
+</ul>
+<h1 id="8-谈谈你对NIO的理解？"><a href="#8-谈谈你对NIO的理解？" class="headerlink" title="8.    谈谈你对NIO的理解？"></a>8.    谈谈你对NIO的理解？</h1><p>NIO即New IO，是JDK1.4中引入的，是非阻塞式、面向缓冲的。NIO中存在一个称为<code>选择器（Selector）</code>的东西，它允许你把多个<code>通道（Channel）</code>注册到一个选择器上，然后使用一个线程来定时轮询这些通道，若这些通道里有某个通道准备好可以进行读写操作了，那么<code>缓冲器（Buffer）</code>就可以对该通道进行读写。<br><code>NIO的原理</code>：可以把通道想象成煤矿，把缓冲器想象成运煤车，运煤车拉运煤矿而归，我们再从运煤车上获得煤矿。换句话说，我们并没有直接和通道进行交互，而是和缓冲器进行交互，并把缓冲器派送到通道。通道要么从缓冲器获得数据，要么向缓冲器发送数据。<br>可以这么认为，<code>缓冲器=流，通道=数据源</code>。<br><img src="https://cdn.staticaly.com/gh/lisj98/image-hosting@master/IO/NIO%E5%9B%BE%E8%A7%A3.70dombsgdqs0.webp" alt="NIO图解"><br><img src="https://cdn.staticaly.com/gh/lisj98/image-hosting@master/IO/NIO%E6%A6%82%E5%BF%B5%E8%AF%A6%E8%A7%A3.7e6c3vwe7bw0.webp" alt="NIO概念详解"></p>
+<h1 id="9-BIO、NIO和AIO的区别？"><a href="#9-BIO、NIO和AIO的区别？" class="headerlink" title="9.    BIO、NIO和AIO的区别？"></a>9.    BIO、NIO和AIO的区别？</h1><ul>
+<li><code>BIO</code>：就是传统的java.io包，它是基于流模型实现的，交互方式是<code>同步并阻塞</code>，即读写输入输出流时，在读写动作完成之前，线程会一直阻塞在那里等待结果；</li>
+<li><code>NIO</code>：即JDK1.4引入的java.nio包，提供了选择器（Selector）、通道（Channel）、缓冲器（Buffer）的概念。首先需要将多个Channel注册到Selector上，Selector定时轮询这些Channel，若某个Channel准备好可以进行读写操作了，则分配相应的Buffer进行操作。可以构建多路复用的IO程序，交互方式为<code>同步非阻塞</code>；</li>
+<li><code>AIO</code>：为JDK1.7之后引入的包，交互方式为<code>异步非阻塞</code>，异步IO是基于事件和回调机制实现的，也就是用户线程在发起读写操作后会直接返回，不会阻塞在那里，当读写操作完成后，会由操作系统将数据拷贝到用户进程中，最后通知用户线程数据已经准备妥当。AIO属于异步模型，用户线程可以同时处理别的事情，在结果返回后，Java提供了两种进一步处理结果的方式：<ul>
+<li>基于回调的方式。即实现CompletionHandler接口，在调用时把回调函数传递给相应的调用者即可；</li>
+<li>使用Future。通过返回一个Future结果，用户线程可以调用Future的方法来查看读写操作是否完成。</li>
+</ul>
+</li>
+</ul>
+<p><code>补充</code>：<code>IO多路复用</code>，即单个线程同时处理多个IO流，NIO中轮询操作是用户线程进行的，如果把这个任务交给其他线程，那么用户线程就可以把轮询花费的时间用来做其他事了。IO多路复用有两种实现方式;</p>
+<ul>
+<li>Select&#x2F;poll：将Channel注册到Selector上，通过轮询Channel是否就绪，将就绪的Channel返回；</li>
+<li>Select&#x2F;epoll：将Channel注册到Selector上，基于回调的方式告知Selector哪些Channel已经就绪，然后将就绪的Channel返回。与select&#x2F;poll方式的区别就在于poll是Selector主动轮询，epoll是由操作系统通知Selector。</li>
+</ul>
+<h1 id="10-内存映射文件是什么？"><a href="#10-内存映射文件是什么？" class="headerlink" title="10.    内存映射文件是什么？"></a>10.    内存映射文件是什么？</h1><p><code>内存映射文件</code>允许我们创建和修改那些因为太大而不能放入内存的文件，有了内存映射文件，我们就可以假定整个文件都存放在内存中，而且完全可以把它当成一个非常大的数组来访问。常见用法是Channel调用map()方法产生一个MappedByteBuffer，这是一种特殊类型的缓冲器，可以指定映射文件的初始位置和映射区域的长度，如此一来就相当于直接操作内存文件了，实际文件还是在外部数据源中。</p>
+<h1 id="11-什么是Java序列化？如何实现Java序列化？"><a href="#11-什么是Java序列化？如何实现Java序列化？" class="headerlink" title="11.    什么是Java序列化？如何实现Java序列化？"></a>11.    什么是Java序列化？如何实现Java序列化？</h1><p>当我们创建对象时，只要我们需要，它就会一直存在，但是在程序终止时它就会消失，<code>Java的对象序列化</code>将那些实现了Serializable接口的类的对象转换成一个字节序列，这些字节序列可以在任何地方比如网络间进行传输，在以后还能将这个字节序列完全恢复为原来的对象。<br>要序列化一个对象，首先要创建某些OutputStream对象，然后将其封装在一个ObjectOutputStream对象内，这时，只需要调用writeObject()即可将对象序列化，并将其发送给OutputStream（对象序列化是基于字节的，因此要使用InputStream和OutputStream继承层次结构）。要反序列化（即将字节序列恢复为对象），需要将一个InputStream对象封装在ObjectInputStream内，然后调用readObject()，和往常一样，我们最后获得的是一个引用，它指向一个向上转型的Object，所以必须向下转型才能对它们进行操作。<br><code>补充</code>：<code>实现了Serializable接口只是代表该对象可以序列化</code>。序列化是对象转换成字节序列，即内存中的数据输出到流中，反序列化是字节序列转换为对象，即将流中的数据读入到内存。</p>
+<h1 id="12-持久性是什么？"><a href="#12-持久性是什么？" class="headerlink" title="12.    持久性是什么？"></a>12.    持久性是什么？</h1><p><code>持久性</code>意味着一个对象的生命周期并不取决于程序是否正在执行，它可以生存于程序的调用之间，通过将一个序列化对象写入磁盘，然后在重新调用程序时恢复该对象，就能够实现持久性的效果。</p>
+<h1 id="13-实现Java序列化既可以实现Serializable接口，也可以实现Externalizable接口，这两者之间的区别是什么？"><a href="#13-实现Java序列化既可以实现Serializable接口，也可以实现Externalizable接口，这两者之间的区别是什么？" class="headerlink" title="13.    实现Java序列化既可以实现Serializable接口，也可以实现Externalizable接口，这两者之间的区别是什么？"></a>13.    实现Java序列化既可以实现Serializable接口，也可以实现Externalizable接口，这两者之间的区别是什么？</h1><p><code>Externalizable接口继承了Serializable接口</code>，同时添加了<code>writeExternal()</code>和<code>readExternal()</code>两个方法，这两个方法会在序列化和反序列化的过程中被<code>自动调用</code>。对于Serializable对象，对象完全以它存储的二进制位为基础来构造，而不用构造器；而对于一个Externalizable对象来说，所有默认构造器（无参）都会被调用（包括在字段定义时的初始化），所以必须注意默认构造器中的逻辑。<code>如果有writeExternal()和readExternal()两个方法，那么默认构造器就不会生效</code>，所以要谨慎对待这两个方法中的逻辑，writeExternal()方法用于序列化时将来自对象的信息写入，readExternal()方法用于恢复数据。因此，Serializable接口看起来似乎更加便捷。<br>也可用Serializable接口代替Externalizable接口，即添加<code>writeObject()</code>与<code>readObject()</code>两个方法，在序列化和反序列化的过程中，这两个方法会被自动调用，只要提供了这两个方法，就不会使用默认的以二进制位构造的序列化机制。</p>
+<h1 id="14-怎么只序列化对象的一部分或者恢复一部分？"><a href="#14-怎么只序列化对象的一部分或者恢复一部分？" class="headerlink" title="14.    怎么只序列化对象的一部分或者恢复一部分？"></a>14.    怎么只序列化对象的一部分或者恢复一部分？</h1><p>当我们对序列化进行控制时，可能某个特定子对象不想让Java的序列化机制自动保存和恢复，例如子对象表示的是我们不希望将其序列化的敏感信息（如密码）。即使对象中的这些信息是private的，序列化处理后人们也可以通过读取文件或者拦截网络传输的方式访问到它，<code>将类实现为Externalizable</code>就可以避免这种情况。实现了Externalizable接口的类的对象中，没有任何东西可以自动序列化，都需要经过默认构造函数，或者writeExternal()和readExternal()两个方法。<br>如果是一个Serializable对象，那么所有序列化都会自动进行，但是可以用<code>transient关键字</code>逐个字段地关闭序列化，它的意思是“不用麻烦你保存或恢复数据，我自己会处理的”。</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：IO理论</li>
+        <li>Post author：Lisj</li>
+        <li>Create time：2022-09-08 22:32:19</li>
+        <li>
+            Post link：https://lisj98.github.io/2022/09/08/IO理论/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/IO%E7%90%86%E8%AE%BA/">#IO理论</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2022/09/08/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%90%86%E8%AE%BA/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">多线程理论</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/09/08/ConcurrentHashMap%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">ConcurrentHashMap源码解析</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Lisj</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E8%B0%88%E8%B0%88%E4%BD%A0%E5%AF%B9IO%E6%B5%81%E7%9A%84%E7%90%86%E8%A7%A3%EF%BC%9F"><span class="nav-text">1.    谈谈你对IO流的理解？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Java%E4%B8%AD%E6%9C%89%E5%87%A0%E7%A7%8D%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%B5%81%EF%BC%9F"><span class="nav-text">2.    Java中有几种类型的流？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E5%B8%B8%E8%A7%81%E7%9A%84IO%E6%B5%81%E7%B1%BB%E5%9E%8B%EF%BC%9F"><span class="nav-text">3.    常见的IO流类型？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-RandomAccessFile%E7%B1%BB%EF%BC%9F"><span class="nav-text">4.    RandomAccessFile类？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E4%BB%80%E4%B9%88%E6%98%AF%E7%BC%93%E5%86%B2%E5%8C%BA%EF%BC%9F"><span class="nav-text">5.    什么是缓冲区？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E4%BB%80%E4%B9%88%E6%98%AF%E9%98%BB%E5%A1%9EIO%EF%BC%8C%E4%BB%80%E4%B9%88%E6%98%AF%E9%9D%9E%E9%98%BB%E5%A1%9EIO%EF%BC%9F"><span class="nav-text">6.    什么是阻塞IO，什么是非阻塞IO？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%AF%B9%E8%B1%A1%E5%85%8B%E9%9A%86%EF%BC%9F"><span class="nav-text">7.    如何实现对象克隆？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-%E8%B0%88%E8%B0%88%E4%BD%A0%E5%AF%B9NIO%E7%9A%84%E7%90%86%E8%A7%A3%EF%BC%9F"><span class="nav-text">8.    谈谈你对NIO的理解？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-BIO%E3%80%81NIO%E5%92%8CAIO%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-text">9.    BIO、NIO和AIO的区别？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-text">10.    内存映射文件是什么？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#11-%E4%BB%80%E4%B9%88%E6%98%AFJava%E5%BA%8F%E5%88%97%E5%8C%96%EF%BC%9F%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0Java%E5%BA%8F%E5%88%97%E5%8C%96%EF%BC%9F"><span class="nav-text">11.    什么是Java序列化？如何实现Java序列化？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#12-%E6%8C%81%E4%B9%85%E6%80%A7%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-text">12.    持久性是什么？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#13-%E5%AE%9E%E7%8E%B0Java%E5%BA%8F%E5%88%97%E5%8C%96%E6%97%A2%E5%8F%AF%E4%BB%A5%E5%AE%9E%E7%8E%B0Serializable%E6%8E%A5%E5%8F%A3%EF%BC%8C%E4%B9%9F%E5%8F%AF%E4%BB%A5%E5%AE%9E%E7%8E%B0Externalizable%E6%8E%A5%E5%8F%A3%EF%BC%8C%E8%BF%99%E4%B8%A4%E8%80%85%E4%B9%8B%E9%97%B4%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-text">13.    实现Java序列化既可以实现Serializable接口，也可以实现Externalizable接口，这两者之间的区别是什么？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#14-%E6%80%8E%E4%B9%88%E5%8F%AA%E5%BA%8F%E5%88%97%E5%8C%96%E5%AF%B9%E8%B1%A1%E7%9A%84%E4%B8%80%E9%83%A8%E5%88%86%E6%88%96%E8%80%85%E6%81%A2%E5%A4%8D%E4%B8%80%E9%83%A8%E5%88%86%EF%BC%9F"><span class="nav-text">14.    怎么只序列化对象的一部分或者恢复一部分？</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Java、数据结构">
+    <meta name="description" content="所见即所得">
+    <meta name="author" content="Lisj">
+    
+    <title>
+        
+            精通SpringMVC(七)-WebSocket支持 |
+        
+        BlogOfLisj
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/l-solid.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"lisj98.github.io","root":"/","language":"en","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#FF00FF","avatar":"/images/Neymar.jpg","favicon":"/images/l-solid.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"What you see is what you get."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"trigger":"auto","unescape":false,"preload":true},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":true},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 6.0.0"><link rel="alternate" href="/atom.xml" title="BlogOfLisj" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                BlogOfLisj
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                TAGS
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">CATEGORIES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">TAGS</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">精通SpringMVC(七)-WebSocket支持</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/Neymar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Lisj</span>
+                        
+                            <span class="author-label">中忍</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-04-11 14:12:49</span>
+        <span class="mobile">2022-04-11 14:12</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/SpringMVC/">SpringMVC</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>1.3k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>5 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>本系列笔记所有代码地址：<a class="link"   target="_blank" rel="noopener" href="https://github.com/lisj98/SpringMVCSource.git" >https://github.com/lisj98/SpringMVCSource.git<i class="fas fa-external-link-alt"></i></a></p>
+<h4 id="7-1-使用-WebSocket"><a href="#7-1-使用-WebSocket" class="headerlink" title="7.1 使用 WebSocket"></a>7.1 使用 WebSocket</h4><p>通常应用程序之间发送消息会使用诸如 JMS、AMQP 等技术，但是如果实现浏览器和服务器的全双工通信，则以上技术是不适用的。但是这样的需求又是普遍存在的，因此诞生了一项新的技术，这便是 <strong>WebSocket</strong> 协议，它很好地<strong>解决了浏览器与服务器全双工通信的问题</strong>，而且能更好地节省服务器资源和带宽并达到实时通信。</p>
+<p>Spring 4.0 主要为 WebSocket 通信提供了以下几个方面的支持：</p>
+<ul>
+<li>发送和接收消息的 API。</li>
+<li>用来发送消息的模板。</li>
+<li>支持 SockJS，用来解决浏览器、服务器及代理不支持 WebSocket 的问题。</li>
+</ul>
+<p>WebSocket 可以用在任何类型的应用中，其最简单的形式是在两个应用之间建立通信的通道。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E5%BA%94%E7%94%A8%E4%B9%8B%E9%97%B4%E7%9A%84WebSocket%E9%80%9A%E4%BF%A1.7e2lekcc7dc0.webp" alt="应用之间的WebSocket通信"></p>
+<p>位于 WebSocket 一端的应用发送消息，而另一端的应用处理消息，因为它是全双工通信的，所以每一端既可以发送又可以处理消息。但是 WebSocket 最为常见的应用场景是实现服务器和基于浏览器的应用之间的通信。在浏览器中使用 JavaScript 开启一个到达服务器的连接，服务器通过这个连接发送更新到浏览器中。相对于传统的在 Web 端轮询服务器及使用 Flash 中的 Socket 和 XMLSocket，这种方式更加高效、便捷。</p>
+<p>下面通过一个在 Web 端使用 JavaScript 与服务器端相互传递“Hello World!”文本信息的例子来展示 WebSocket 的用法。</p>
+<p>Spring 提供了一个 <strong>WebSocketHandler</strong> 接口，该接口定义了 5 个 WebSocket 相关的接口方法。</p>
+<p>Spring 拥有一个 WebSocketHandler 接口的抽象实现类 <strong>AbstractWebSocketHandler</strong> 继承该类便可以选择性地实现感兴趣的方法。</p>
+<p>编写 MyWebSocketHandler：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyWebSocketHandler</span> <span class="keyword">extends</span> <span class="title class_">AbstractWebSocketHandler</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">afterConnectionEstablished</span><span class="params">(WebSocketSession session)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;建立连接&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">handleTextMessage</span><span class="params">(WebSocketSession session, TextMessage message)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="comment">//处理文本消息</span></span><br><span class="line">        System.out.println(<span class="string">&quot;收到消息&quot;</span> + message.getPayload());</span><br><span class="line">        <span class="comment">//模拟延时</span></span><br><span class="line">        Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">        <span class="comment">//发送文本消息</span></span><br><span class="line">        System.out.println(<span class="string">&quot;发送消息：hello world!&quot;</span>);</span><br><span class="line">        session.sendMessage(<span class="keyword">new</span> <span class="title class_">TextMessage</span>(<span class="string">&quot;hello world!&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">afterConnectionClosed</span><span class="params">(WebSocketSession session, CloseStatus status)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;关闭连接&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>AbstractWebSocketHandler 还定义了以下 3 个方法：</p>
+<ul>
+<li>**handleTextMessage()**：处理文本消息类型的方法。</li>
+<li>handleBinaryMessage()：处理二进制消息类型的方法。</li>
+<li>**handlePongMessage()**：处理Pong消息类型的方法。</li>
+</ul>
+<p>希望 WebSocketHandler 处理什么类型的消息就可以只重载对应的消息类型的方法，而不必重载所有方法。</p>
+<p>通过上述代码，一个简单的消息处理类就完成了，需要在 Spring 上下文中增加相关的配置：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--将helloHandler映射到&quot;/hello&quot;请求--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">websocket:handlers</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">websocket:mapping</span> <span class="attr">path</span>=<span class="string">&quot;/hello&quot;</span> <span class="attr">handler</span>=<span class="string">&quot;helloHandler&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">websocket:handlers</span>&gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">&lt;!--声明MyWebSocketHandler Bean--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;helloHandler&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.smart.MyWebSocketHandler&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>以上是使用配置文件的形式。</p>
+<p>还能通过编码的形式（但是推荐使用配置文件）装配 WebSocketHandler，编写 MyWebSoketConfig：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@EnableWebSocket</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyWebSoketConfig</span> <span class="keyword">implements</span> <span class="title class_">WebSocketConfigurer</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">registerWebSocketHandlers</span><span class="params">(WebSocketHandlerRegistry webSocketHandlerRegistry)</span> &#123;</span><br><span class="line">        webSocketHandlerRegistry.addHandler(helloHandler(),<span class="string">&quot;/chapter17/hello&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> MyWebSocketHandler <span class="title function_">helloHandler</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">MyWebSocketHandler</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同样需要在 applicationContext.xml 中装配：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;helloHandler&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.smart.web.MyWebSoketConfig&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>服务器端搭建完毕，接下来便是客户端的实现了：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">&lt;%--</span><br><span class="line">  Created by IntelliJ IDEA.</span><br><span class="line">  User: LiSJ</span><br><span class="line">  Date: <span class="number">2022</span>/<span class="number">4</span>/<span class="number">11</span></span><br><span class="line">  Time: <span class="number">14</span>:<span class="number">42</span></span><br><span class="line">  To change <span class="built_in">this</span> template use File | Settings | File Templates.</span><br><span class="line">--%&gt;</span><br><span class="line">&lt;%@ page contentType=<span class="string">&quot;text/html;charset=UTF-8&quot;</span> language=<span class="string">&quot;java&quot;</span> %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;WebSocket测试&lt;/title&gt;</span><br><span class="line">    &lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line">        <span class="comment">/* url使用“ws://”前缀，表示这是一个WebSocket连接 */</span></span><br><span class="line">        <span class="type">var</span> <span class="variable">url</span> <span class="operator">=</span> <span class="string">&#x27;ws://&#x27;</span> + window.location.host + <span class="string">&#x27;&lt;%=request.getContextPath()%&gt;/hello&#x27;</span>;</span><br><span class="line">        <span class="type">var</span> <span class="variable">sock</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">WebSocket</span>(url);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">/* opopen事件对应于WebSocketHandler的afterConnectionEstablished()方法 */</span></span><br><span class="line">        sock.onopen = function () &#123;</span><br><span class="line">            console.log(<span class="string">&#x27;开启WebSocket连接&#x27;</span>);</span><br><span class="line">            sayHello();</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">/* onmessage事件对应于WebSocketHandler的handleTextMessage()方法 */</span></span><br><span class="line">        sock.onmessage = function (e)&#123;</span><br><span class="line">            console.log(<span class="string">&#x27;接收消息：&#x27;</span>, e.data);</span><br><span class="line">            setTimeout(function ()&#123;sayHello()&#125;, <span class="number">2000</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* onclose事件对应于WebSocketHandler的afterConnectionClosed()方法 */</span></span><br><span class="line">        sock.onclose = function () &#123;</span><br><span class="line">            console.log(<span class="string">&#x27;关闭WebSocket连接&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        function <span class="title function_">sayHello</span><span class="params">()</span> &#123;</span><br><span class="line">            console.log(<span class="string">&#x27;发送消息：hello world!&#x27;</span>);</span><br><span class="line">            sock.send(<span class="string">&#x27;hello world!&#x27;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    hello world!</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在 onopen 事件中会调用 sayHello() 方法，在该 WebSocket 上发送“hello world!”消息，通过发送这个消息，这个双向通信即建立起来。服务器端的 MyWebSocketHandler 作为响应将“hello world!”发送回来，当客户端收到来自服务器端的消息后，onmessage 事件又会发送一个“hello world!”给服务器端，如此循环往复。</p>
+<p>最终结果：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/WebSocket%E6%B6%88%E6%81%AF%E5%8F%91%E9%80%81.sob9gy5bdi8.webp" alt="WebSocket消息发送"></p>
+<h4 id="7-2-WebSocket-的限制"><a href="#7-2-WebSocket-的限制" class="headerlink" title="7.2 WebSocket 的限制"></a>7.2 WebSocket 的限制</h4><p>不同的浏览器和应用服务器对 WebSocket 的支持程度不同。通过 SockJS，就可以模拟对 WebSocket 的支持，这样即使浏览器和服务器不支持 WebSocket，SockJS 也可以让它们支持 WebSocket。</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：精通SpringMVC(七)-WebSocket支持</li>
+        <li>Post author：Lisj</li>
+        <li>Create time：2022-04-11 14:12:49</li>
+        <li>
+            Post link：https://lisj98.github.io/2022/04/11/精通SpringMVC-七-WebSocket支持/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2022/04/11/%E7%B2%BE%E9%80%9ASpringMVC-%E5%85%AB-%E6%9D%82%E9%A1%B9/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">精通SpringMVC(八)-杂项</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/04/11/%E7%B2%BE%E9%80%9ASpringMVC-%E5%85%AD-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">精通SpringMVC(六)-文件上传</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Lisj</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#7-1-%E4%BD%BF%E7%94%A8-WebSocket"><span class="nav-text">7.1 使用 WebSocket</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-2-WebSocket-%E7%9A%84%E9%99%90%E5%88%B6"><span class="nav-text">7.2 WebSocket 的限制</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Java、数据结构">
+    <meta name="description" content="所见即所得">
+    <meta name="author" content="Lisj">
+    
+    <title>
+        
+            精通SpringMVC(一)-SpringMVC体系结构概述 |
+        
+        BlogOfLisj
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/l-solid.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"lisj98.github.io","root":"/","language":"en","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#FF00FF","avatar":"/images/Neymar.jpg","favicon":"/images/l-solid.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"What you see is what you get."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"trigger":"auto","unescape":false,"preload":true},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":true},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 6.0.0"><link rel="alternate" href="/atom.xml" title="BlogOfLisj" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                BlogOfLisj
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                TAGS
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">CATEGORIES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">TAGS</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">精通SpringMVC(一)-SpringMVC体系结构概述</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/Neymar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Lisj</span>
+                        
+                            <span class="author-label">中忍</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-04-06 15:06:33</span>
+        <span class="mobile">2022-04-06 15:06</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/SpringMVC/">SpringMVC</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>4.5k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>20 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>​    本系列笔记所有代码地址：<a class="link"   target="_blank" rel="noopener" href="https://github.com/lisj98/SpringMVCSource.git" >https://github.com/lisj98/SpringMVCSource.git<i class="fas fa-external-link-alt"></i></a></p>
+<p>​    Spring MVC 通过一套 MVC 注解，让 POJO 成为处理请求的控制器，而不用像原生 Spring 那样需要事先实现接口。</p>
+<p>​    Spring MVC 的核心是 <strong>DispatcherServlet</strong> ，DispatcherServlet 是Spring MVC的总导演、总策划，是Spring MVC的灵魂和心脏，它负责截获客户端发来的请求并协调好 Spring MVC 的各个组件来完成请求处理并返回响应的过程。</p>
+<h4 id="1-1-体系结构"><a href="#1-1-体系结构" class="headerlink" title="1.1 体系结构"></a>1.1 体系结构</h4><p>​    Spring MVC，顾名思义，是 <strong>MVC(Model、View、Control)</strong> 的集中体现，它利用处理器来分离模型、视图和控制，达到不同层级间松散耦合的效果，是基于 <strong>Model 2</strong> 实现的技术框架，而 <strong>Model 1</strong> 就是把所有的展现逻辑和业务逻辑集中到一起，缺点自然就是紧耦合、复用性差、维护成本高。</p>
+<p>Spring MVC 框架模型：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/Spring-MVC%E6%A1%86%E6%9E%B6%E6%A8%A1%E5%9E%8B.62clemp5dww0.webp" alt="Spring-MVC框架模型"></p>
+<p>​    从 Spring MVC 框架模型中可以看出，DispatcherServlet 处于核心的地位，它负责协调和组织不同组件以完成请求处理并返回相应的工作。Spring MVC 通过一个前端 Servlet 接收所有的请求，并将具体工作委派给其他组件进行处理，DispatcherServlet 就是 Spring MVC 的前端 Servlet。</p>
+<p><strong>Spring MVC处理请求的整体过程</strong> ：</p>
+<ol>
+<li>客户端发出一个 HTTP 请求，Web 应用服务器接收到这个请求，如果匹配到了 <strong>DispatcherServlet</strong> 指定的请求映射路径（在 web.xml 中指定），则将该请求转交给 DispatcherServlet 处理。</li>
+<li>DispatcherServlet 接收到这个请求后，根据请求的信息（URL、HTTP 请求方法、请求报文头、请求参数、Cookie 等）及 <strong>HandlerMapping</strong> 的配置找到处理请求的特定处理器（Handler）。</li>
+<li>当 DispatcherServlet 得到具体的处理器后，通过 <strong>HandlerAdapter</strong> 对 Handler 进行封装，再以统一的适配器接口调用 Handler。HandlerAdapter 是一个适配器，它用统一的接口对各种 Handler 方法进行调用。</li>
+<li>当处理器（Handler）完成业务逻辑的处理后将返回一个 <strong>ModelAndView</strong> 给 DispatcherServlet ，ModelAndView 包含了<strong>逻辑视图名</strong>和模型数据信息。</li>
+<li>ModelAndView 中包含的“逻辑视图名”并不是真正的视图对象，需要通过 <strong>ViewResolver</strong> 完成逻辑视图名到真实视图对象的解析工作。</li>
+<li>当得到真实的视图对象 <strong>View</strong> 后，DispatcherServlet 就用这个 View 对象对 ModelAndView 中的模型数据进行视图渲染。</li>
+<li>最终客户端得到的就是一个真实的视图，可以是一个 HTML 页面，也可以是一个 XML 串、一个 JSON 串、一张图片等。</li>
+</ol>
+<h4 id="1-2-配置-DispatcherServlet"><a href="#1-2-配置-DispatcherServlet" class="headerlink" title="1.2 配置 DispatcherServlet"></a>1.2 配置 DispatcherServlet</h4><p>​    要了解 Spring MVC 框架的工作原理，必须回答三个问题：</p>
+<ol>
+<li>DispatcherServlet 如何截获特定的 HTTP 请求并交由框架进行处理？（通过 &lt;servlet-mapping&gt;）</li>
+<li>位于 Web 层的 Spring 容器（WebApplicationContext）如何与位于业务层的 Spring 容器（ApplicationContext）建立联系，以使 Web 层的 Bean 可以调用业务层的 Bean？（一个 web.xml 文件可以指定多个 DispatcherServlet，通过 &lt;servlet-mapping&gt; 配置，让每个 DispatcherServlet 处理不同的请求）</li>
+<li>如何初始化 Spring MVC 的各个组件，并将它们装配到 DispatcherServlet 中？（initStrategies() 方法）</li>
+</ol>
+<h5 id="配置-DispatcherServlet-，截获特定的-HTTP-请求"><a href="#配置-DispatcherServlet-，截获特定的-HTTP-请求" class="headerlink" title="配置 DispatcherServlet ，截获特定的 HTTP 请求"></a>配置 DispatcherServlet ，截获特定的 HTTP 请求</h5><p>传统的 web.xml 的方式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--添加web框架支持，src/main/webapp/WEB-INF/web.xml--&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--业务层和持久层的配置文件，这些配置文件可以被父Spring容器所使用--&gt;</span><br><span class="line">&lt;context-param&gt;</span><br><span class="line">	&lt;!--&lt;context-param&gt;通常都是以一个整体的形式出现，如果参数名为contextConfigLocation，那么&lt;param-value&gt;中的文件就被指定为业务层或持久层的配置文件，可以有多个，用逗号分隔--&gt;</span><br><span class="line">	&lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;</span><br><span class="line">	&lt;param-value&gt;classpath:/applicationContext.xml&lt;/param-value&gt;</span><br><span class="line">&lt;/context-param&gt;</span><br><span class="line">&lt;listener&gt;</span><br><span class="line">	&lt;!--ContextLoaderListener是一个ServletContextListener，它通过contextConfigLocation参数所指定的文件也就是applicationContext.xml文件启动“业务层”或者“持久层”的Spring容器--&gt;</span><br><span class="line">	&lt;listener-class&gt;org.springframework.web.context.ContextLoaderListener&lt;/listener-class&gt;</span><br><span class="line">&lt;/listener&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--声明DispatcherServlet--&gt;</span><br><span class="line">&lt;servlet&gt;</span><br><span class="line">	&lt;!--DispatcherServlet默认自动加载/WEB-INF目录下的Spring配置文件，用来启动<span class="string">&quot;Web层&quot;</span>的Spring容器--&gt;</span><br><span class="line">	&lt;servlet-name&gt;smart&lt;/servlet-name&gt;</span><br><span class="line">	&lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;</span><br><span class="line">	&lt;load-on-startup&gt;<span class="number">1</span>&lt;/load-on-startup&gt;</span><br><span class="line">&lt;/servlet&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--名为DispatcherServlet匹配的URL模式--&gt;</span><br><span class="line">&lt;servlet-mapping&gt;</span><br><span class="line">	&lt;!--处理所有后缀为.html的HTTP请求--&gt;</span><br><span class="line">	&lt;servlet-name&gt;smart&lt;/servlet-name&gt;</span><br><span class="line">	&lt;url-pattern&gt;*.html&lt;/url-pattern&gt;</span><br><span class="line">&lt;/servlet-mapping&gt;</span><br></pre></td></tr></table></figure>
+
+<p>​    一个 web.xml 可以配置多个 DispatcherServlet ，通过其 &lt;servlet-mapping&gt; 配置，让每个 DispatcherServlet 处理不同的请求。</p>
+<p>​    DispatcherServlet 遵循 <strong>约定大于配置</strong> 的原则，在大多数情况下，用户无须进行额外的配置，只需要按照约定行事即可。</p>
+<p>​    如果确实要对 DispatcherServlet 的默认规则进行调整的话，可以通过&lt;servlet&gt;的&lt;init-param&gt;指定：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--就是将上述代码里的&lt;context-param&gt;和&lt;servlet&gt;写在一起--&gt;</span><br><span class="line">&lt;servlet&gt;</span><br><span class="line">	&lt;servlet-name&gt;smart&lt;/servlet-name&gt;</span><br><span class="line">	&lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;</span><br><span class="line">	&lt;init-param&gt;</span><br><span class="line">		&lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;</span><br><span class="line">		&lt;param-value&gt;/WEB-INF/spring/webApplicationContext.xml&lt;/param-value&gt;</span><br><span class="line">	&lt;/init-param&gt;</span><br><span class="line">&lt;/servlet&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>namespace</strong>：DispatcherServlet 对应的命名空间，默认为&lt;servlet-name&gt;-servlet，用于构造 Spring 配置文件的路径。在显式指定路径后，配置文件对应的路径为 &#x2F;WEB-INF&#x2F;&lt;namespace&gt;.xml，而不是 &#x2F;WEB-INF&#x2F;&lt;servlet-name&gt;-servlet.xml。例如上述代码中的配置文件就为 smart-servlet.xml，而要是 namespace 指定为 smart，则配置文件就为 smart.xml。</li>
+<li><strong>contextConfigLocation</strong>：用于指定业务层或持久层的配置文件，即 &lt;param-value&gt; 中的文件。</li>
+<li><strong>publishContext</strong>：布尔类型，默认为 true。DispatcherServlet 根据该属性决定是否将 WebApplicationContext 发布到 ServletContext 的属性列表中，以便调用者可借由 ServletContext 找到 WebApplicationContext 实例，对应的属性名为 DispatcherServlet#getContextAttributeName() 方法的返回值。</li>
+<li><strong>publishEvents</strong>：布尔类型。当 DispatcherServlet 处理完一个请求后，是否需要向容器发布一个 ServletRequestHandledEvents 事件，默认为true。</li>
+</ul>
+<p>编程的方式（Servlet 3.0的实现方式）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SmartApplicationInitializer</span> <span class="keyword">implements</span> <span class="title class_">WebApplicationInitializer</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onStartup</span><span class="params">(ServletContext container)</span> <span class="keyword">throws</span> ServletException &#123;</span><br><span class="line">        Registration.<span class="type">Dynamic</span> <span class="variable">registration</span> <span class="operator">=</span> container.addServlet(<span class="string">&quot;diapatcher&quot;</span>, <span class="keyword">new</span> <span class="title class_">DispatcherServlet</span>());</span><br><span class="line">        registration.setLoadOnStartup(<span class="number">1</span>);</span><br><span class="line">        registration.addMapping(<span class="string">&quot;*.html&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    也就是把 web.xml 中的实现方式用 Java 代码实现，仔细比较的话其实是一样的。</p>
+<p>​    Servlet 3.0 的实现原理：在 Servlet 3.0 的环境中，容器会在类路径中查找实现 <code>javax.servlet.ServletContainerInitializer</code> 的类，如果发现已有实现类，就会调用它来配置 Servlet 容器。在 Spring 中，<code>org.springframework.web.SpringServletContainerInitializer</code> 类实现了该接口，同时这个类又会查找实现 <code>org.springframework.web.WebApplicationInitializer</code> 接口的类，并将配置任务交给这些实现类去完成。另外，Spring 提供了一个便利的抽象类 <strong>AbstractAnnotationConfigDispatcherServletInitializer</strong> 来实现这个接口，使得它在注册 DispatcherServlet 时只需简单地指定它的 Servlet 映射即可。在上述示例中，当应用部署到 Servlet 3.0 容器中时，容器启动时会自动发现它，并使用它来配置 Servlet 上下文。</p>
+<h5 id="探究-DispatcherServlet-的内部逻辑"><a href="#探究-DispatcherServlet-的内部逻辑" class="headerlink" title="探究 DispatcherServlet 的内部逻辑"></a>探究 DispatcherServlet 的内部逻辑</h5><p>​    通过查看 DispatcherServlet 的 <strong>initStrategies()</strong> 方法的代码，就能知道 Spring 是如何将上下文中的 Spring MVC 组件装配到 DispatcherServlet 中的了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">initStrategies</span><span class="params">(ApplicationContext context)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.initMultipartResolver(context);	<span class="comment">//初始化文件上传解析器</span></span><br><span class="line">    <span class="built_in">this</span>.initLocaleResolver(context);	<span class="comment">//初始化本地解析器</span></span><br><span class="line">    <span class="built_in">this</span>.initThemeResolver(context);	<span class="comment">//初始化主体解析器</span></span><br><span class="line">    <span class="built_in">this</span>.initHandlerMappings(context);	<span class="comment">//初始化处理器映射器</span></span><br><span class="line">    <span class="built_in">this</span>.initHandlerAdapters(context);	<span class="comment">//初始化处理器适配器</span></span><br><span class="line">    <span class="built_in">this</span>.initHandlerExceptionResolvers(context);	<span class="comment">//初始化处理器异常解析器</span></span><br><span class="line">    <span class="built_in">this</span>.initRequestToViewNameTranslator(context);	<span class="comment">//初始化请求到视图名解析器</span></span><br><span class="line">    <span class="built_in">this</span>.initViewResolvers(context);	<span class="comment">//初始化视图解析器</span></span><br><span class="line">    <span class="built_in">this</span>.initFlashMapManager(context);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    initStrategies() 方法会在 WebApplicationContext 初始化后自动执行，此时 Spring 上下文中的 Bean 已经初始化完毕。该方法的工作原理是：通过反射机制查找并装配 Spring 容器中用户显式自定义的组件 Bean，如果找不到，则装配默认的组件实例。</p>
+<p>​    Spring MVC 定义了一套默认的组件实现类，在 spring-webmvc-4.x.jar 包的 <code>org/springframework/web/servlet</code> 类路径下有一个 <strong>DispatcherServlet.properties</strong> 配置文件，该文件指定了 DispatcherServlet 所使用的默认组件：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/DispatcherServlet.properties.2yk2pov8hc80.webp" alt="DispatcherServlet"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"># Default implementation classes <span class="keyword">for</span> DispatcherServlet<span class="string">&#x27;s strategy interfaces.</span></span><br><span class="line"><span class="string"># Used as fallback when no matching beans are found in the DispatcherServlet context.</span></span><br><span class="line"><span class="string"># Not meant to be customized by application developers.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># 本地化解析器</span></span><br><span class="line"><span class="string">org.springframework.web.servlet.LocaleResolver=org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># 主题解析器</span></span><br><span class="line"><span class="string">org.springframework.web.servlet.ThemeResolver=org.springframework.web.servlet.theme.FixedThemeResolver</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># 处理器映射（共2个）</span></span><br><span class="line"><span class="string">org.springframework.web.servlet.HandlerMapping=org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping,\</span></span><br><span class="line"><span class="string">	org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># 处理器适配器（共3个）</span></span><br><span class="line"><span class="string">org.springframework.web.servlet.HandlerAdapter=org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter,\</span></span><br><span class="line"><span class="string">	org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter,\</span></span><br><span class="line"><span class="string">	org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># 异常处理器（共3个）</span></span><br><span class="line"><span class="string">org.springframework.web.servlet.HandlerExceptionResolver=org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerExceptionResolver,\</span></span><br><span class="line"><span class="string">	org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver,\</span></span><br><span class="line"><span class="string">	org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># 视图名称翻译器</span></span><br><span class="line"><span class="string">org.springframework.web.servlet.RequestToViewNameTranslator=org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># 视图解析器</span></span><br><span class="line"><span class="string">org.springframework.web.servlet.ViewResolver=org.springframework.web.servlet.view.InternalResourceViewResolver</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">org.springframework.web.servlet.FlashMapManager=org.springframework.web.servlet.support.SessionFlashMapManager</span></span><br></pre></td></tr></table></figure>
+
+<p>​    如果希望使用非默认类型的组件，则只需在 Spring 配置文件中配置自定义的组件 Bean 即可。Spring MVC 一旦发现上下文中有用户自定义的组件，就不会使用默认的组件。</p>
+<p>​    DispatcherServlet 装配各型组件的逻辑：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/DispatcherServlet-%E8%A3%85%E9%85%8D%E5%90%84%E5%9E%8B%E7%BB%84%E4%BB%B6%E7%9A%84%E9%80%BB%E8%BE%911.4bjkd50jmbc0.webp" alt="DispatcherServlet-装配各型组件的逻辑1"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/DispatcherServlet-%E8%A3%85%E9%85%8D%E5%90%84%E5%9E%8B%E7%BB%84%E4%BB%B6%E7%9A%84%E9%80%BB%E8%BE%912.6q7shtaqacc0.webp" alt="DispatcherServlet-装配各型组件的逻辑2"></p>
+<p>​    有些组件最多允许存在一个实例，用☆表示；而另一些组件允许存在多个实例，用★表示。这些组件都实现了 <code>org.springframework.core.Ordered</code> 接口，同一类型的组件如果存在多个，可以通过 order 属性确定优先级顺序，值越小优先级越高。</p>
+<p>​    简言之，当 DispatcherServlet 初始化后，就会自动扫描上下文的 Bean，根据名称或类型匹配的机制查找自定义的组件，找不到时则使用 DispatcherServlet.properties 定义的默认组件。</p>
+<h4 id="1-3-一个简单的实例"><a href="#1-3-一个简单的实例" class="headerlink" title="1.3 一个简单的实例"></a>1.3 一个简单的实例</h4><p>​    Spring MVC 开发一般包括以下几个步骤：</p>
+<ol>
+<li>配置 web.xml，指定业务层对应的 Spring 配置文件，定义 DispatcherServlet。</li>
+<li>编写处理请求的控制器（处理器）。</li>
+<li>编写视图对象，即 jsp 页面、html 页面等。</li>
+<li>配置 Spring MVC 的配置文件，使控制器、视图解析器等生效。</li>
+</ol>
+<h5 id="编写-web-xml"><a href="#编写-web-xml" class="headerlink" title="编写 web.xml"></a>编写 web.xml</h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"># src/main/webapp/WEB-INF/web.xml</span><br><span class="line"></span><br><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">version</span>=<span class="string">&quot;2.5&quot;</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://java.sun.com/xml/ns/javaee&quot;</span></span></span><br><span class="line"><span class="tag">	<span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">	<span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://java.sun.com/xml/ns/javaee </span></span></span><br><span class="line"><span class="string"><span class="tag">	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">context-param</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">param-value</span>&gt;</span>classpath:/applicationContext.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">context-param</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">listener</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">listener-class</span>&gt;</span>org.springframework.web.context.ContextLoaderListener<span class="tag">&lt;/<span class="name">listener-class</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">listener</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>smart<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>1<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>smart<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>*.html<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="编写处理请求的控制器"><a href="#编写处理请求的控制器" class="headerlink" title="编写处理请求的控制器"></a>编写处理请求的控制器</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.smart.web;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Controller</span> <span class="comment">//@Controller注解可将一个POJO转化为处理HTTP请求的控制器</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/user&quot;)</span>    <span class="comment">//@RequestMapping为控制器指定处理哪些URL的请求，在类处标明则表示该类下的所有请求路径都包含在/user/下</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserController</span> &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//通过请求 /user/register就可以调用到该方法，然后返回一个/user/路径下的register逻辑视图名，最后通过ViewResolver就可以将register逻辑视图名转化为register.jsp视图对象</span></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/register&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">register</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;user/register&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="编写视图对象"><a href="#编写视图对象" class="headerlink" title="编写视图对象"></a>编写视图对象</h5><p>​    编写 register.jsp，UserController#register() 方法处理完成后，将转向这个 register.jsp 页面。</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span> pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;%<span class="meta">@taglib</span> uri=<span class="string">&quot;http://java.sun.com/jsp/jstl/core&quot;</span> prefix=<span class="string">&quot;c&quot;</span> %&gt;</span><br><span class="line">&lt;%@ taglib prefix=<span class="string">&quot;form&quot;</span> uri=<span class="string">&quot;http://www.springframework.org/tags/form&quot;</span> %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;title&gt;新增用户&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;%--将表单提交到/user.html控制器中--%&gt;</span><br><span class="line">  &lt;form method=<span class="string">&quot;post&quot;</span> action=<span class="string">&quot;&lt;c:url value=&quot;</span>/user.html<span class="string">&quot;/&gt;&quot;</span>&gt;</span><br><span class="line">    &lt;table&gt;</span><br><span class="line">	    &lt;tr&gt;</span><br><span class="line">	       &lt;td&gt;用户名：&lt;/td&gt;</span><br><span class="line">	       &lt;td&gt;&lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;userName&quot;</span>  value=<span class="string">&quot;$&#123;user.userName&#125;&quot;</span>/&gt;&lt;/td&gt;</span><br><span class="line">	    &lt;/tr&gt;</span><br><span class="line">	    &lt;tr&gt;</span><br><span class="line">	     &lt;td&gt;密码：&lt;/td&gt;</span><br><span class="line">	       &lt;td&gt;&lt;input type=<span class="string">&quot;password&quot;</span> name=<span class="string">&quot;password&quot;</span> value=<span class="string">&quot;$&#123;user.password&#125;&quot;</span>/&gt;&lt;/td&gt;</span><br><span class="line">	    &lt;/tr&gt;</span><br><span class="line">	    &lt;tr&gt;</span><br><span class="line">	     &lt;td&gt;姓名：&lt;/td&gt;</span><br><span class="line">	       &lt;td&gt;&lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;realName&quot;</span> value=<span class="string">&quot;$&#123;user.realName&#125;&quot;</span>/&gt;&lt;/td&gt;</span><br><span class="line">	    &lt;/tr&gt;</span><br><span class="line">	    &lt;tr&gt;</span><br><span class="line">	     &lt;td&gt;生日：&lt;/td&gt;</span><br><span class="line">	       &lt;td&gt;&lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;realName&quot;</span> value=<span class="string">&quot;$&#123;user.birthday&#125;&quot;</span>/&gt;&lt;/td&gt;</span><br><span class="line">	    &lt;/tr&gt;</span><br><span class="line">	    	    	    	    &lt;tr&gt;</span><br><span class="line">	     &lt;td&gt;工资：&lt;/td&gt;</span><br><span class="line">	       &lt;td&gt;&lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;realName&quot;</span> value=<span class="string">&quot;$&#123;user.salary&#125;&quot;</span>/&gt;&lt;/td&gt;</span><br><span class="line">	    &lt;/tr&gt;</span><br><span class="line">	    &lt;tr&gt;</span><br><span class="line">	     &lt;td colspan=<span class="string">&quot;2&quot;</span>&gt;&lt;input type=<span class="string">&quot;submit&quot;</span> name=<span class="string">&quot;提交&quot;</span>/&gt;&lt;/td&gt;</span><br><span class="line">	    &lt;/tr&gt;	    </span><br><span class="line">    &lt;/table&gt;</span><br><span class="line">  &lt;/form&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>​    register.jsp 的作用是注册一个新的用户，因此 UserController 中还需添加一个 createUser() 方法用来处理&#x2F;user.html请求。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.smart.web;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.smart.UserService;</span><br><span class="line"><span class="keyword">import</span> com.smart.domain.User;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMethod;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.ModelAndView;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Controller</span> <span class="comment">//@Controller注解可将一个POJO转化为处理请求的控制器</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/user&quot;)</span>    <span class="comment">//@RequestMapping为控制器指定处理哪些URL的请求，在类处标明则表示该类下的所有请求路径都包含在/user/下</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//注入业务层的Bean</span></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> UserService userService;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//RequestMapping没有标注路径，说明它处理的是/user.html的请求，请求的方法必须为POST</span></span><br><span class="line">    <span class="comment">//将表单值映射到User对象中，调用UserService保存user，返回ModelAndView</span></span><br><span class="line">    <span class="meta">@RequestMapping(method = RequestMethod.POST)</span></span><br><span class="line">    <span class="keyword">public</span> ModelAndView <span class="title function_">createUser</span><span class="params">(User user)</span>&#123;</span><br><span class="line">        userService.createUser(user);</span><br><span class="line">        <span class="type">ModelAndView</span> <span class="variable">mav</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ModelAndView</span>();</span><br><span class="line">        mav.setViewName(<span class="string">&quot;user/createSuccess&quot;</span>);	<span class="comment">//逻辑视图名</span></span><br><span class="line">        mav.addObject(<span class="string">&quot;user&quot;</span>, user);			<span class="comment">//模型数据信息</span></span><br><span class="line">        <span class="keyword">return</span> mav;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/register&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">register</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;user/register&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    Spring MVC 自动将表单中的数据按参数名和 User 属性名相匹配的方式进行绑定，将参数值填充到 User 的相应属性中。User 中的参数名和表单组件是相同的，这样 Spring MVC 即可将表单组件值填充到 User 的相应属性中。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E8%A1%A8%E5%8D%95%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E5%8F%82%E6%95%B0%E5%90%8D.27ybdjr6m9no.webp" alt="表单中的数据参数名"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/User%E5%B1%9E%E6%80%A7%E5%90%8D.4oxxvcbkdmy0.webp" alt="User属性名"></p>
+<p>​    然后调用业务层的 UserService 进行业务处理，进而返回 ModelAndView 对象，逻辑视图名为 user&#x2F;createSuccess，user 作为模型数据暴露给视图对象。</p>
+<p>​    视图解析器将 user&#x2F;createSuccess 解析为 &#x2F;web-INF&#x2F;views&#x2F;user&#x2F;createSuccess.jsp 的视图对象，createSuccess.jsp 页面代码如下所示：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span> pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;title&gt;用户创建成功&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">      恭喜，用户$&#123;user.userName&#125;创建成功，用户ID为$&#123;user.userId&#125;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>​    由于 UserController#createUser() 方法中已将 user 作为模型数据信息填充到了模型中，因此 createSuccess.jsp 就可以通过 ${user.userName} 访问到模型中的数据了。</p>
+<h5 id="配置-Spring-MVC-的配置文件"><a href="#配置-Spring-MVC-的配置文件" class="headerlink" title="配置 Spring MVC 的配置文件"></a>配置 Spring MVC 的配置文件</h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:context</span>=<span class="string">&quot;http://www.springframework.org/schema/context&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:p</span>=<span class="string">&quot;http://www.springframework.org/schema/p&quot;</span> <span class="attr">xmlns:aop</span>=<span class="string">&quot;http://www.springframework.org/schema/aop&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:tx</span>=<span class="string">&quot;http://www.springframework.org/schema/tx&quot;</span> <span class="attr">xmlns:mvc</span>=<span class="string">&quot;http://www.springframework.org/schema/mvc&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:websocket</span>=<span class="string">&quot;http://www.springframework.org/schema/websocket&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd</span></span></span><br><span class="line"><span class="string"><span class="tag">    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket.xsd&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--&lt;context:component-scan&gt;使得Spring扫描指定包下的所有类，让标注Spring注解的类生效--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">&quot;com.smart.web&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--定义了一个视图解析器，指定了前缀路径和后缀路径--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:prefix</span>=<span class="string">&quot;/WEB-INF/views&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:suffix</span>=<span class="string">&quot;.jsp&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="运行用户注册模块"><a href="#运行用户注册模块" class="headerlink" title="运行用户注册模块"></a>运行用户注册模块</h5><p>​    将用户模块部署到 Web 服务器中，Web 服务器服务端口为8080，部署根路径为&#x2F;，通过 <a class="link"   target="_blank" rel="noopener" href="http://localhost:8080/user/register.html" >http://localhost:8080/user/register.html<i class="fas fa-external-link-alt"></i></a> 即可访问用户注册页面，填写用户注册信息，将表单提交到 <a class="link"   target="_blank" rel="noopener" href="http://localhost:8080/user.html" >http://localhost:8080/user.html<i class="fas fa-external-link-alt"></i></a> 地址中，UserController 控制器的 createUser() 方法响应这个请求，并导向 createSuccess.jsp 页面中。</p>
+<p>​    对于用户注册表单提交直到返回响应这一过程，用实物对象对组件接口进行替换，可得到交互图如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/user.html%E6%8F%90%E4%BA%A4%E8%A1%A8%E5%8D%95%E7%9A%84%E6%95%B4%E4%BD%93%E8%BF%87%E7%A8%8B.3yg4bkoe1ms0.webp" alt="user"></p>
+<p>​    简要描述一下 Spring MVC 处理 &#x2F;user.html 的整个过程：</p>
+<ol>
+<li>DispatcherServlet 接收到客户端的 &#x2F;user.html 请求。</li>
+<li>DispatcherServlet 使用 DefaultAnnotationHandlerMapping 查找负责处理该请求的处理器。</li>
+<li>DispatcherServlet 将请求分发给名为 &#x2F;user.html 的 UserController处理器。</li>
+<li>处理器完成业务处理后，返回 ModelAndView 对象，其中 View 的逻辑视图名为 &#x2F;user&#x2F;createSuccess，而模型包含一个 user 的模型数据信息。</li>
+<li>DispatcherServlet 调用 InternalResourceViewResolver 组件对 ModelAndView 中的逻辑视图名进行解析，得到真实的 &#x2F;WEB-INF&#x2F;view&#x2F;user&#x2F;createSuccess.jsp 视图对象。</li>
+<li>DispatcherServlet 使用&#x2F;WEB-INF&#x2F;view&#x2F;user&#x2F;createSuccess.jsp 对模型中的 user 模型对象进行渲染。</li>
+<li>返回相应页面给客户端。</li>
+</ol>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：精通SpringMVC(一)-SpringMVC体系结构概述</li>
+        <li>Post author：Lisj</li>
+        <li>Create time：2022-04-06 15:06:33</li>
+        <li>
+            Post link：https://lisj98.github.io/2022/04/06/精通SpringMVC-一-SpringMVC体系结构概述/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2022/04/06/Spring-MVC%E9%94%99%E8%AF%AF%E9%9B%86/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Spring MVC错误集</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Lisj</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-text">1.1 体系结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-%E9%85%8D%E7%BD%AE-DispatcherServlet"><span class="nav-text">1.2 配置 DispatcherServlet</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-DispatcherServlet-%EF%BC%8C%E6%88%AA%E8%8E%B7%E7%89%B9%E5%AE%9A%E7%9A%84-HTTP-%E8%AF%B7%E6%B1%82"><span class="nav-text">配置 DispatcherServlet ，截获特定的 HTTP 请求</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8E%A2%E7%A9%B6-DispatcherServlet-%E7%9A%84%E5%86%85%E9%83%A8%E9%80%BB%E8%BE%91"><span class="nav-text">探究 DispatcherServlet 的内部逻辑</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E5%AE%9E%E4%BE%8B"><span class="nav-text">1.3 一个简单的实例</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BC%96%E5%86%99-web-xml"><span class="nav-text">编写 web.xml</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BC%96%E5%86%99%E5%A4%84%E7%90%86%E8%AF%B7%E6%B1%82%E7%9A%84%E6%8E%A7%E5%88%B6%E5%99%A8"><span class="nav-text">编写处理请求的控制器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BC%96%E5%86%99%E8%A7%86%E5%9B%BE%E5%AF%B9%E8%B1%A1"><span class="nav-text">编写视图对象</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-Spring-MVC-%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-text">配置 Spring MVC 的配置文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E7%94%A8%E6%88%B7%E6%B3%A8%E5%86%8C%E6%A8%A1%E5%9D%97"><span class="nav-text">运行用户注册模块</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

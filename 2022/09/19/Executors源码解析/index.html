@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Java、数据结构">
+    <meta name="description" content="所见即所得">
+    <meta name="author" content="Lisj">
+    
+    <title>
+        
+            Executors源码解析 |
+        
+        BlogOfLisj
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/l-solid.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"lisj98.github.io","root":"/","language":"en","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#FF00FF","avatar":"/images/Neymar.jpg","favicon":"/images/l-solid.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"What you see is what you get."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"trigger":"auto","unescape":false,"preload":true},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":true},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 6.0.0"><link rel="alternate" href="/atom.xml" title="BlogOfLisj" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                BlogOfLisj
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                TAGS
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">CATEGORIES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">TAGS</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Executors源码解析</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/Neymar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Lisj</span>
+                        
+                            <span class="author-label">中忍</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-09-19 23:04:37</span>
+        <span class="mobile">2022-09-19 23:04</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Executors/">Executors</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>3.4k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>16 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="1-前置知识"><a href="#1-前置知识" class="headerlink" title="1. 前置知识"></a>1. 前置知识</h1><p>Executors，执行器，用来管理Thread对象，它是一个创建<code>Executor，ExecutorService，ScheduledExecutorService，ThreadFactory</code>或者<code>Callable</code>对象的工厂类，或者说工具类，通常用它来创建线程池。</p>
+<h1 id="2-几个典型方法"><a href="#2-几个典型方法" class="headerlink" title="2. 几个典型方法"></a>2. 几个典型方法</h1><h2 id="newFixedThreadPool"><a href="#newFixedThreadPool" class="headerlink" title="newFixedThreadPool"></a>newFixedThreadPool</h2><p>创建一个定长大小的线程池。</p>
+<p>使用无界任务队列，如果有新任务被添加入队，但是所有线程都在忙，那么任务就在队列中一直等待直到有线程空闲下来为止。如果某个线程运行过程中由于某些原因停止了，那么会有其他的线程接管它的任务，但是这个停止的线程的资源不会被回收，也不会创建新线程来代替它，也就是说线程池一旦创建完毕，里面的线程将永远是那几个，只有明确调用了<code>shutdown()</code>方法线程池才会关闭，线程资源才会被回收。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//a</span></span><br><span class="line"><span class="comment">//nThreads：池中线程的数量</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title function_">newFixedThreadPool</span><span class="params">(<span class="type">int</span> nThreads)</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ThreadPoolExecutor</span>(nThreads, nThreads,</span><br><span class="line">	                              <span class="number">0L</span>, TimeUnit.MILLISECONDS,</span><br><span class="line">	                              <span class="keyword">new</span> <span class="title class_">LinkedBlockingQueue</span>&lt;Runnable&gt;());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//b</span></span><br><span class="line"><span class="comment">//nThreads：池中线程的数量</span></span><br><span class="line"><span class="comment">//和a的区别就是该方法指定了一个自定义的线程工厂类，按照自定义的方式创建池中的线程</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title function_">newFixedThreadPool</span><span class="params">(<span class="type">int</span> nThreads, ThreadFactory threadFactory)</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ThreadPoolExecutor</span>(nThreads, nThreads,</span><br><span class="line">	                              <span class="number">0L</span>, TimeUnit.MILLISECONDS,</span><br><span class="line">	                              <span class="keyword">new</span> <span class="title class_">LinkedBlockingQueue</span>&lt;Runnable&gt;(),</span><br><span class="line">	                              threadFactory);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>return的<code>ThreadPoolExecutor</code>中<code>corePoolSize=maximumPoolSize=nThreads</code>，所以是一个定长的线程池，因为是无界队列，所以任务队列用<code>LinkedBlockingQueue</code>。</p>
+<h2 id="newSingleThreadExecutor"><a href="#newSingleThreadExecutor" class="headerlink" title="newSingleThreadExecutor"></a>newSingleThreadExecutor</h2><p>创建一个仅包含单线程的线程池。</p>
+<p>也是使用无界任务队列，但是和<code>newFixedThreadPool()</code>的不同之处就在于，倘若这个线程由于某些原因停止了，会创建一个新的线程来代替它并接管其任务。本线程池保证任务有序执行，并且同一时间也只能执行一个任务。</p>
+<p>和<code>newFixedThreadPool(1)</code>不同，该方法返回的线程池不可配置，因为它返回的是一个<code>FinalizableDelegatedExecutorService</code>对象，具体原因见<a href="#unconfigurableExecutorService">unconfigurableExecutorService方法</a>和<a href="#FinalizableDelegatedExecutorService">关联FinalizableDelegatedExecutorService内部类代码</a>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//a</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title function_">newSingleThreadExecutor</span><span class="params">()</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">FinalizableDelegatedExecutorService</span></span><br><span class="line">	       (<span class="keyword">new</span> <span class="title class_">ThreadPoolExecutor</span>(<span class="number">1</span>, <span class="number">1</span>,</span><br><span class="line">	                               <span class="number">0L</span>, TimeUnit.MILLISECONDS,</span><br><span class="line">	                               <span class="keyword">new</span> <span class="title class_">LinkedBlockingQueue</span>&lt;Runnable&gt;()));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//b</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title function_">newSingleThreadExecutor</span><span class="params">(ThreadFactory threadFactory)</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">FinalizableDelegatedExecutorService</span></span><br><span class="line">	       (<span class="keyword">new</span> <span class="title class_">ThreadPoolExecutor</span>(<span class="number">1</span>, <span class="number">1</span>,</span><br><span class="line">	                               <span class="number">0L</span>, TimeUnit.MILLISECONDS,</span><br><span class="line">	                               <span class="keyword">new</span> <span class="title class_">LinkedBlockingQueue</span>&lt;Runnable&gt;(),</span><br><span class="line">	                               threadFactory));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="newScheduledThreadPool"><a href="#newScheduledThreadPool" class="headerlink" title="newScheduledThreadPool"></a>newScheduledThreadPool</h2><p>创建一个线程可定时执行的线程池。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//a</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> ScheduledExecutorService <span class="title function_">newScheduledThreadPool</span><span class="params">(<span class="type">int</span> corePoolSize)</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ScheduledThreadPoolExecutor</span>(corePoolSize);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//b</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> ScheduledExecutorService <span class="title function_">newScheduledThreadPool</span><span class="params">(</span></span><br><span class="line"><span class="params">    <span class="type">int</span> corePoolSize, ThreadFactory threadFactory)</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ScheduledThreadPoolExecutor</span>(corePoolSize, threadFactory);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="newSingleThreadScheduledExecutor"><a href="#newSingleThreadScheduledExecutor" class="headerlink" title="newSingleThreadScheduledExecutor"></a>newSingleThreadScheduledExecutor</h2><p>创建一个仅包含可定时执行的单线程的线程池。</p>
+<p>任务使用无界队列，倘若这个线程由于某些原因停止了，会创建一个新的线程来代替它并接管其任务。本线程池保证任务有序执行，并且同一时间也只能执行一个任务。</p>
+<p>和<code>newScheduledThreadPool(1)</code>不同，该方法返回的线程池不可配置，因为它返回的是一个<code>DelegatedScheduledExecutorService</code>对象，具体原因见</p>
+<p><a href="#unconfigurableExecutorService">unconfigurableExecutorService方法</a>和<a href="#DelegatedScheduledExecutorService">关联DelegatedScheduledExecutorService内部类代码</a>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//a</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> ScheduledExecutorService <span class="title function_">newSingleThreadScheduledExecutor</span><span class="params">()</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">DelegatedScheduledExecutorService</span></span><br><span class="line">	       (<span class="keyword">new</span> <span class="title class_">ScheduledThreadPoolExecutor</span>(<span class="number">1</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//b</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> ScheduledExecutorService <span class="title function_">newSingleThreadScheduledExecutor</span><span class="params">(ThreadFactory threadFactory)</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">DelegatedScheduledExecutorService</span></span><br><span class="line">	       (<span class="keyword">new</span> <span class="title class_">ScheduledThreadPoolExecutor</span>(<span class="number">1</span>, threadFactory));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="newCachedThreadPool"><a href="#newCachedThreadPool" class="headerlink" title="newCachedThreadPool"></a>newCachedThreadPool</h2><p>创建一个长度可变的线程池。</p>
+<p>线程池会按需创建线程，有新任务到来时，空闲的线程会被重新分配任务，如果没有线程空闲，则会创建一个新线程并添加到池中。空闲时间超过60s的线程将被停止并从池中移除。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//a</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title function_">newCachedThreadPool</span><span class="params">()</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ThreadPoolExecutor</span>(<span class="number">0</span>, Integer.MAX_VALUE,</span><br><span class="line">	                              <span class="number">60L</span>, TimeUnit.SECONDS,</span><br><span class="line">	                              <span class="keyword">new</span> <span class="title class_">SynchronousQueue</span>&lt;Runnable&gt;());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//b</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title function_">newCachedThreadPool</span><span class="params">(ThreadFactory threadFactory)</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ThreadPoolExecutor</span>(<span class="number">0</span>, Integer.MAX_VALUE,</span><br><span class="line">	                              <span class="number">60L</span>, TimeUnit.SECONDS,</span><br><span class="line">	                              <span class="keyword">new</span> <span class="title class_">SynchronousQueue</span>&lt;Runnable&gt;(),</span><br><span class="line">	                              threadFactory);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>由于长度可变，所以<code>maximumPoolSize=Integer.MAX_VALUE</code>，60s是写死的，线程池中线程永远够用，任务入队立马消费，因此用<code>SynchronousQueue</code>。</p>
+<h2 id="newWorkStealingPool"><a href="#newWorkStealingPool" class="headerlink" title="newWorkStealingPool"></a>newWorkStealingPool</h2><p>创建一个任务窃取线程池。</p>
+<p><code>ForkJoinPool</code>，顾名思义，分叉（fork）合并（join），将大任务分成多个小任务，各自执行后再合并结果。普通线程池中，多个线程共用一个任务队列，而<code>ForkJoinPool</code>中每一个线程都有一个自己的任务队列，当线程发现自己的队列中没任务时，就会到别的队列里取任务，也就是“窃取”。执行自己队列的任务是先执行队首任务，窃取任务时是先取队尾任务。本线程池不保证任务的执行顺序。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//a</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title function_">newWorkStealingPool</span><span class="params">()</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ForkJoinPool</span></span><br><span class="line">	       (Runtime.getRuntime().availableProcessors(),</span><br><span class="line">	        ForkJoinPool.defaultForkJoinWorkerThreadFactory,</span><br><span class="line">	        <span class="literal">null</span>, <span class="literal">true</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//b</span></span><br><span class="line"><span class="comment">//parallelism：并行度，也就是同一个任务可以拆分给多少个线程来处理</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title function_">newWorkStealingPool</span><span class="params">(<span class="type">int</span> parallelism)</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ForkJoinPool</span></span><br><span class="line">	       (parallelism,</span><br><span class="line">	        ForkJoinPool.defaultForkJoinWorkerThreadFactory,</span><br><span class="line">	        <span class="literal">null</span>, <span class="literal">true</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="unconfigurableExecutorService"><a href="#unconfigurableExecutorService" class="headerlink" title="unconfigurableExecutorService"></a>unconfigurableExecutorService</h2><p><a id="unconfigurableExecutorService"></a></p>
+<p>返回一个限制<code>ExecutorService</code>对象，该方法对现有的<code>ExecutorService</code>进行包装，使其只暴露出<code>ExecutorService</code>接口本身的方法，不能调用不属于<code>ExecutorService</code>接口的方法，因此不能对其引用指向的对象，也就是线程池对象进行配置，如果我们需要创建不可配置的线程池，可以使用此方法。</p>
+<p><a href="#DelegatedExecutorService">关联DelegatedExecutorService内部类代码</a>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title function_">unconfigurableExecutorService</span><span class="params">(ExecutorService executor)</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> (executor == <span class="literal">null</span>)</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">NullPointerException</span>();</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">DelegatedExecutorService</span>(executor);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>代码示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.concurrent.ExecutorService;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.Executors;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.ThreadPoolExecutor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span>&#123;</span><br><span class="line">        <span class="comment">//a</span></span><br><span class="line">        <span class="type">ExecutorService</span> <span class="variable">e</span> <span class="operator">=</span> Executors.newScheduledThreadPool(<span class="number">5</span>);</span><br><span class="line">        <span class="type">ThreadPoolExecutor</span> <span class="variable">tpe</span> <span class="operator">=</span> (ThreadPoolExecutor) e;</span><br><span class="line">        tpe.setCorePoolSize(<span class="number">3</span>);</span><br><span class="line">        System.out.println(tpe.getCorePoolSize());</span><br><span class="line"></span><br><span class="line">        <span class="comment">//b</span></span><br><span class="line">        <span class="type">ExecutorService</span> <span class="variable">e1</span> <span class="operator">=</span> Executors.unconfigurableExecutorService(e);</span><br><span class="line">        <span class="type">ThreadPoolExecutor</span> <span class="variable">tpe1</span> <span class="operator">=</span> (ThreadPoolExecutor) e1;</span><br><span class="line">        tpe1.setCorePoolSize(<span class="number">3</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3</span></span><br><span class="line">Exception in thread <span class="string">&quot;main&quot;</span> java.lang.ClassCastException: java.util.concurrent.Executors$DelegatedExecutorService cannot be cast to java.util.concurrent.ThreadPoolExecutor</span><br><span class="line">	at Solution.main(Solution.java:<span class="number">13</span>)</span><br></pre></td></tr></table></figure>
+
+<p>上述代码中由于b处e1指向的<code>DelegatedExecutorService</code>对象只暴露了<code>ExecutorService</code>本身的方法，因此调用<code>ExecutorService</code>接口不具有的方法就会报错。</p>
+<h2 id="unconfigurableScheduledExecutorService"><a href="#unconfigurableScheduledExecutorService" class="headerlink" title="unconfigurableScheduledExecutorService"></a>unconfigurableScheduledExecutorService</h2><p>返回一个限制<code>ScheduledExecutorService</code>对象，该方法对现有的<code>ScheduledExecutorService</code>进行包装，使其只暴露出<code>ScheduledExecutorService</code>接口及其父接口<code>ExecutorService</code>接口本身的方法，不能调用不属于这两个接口的方法，因此不能对其引用指向的对象，也就是线程池对象进行配置，如果我们需要创建不可配置的线程池，可以使用此方法。</p>
+<p><a href="#DelegatedScheduledExecutorService">关联DelegatedScheduledExecutorService内部类代码</a>。</p>
+<p>该方法主要是针对定时线程池的，而上面的<code>unconfigurableExecutorService</code>一般是针对非定时线程池的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> ScheduledExecutorService <span class="title function_">unconfigurableScheduledExecutorService</span><span class="params">(ScheduledExecutorService executor)</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> (executor == <span class="literal">null</span>)</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">NullPointerException</span>();</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">DelegatedScheduledExecutorService</span>(executor);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="defaultThreadFactory"><a href="#defaultThreadFactory" class="headerlink" title="defaultThreadFactory"></a>defaultThreadFactory</h2><p>返回一个线程工厂。</p>
+<p>通过该线程工厂创建的每个线程都在同一个线程组中，都是非守护线程，优先级设置为<code>Thread.NORM_PRIORITY</code>和线程组中允许的最大优先级中的较小者。线程名格式为<code>pool-N-thread-M</code>，N为工厂的序列号，M为线程的序列号。</p>
+<p><a href="#DefaultThreadFactory">关联DefaultThreadFactory内部类解析</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> ThreadFactory <span class="title function_">defaultThreadFactory</span><span class="params">()</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">DefaultThreadFactory</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="privilegedThreadFactory"><a href="#privilegedThreadFactory" class="headerlink" title="privilegedThreadFactory"></a>privilegedThreadFactory</h2><p>返回一个线程工厂，通过该工厂创建的线程具有和方法调用线程同样的权限，在<code>defaultThreadFactory()</code>已有设置的基础上还具有相同的<code>AccessControlContext</code>和<code>contextClassLoader</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> ThreadFactory <span class="title function_">privilegedThreadFactory</span><span class="params">()</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">PrivilegedThreadFactory</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="callable"><a href="#callable" class="headerlink" title="callable"></a>callable</h2><p><code>Runnable</code>任务的适配器，将<code>Runnable</code>型任务封装到<code>Callable</code>型任务中。</p>
+<p><a href="#RunnableAdapter">关联RunnableAdapter内部类解析</a>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//a</span></span><br><span class="line"><span class="comment">//只指定task，result为null</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> Callable&lt;Object&gt; <span class="title function_">callable</span><span class="params">(Runnable task)</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> (task == <span class="literal">null</span>)</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">NullPointerException</span>();</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">RunnableAdapter</span>&lt;Object&gt;(task, <span class="literal">null</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//b</span></span><br><span class="line"><span class="comment">//既指定task也指定result</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; Callable&lt;T&gt; <span class="title function_">callable</span><span class="params">(Runnable task, T result)</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> (task == <span class="literal">null</span>)</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">NullPointerException</span>();</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">RunnableAdapter</span>&lt;T&gt;(task, result);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//TODO</span></span><br><span class="line"><span class="comment">//c</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> Callable&lt;Object&gt; <span class="title function_">callable</span><span class="params">(<span class="keyword">final</span> PrivilegedAction&lt;?&gt; action)</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> (action == <span class="literal">null</span>)</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">NullPointerException</span>();</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Callable</span>&lt;Object&gt;() &#123;</span><br><span class="line">		<span class="keyword">public</span> Object <span class="title function_">call</span><span class="params">()</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> action.run();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//TODO</span></span><br><span class="line"><span class="comment">//d</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> Callable&lt;Object&gt; <span class="title function_">callable</span><span class="params">(<span class="keyword">final</span> PrivilegedExceptionAction&lt;?&gt; action)</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> (action == <span class="literal">null</span>)</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">NullPointerException</span>();</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Callable</span>&lt;Object&gt;() &#123;</span><br><span class="line">		<span class="keyword">public</span> Object <span class="title function_">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123; <span class="keyword">return</span> action.run(); &#125;</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="x2F-x2F-TODO-privilegedCallable、privilegedCallableUsingCurrentClassLoader"><a href="#x2F-x2F-TODO-privilegedCallable、privilegedCallableUsingCurrentClassLoader" class="headerlink" title="&#x2F;&#x2F;TODO privilegedCallable、privilegedCallableUsingCurrentClassLoader"></a>&#x2F;&#x2F;TODO privilegedCallable、privilegedCallableUsingCurrentClassLoader</h2><h1 id="3-内部类"><a href="#3-内部类" class="headerlink" title="3. 内部类"></a>3. 内部类</h1><h2 id="RunnableAdapter"><a href="#RunnableAdapter" class="headerlink" title="RunnableAdapter"></a>RunnableAdapter</h2><p>作用其实很简单，丢进来一个<code>Runnable</code>任务，进行适当封装后返回一个<code>Callable</code>任务。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">RunnableAdapter</span>&lt;T&gt; <span class="keyword">implements</span> <span class="title class_">Callable</span>&lt;T&gt; &#123;</span><br><span class="line">	<span class="keyword">final</span> Runnable task;</span><br><span class="line">	<span class="keyword">final</span> T result;</span><br><span class="line">	RunnableAdapter(Runnable task, T result) &#123;</span><br><span class="line">		<span class="built_in">this</span>.task = task;</span><br><span class="line">		<span class="built_in">this</span>.result = result;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> T <span class="title function_">call</span><span class="params">()</span> &#123;</span><br><span class="line">		task.run();</span><br><span class="line">		<span class="keyword">return</span> result;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="x2F-x2F-TODO-PrivilegedCallable、PrivilegedCallableUsingCurrentClassLoader"><a href="#x2F-x2F-TODO-PrivilegedCallable、PrivilegedCallableUsingCurrentClassLoader" class="headerlink" title="&#x2F;&#x2F;TODO PrivilegedCallable、PrivilegedCallableUsingCurrentClassLoader"></a>&#x2F;&#x2F;TODO PrivilegedCallable、PrivilegedCallableUsingCurrentClassLoader</h2><h2 id="DefaultThreadFactory"><a href="#DefaultThreadFactory" class="headerlink" title="DefaultThreadFactory"></a>DefaultThreadFactory</h2><p><a id="DefaultThreadFactory"></a></p>
+<p>默认的线程工厂。</p>
+<p>创建的线程仅设置线程名、线程组、是否守护线程以及优先级。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">DefaultThreadFactory</span> <span class="keyword">implements</span> <span class="title class_">ThreadFactory</span> &#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">AtomicInteger</span> <span class="variable">poolNumber</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AtomicInteger</span>(<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> ThreadGroup group;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="type">AtomicInteger</span> <span class="variable">threadNumber</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AtomicInteger</span>(<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> String namePrefix;</span><br><span class="line"></span><br><span class="line">	DefaultThreadFactory() &#123;</span><br><span class="line">		<span class="type">SecurityManager</span> <span class="variable">s</span> <span class="operator">=</span> System.getSecurityManager();</span><br><span class="line">		group = (s != <span class="literal">null</span>) ? s.getThreadGroup() :</span><br><span class="line">		        Thread.currentThread().getThreadGroup();</span><br><span class="line">		namePrefix = <span class="string">&quot;pool-&quot;</span> +</span><br><span class="line">		             poolNumber.getAndIncrement() +</span><br><span class="line">		             <span class="string">&quot;-thread-&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> Thread <span class="title function_">newThread</span><span class="params">(Runnable r)</span> &#123;</span><br><span class="line">		<span class="type">Thread</span> <span class="variable">t</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(group, r,</span><br><span class="line">		                      namePrefix + threadNumber.getAndIncrement(),</span><br><span class="line">		                      <span class="number">0</span>);</span><br><span class="line">		<span class="keyword">if</span> (t.isDaemon())</span><br><span class="line">			t.setDaemon(<span class="literal">false</span>);</span><br><span class="line">		<span class="keyword">if</span> (t.getPriority() != Thread.NORM_PRIORITY)</span><br><span class="line">			t.setPriority(Thread.NORM_PRIORITY);</span><br><span class="line">		<span class="keyword">return</span> t;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="PrivilegedThreadFactory"><a href="#PrivilegedThreadFactory" class="headerlink" title="PrivilegedThreadFactory"></a>PrivilegedThreadFactory</h2><p>在<code>DefaultThreadFactory</code>的基础上还会设置<code>AccessControlContext</code>和<code>ClassLoader</code>，这两个参数值和调用本方法的线程一样。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">PrivilegedThreadFactory</span> <span class="keyword">extends</span> <span class="title class_">DefaultThreadFactory</span> &#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> AccessControlContext acc;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> ClassLoader ccl;</span><br><span class="line"></span><br><span class="line">	PrivilegedThreadFactory() &#123;</span><br><span class="line">		<span class="built_in">super</span>();</span><br><span class="line">		<span class="type">SecurityManager</span> <span class="variable">sm</span> <span class="operator">=</span> System.getSecurityManager();</span><br><span class="line">		<span class="keyword">if</span> (sm != <span class="literal">null</span>) &#123;</span><br><span class="line">			<span class="comment">// Calls to getContextClassLoader from this class</span></span><br><span class="line">			<span class="comment">// never trigger a security check, but we check</span></span><br><span class="line">			<span class="comment">// whether our callers have this permission anyways.</span></span><br><span class="line">			sm.checkPermission(SecurityConstants.GET_CLASSLOADER_PERMISSION);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// Fail fast</span></span><br><span class="line">			sm.checkPermission(<span class="keyword">new</span> <span class="title class_">RuntimePermission</span>(<span class="string">&quot;setContextClassLoader&quot;</span>));</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">this</span>.acc = AccessController.getContext();</span><br><span class="line">		<span class="built_in">this</span>.ccl = Thread.currentThread().getContextClassLoader();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> Thread <span class="title function_">newThread</span><span class="params">(<span class="keyword">final</span> Runnable r)</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">super</span>.newThread(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;</span><br><span class="line">			<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">				AccessController.doPrivileged(<span class="keyword">new</span> <span class="title class_">PrivilegedAction</span>&lt;Void&gt;() &#123;</span><br><span class="line">					<span class="keyword">public</span> Void <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">						Thread.currentThread().setContextClassLoader(ccl);</span><br><span class="line">						r.run();</span><br><span class="line">						<span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;, acc);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="DelegatedExecutorService"><a href="#DelegatedExecutorService" class="headerlink" title="DelegatedExecutorService"></a>DelegatedExecutorService</h2><p><a id="DelegatedExecutorService"></a></p>
+<p>该类对现有的<code>ExecutorService</code>进行包装，使其只暴露出<code>ExecutorService</code>接口本身的方法，不能调用不属于<code>ExecutorService</code>接口的方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">DelegatedExecutorService</span> <span class="keyword">extends</span> <span class="title class_">AbstractExecutorService</span> &#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> ExecutorService e;</span><br><span class="line">	DelegatedExecutorService(ExecutorService executor) &#123;</span><br><span class="line">		e = executor;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">execute</span><span class="params">(Runnable command)</span> &#123;</span><br><span class="line">		e.execute(command);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">shutdown</span><span class="params">()</span> &#123;</span><br><span class="line">		e.shutdown();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> List&lt;Runnable&gt; <span class="title function_">shutdownNow</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> e.shutdownNow();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isShutdown</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> e.isShutdown();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isTerminated</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> e.isTerminated();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">awaitTermination</span><span class="params">(<span class="type">long</span> timeout, TimeUnit unit)</span></span><br><span class="line">	<span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">		<span class="keyword">return</span> e.awaitTermination(timeout, unit);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> Future&lt;?&gt; submit(Runnable task) &#123;</span><br><span class="line">		<span class="keyword">return</span> e.submit(task);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> &lt;T&gt; Future&lt;T&gt; <span class="title function_">submit</span><span class="params">(Callable&lt;T&gt; task)</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> e.submit(task);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> &lt;T&gt; Future&lt;T&gt; <span class="title function_">submit</span><span class="params">(Runnable task, T result)</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> e.submit(task, result);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> &lt;T&gt; List&lt;Future&lt;T&gt;&gt; <span class="title function_">invokeAll</span><span class="params">(Collection&lt;? extends Callable&lt;T&gt;&gt; tasks)</span></span><br><span class="line">	<span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">		<span class="keyword">return</span> e.invokeAll(tasks);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> &lt;T&gt; List&lt;Future&lt;T&gt;&gt; <span class="title function_">invokeAll</span><span class="params">(Collection&lt;? extends Callable&lt;T&gt;&gt; tasks,</span></span><br><span class="line"><span class="params">	                                     <span class="type">long</span> timeout, TimeUnit unit)</span></span><br><span class="line">	<span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">		<span class="keyword">return</span> e.invokeAll(tasks, timeout, unit);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> &lt;T&gt; T <span class="title function_">invokeAny</span><span class="params">(Collection&lt;? extends Callable&lt;T&gt;&gt; tasks)</span></span><br><span class="line">	<span class="keyword">throws</span> InterruptedException, ExecutionException &#123;</span><br><span class="line">		<span class="keyword">return</span> e.invokeAny(tasks);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> &lt;T&gt; T <span class="title function_">invokeAny</span><span class="params">(Collection&lt;? extends Callable&lt;T&gt;&gt; tasks,</span></span><br><span class="line"><span class="params">	                       <span class="type">long</span> timeout, TimeUnit unit)</span></span><br><span class="line">	<span class="keyword">throws</span> InterruptedException, ExecutionException, TimeoutException &#123;</span><br><span class="line">		<span class="keyword">return</span> e.invokeAny(tasks, timeout, unit);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="FinalizableDelegatedExecutorService"><a href="#FinalizableDelegatedExecutorService" class="headerlink" title="FinalizableDelegatedExecutorService"></a>FinalizableDelegatedExecutorService</h2><p><a id="FinalizableDelegatedExecutorService"></a></p>
+<p>本类相较于父类<code>DelegatedExecutorService</code>增加了一个<code>finalize()</code>方法，而JVM在进行垃圾回收的时候会调用<code>finalize()</code>方法，换言之，<code>FinalizableDelegatedExecutorService</code>的实例即使不手动调用<code>shutdown()</code>方法关闭线程池，JVM也会完成此任务，但是要注意，JVM不保证<code>finalize()</code>方法一定被调用，因此我们不应该依赖于它，而应手动调用<code>shutdown()</code>方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">FinalizableDelegatedExecutorService</span></span><br><span class="line">		<span class="keyword">extends</span> <span class="title class_">DelegatedExecutorService</span> &#123;</span><br><span class="line">	FinalizableDelegatedExecutorService(ExecutorService executor) &#123;</span><br><span class="line">		<span class="built_in">super</span>(executor);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">finalize</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="built_in">super</span>.shutdown();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="DelegatedScheduledExecutorService"><a href="#DelegatedScheduledExecutorService" class="headerlink" title="DelegatedScheduledExecutorService"></a>DelegatedScheduledExecutorService</h2><p><a id="DelegatedScheduledExecutorService"></a></p>
+<p>本类相较于父类<code>DelegatedExecutorService</code>增加了定时相关的方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">DelegatedScheduledExecutorService</span></span><br><span class="line">	<span class="keyword">extends</span> <span class="title class_">DelegatedExecutorService</span></span><br><span class="line">		<span class="keyword">implements</span> <span class="title class_">ScheduledExecutorService</span> &#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> ScheduledExecutorService e;</span><br><span class="line">	DelegatedScheduledExecutorService(ScheduledExecutorService executor) &#123;</span><br><span class="line">		<span class="built_in">super</span>(executor);</span><br><span class="line">		e = executor;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> ScheduledFuture&lt;?&gt; schedule(Runnable command, <span class="type">long</span> delay, TimeUnit unit) &#123;</span><br><span class="line">		<span class="keyword">return</span> e.schedule(command, delay, unit);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> &lt;V&gt; ScheduledFuture&lt;V&gt; <span class="title function_">schedule</span><span class="params">(Callable&lt;V&gt; callable, <span class="type">long</span> delay, TimeUnit unit)</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> e.schedule(callable, delay, unit);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> ScheduledFuture&lt;?&gt; scheduleAtFixedRate(Runnable command, <span class="type">long</span> initialDelay, <span class="type">long</span> period, TimeUnit unit) &#123;</span><br><span class="line">		<span class="keyword">return</span> e.scheduleAtFixedRate(command, initialDelay, period, unit);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> ScheduledFuture&lt;?&gt; scheduleWithFixedDelay(Runnable command, <span class="type">long</span> initialDelay, <span class="type">long</span> delay, TimeUnit unit) &#123;</span><br><span class="line">		<span class="keyword">return</span> e.scheduleWithFixedDelay(command, initialDelay, delay, unit);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="4-补充"><a href="#4-补充" class="headerlink" title="4. 补充"></a>4. 补充</h1><h2 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h2><ol>
+<li>newFixedThreadPool</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="comment">//定长线程池</span></span><br><span class="line">        <span class="type">ExecutorService</span> <span class="variable">e</span> <span class="operator">=</span> Executors.newFixedThreadPool(<span class="number">3</span>);</span><br><span class="line">        ArrayList&lt;Future&gt; list = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">8</span>; i++) &#123;</span><br><span class="line">            list.add(e.submit(<span class="keyword">new</span> <span class="title class_">Callable</span>&lt;String&gt;() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="keyword">public</span> String <span class="title function_">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">                    <span class="keyword">return</span> Thread.currentThread().getName();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (Future f : list) &#123;</span><br><span class="line">            System.out.println(f.get());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//随机的</span></span><br><span class="line">pool-<span class="number">1</span>-thread-<span class="number">1</span></span><br><span class="line">pool-<span class="number">1</span>-thread-<span class="number">2</span></span><br><span class="line">pool-<span class="number">1</span>-thread-<span class="number">3</span></span><br><span class="line">pool-<span class="number">1</span>-thread-<span class="number">2</span></span><br><span class="line">pool-<span class="number">1</span>-thread-<span class="number">2</span></span><br><span class="line">pool-<span class="number">1</span>-thread-<span class="number">2</span></span><br><span class="line">pool-<span class="number">1</span>-thread-<span class="number">1</span></span><br><span class="line">pool-<span class="number">1</span>-thread-<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>newSingleThreadExecutor</li>
+</ol>
+<p>类比newFixedThreadPool</p>
+<ol start="3">
+<li>newScheduledThreadPool</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="comment">//定时执行线程池</span></span><br><span class="line">        <span class="type">ScheduledExecutorService</span> <span class="variable">e</span> <span class="operator">=</span> Executors.newScheduledThreadPool(<span class="number">3</span>);</span><br><span class="line">        e.scheduleAtFixedRate(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">                System.out.println(Thread.currentThread().getName() + <span class="string">&quot; &quot;</span> + <span class="keyword">new</span> <span class="title class_">Date</span>());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,<span class="number">3000</span>, <span class="number">5000</span>, TimeUnit.MILLISECONDS);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">pool-<span class="number">1</span>-thread-<span class="number">1</span> Mon Sep <span class="number">19</span> <span class="number">20</span>:<span class="number">57</span>:<span class="number">43</span> CST <span class="number">2022</span></span><br><span class="line">pool-<span class="number">1</span>-thread-<span class="number">1</span> Mon Sep <span class="number">19</span> <span class="number">20</span>:<span class="number">57</span>:<span class="number">48</span> CST <span class="number">2022</span></span><br><span class="line">pool-<span class="number">1</span>-thread-<span class="number">2</span> Mon Sep <span class="number">19</span> <span class="number">20</span>:<span class="number">57</span>:<span class="number">53</span> CST <span class="number">2022</span></span><br><span class="line">pool-<span class="number">1</span>-thread-<span class="number">1</span> Mon Sep <span class="number">19</span> <span class="number">20</span>:<span class="number">57</span>:<span class="number">58</span> CST <span class="number">2022</span></span><br><span class="line">pool-<span class="number">1</span>-thread-<span class="number">1</span> Mon Sep <span class="number">19</span> <span class="number">20</span>:<span class="number">58</span>:<span class="number">03</span> CST <span class="number">2022</span></span><br><span class="line">pool-<span class="number">1</span>-thread-<span class="number">2</span> Mon Sep <span class="number">19</span> <span class="number">20</span>:<span class="number">58</span>:08 CST <span class="number">2022</span></span><br><span class="line">pool-<span class="number">1</span>-thread-<span class="number">2</span> Mon Sep <span class="number">19</span> <span class="number">20</span>:<span class="number">58</span>:<span class="number">13</span> CST <span class="number">2022</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>newSingleThreadScheduledExecutor</li>
+</ol>
+<p>类比newScheduledThreadPool</p>
+<ol start="5">
+<li>newCachedThreadPool</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="comment">//长度可变线程池</span></span><br><span class="line">        <span class="type">ExecutorService</span> <span class="variable">e</span> <span class="operator">=</span> Executors.newCachedThreadPool();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">            e.execute(()-&gt; System.out.println(Thread.currentThread().getName()));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">pool-<span class="number">1</span>-thread-<span class="number">1</span></span><br><span class="line">pool-<span class="number">1</span>-thread-<span class="number">3</span></span><br><span class="line">pool-<span class="number">1</span>-thread-<span class="number">2</span></span><br><span class="line">pool-<span class="number">1</span>-thread-<span class="number">4</span></span><br><span class="line">pool-<span class="number">1</span>-thread-<span class="number">5</span></span><br><span class="line">pool-<span class="number">1</span>-thread-<span class="number">6</span></span><br><span class="line">pool-<span class="number">1</span>-thread-<span class="number">8</span></span><br><span class="line">pool-<span class="number">1</span>-thread-<span class="number">7</span></span><br><span class="line">pool-<span class="number">1</span>-thread-<span class="number">9</span></span><br><span class="line">pool-<span class="number">1</span>-thread-<span class="number">10</span></span><br></pre></td></tr></table></figure>
+
+<p>而加上一个sleep后：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="comment">//长度可变线程池</span></span><br><span class="line">        <span class="type">ExecutorService</span> <span class="variable">e</span> <span class="operator">=</span> Executors.newCachedThreadPool();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">            e.execute(()-&gt; System.out.println(Thread.currentThread().getName()));</span><br><span class="line">            Thread.sleep(<span class="number">3000</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">pool-<span class="number">1</span>-thread-<span class="number">1</span></span><br><span class="line">pool-<span class="number">1</span>-thread-<span class="number">1</span></span><br><span class="line">pool-<span class="number">1</span>-thread-<span class="number">1</span></span><br><span class="line">pool-<span class="number">1</span>-thread-<span class="number">1</span></span><br><span class="line">pool-<span class="number">1</span>-thread-<span class="number">1</span></span><br><span class="line">pool-<span class="number">1</span>-thread-<span class="number">1</span></span><br><span class="line">pool-<span class="number">1</span>-thread-<span class="number">1</span></span><br><span class="line">pool-<span class="number">1</span>-thread-<span class="number">1</span></span><br><span class="line">pool-<span class="number">1</span>-thread-<span class="number">1</span></span><br><span class="line">pool-<span class="number">1</span>-thread-<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>newWorkStealingPool</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.concurrent.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="comment">//任务窃取线程池</span></span><br><span class="line">        <span class="type">ExecutorService</span> <span class="variable">e</span> <span class="operator">=</span> Executors.newWorkStealingPool(Runtime.getRuntime().availableProcessors());</span><br><span class="line">        LinkedBlockingDeque&lt;Future&lt;String&gt;&gt; queue = <span class="keyword">new</span> <span class="title class_">LinkedBlockingDeque</span>&lt;&gt;();</span><br><span class="line">        <span class="comment">//CPU核数</span></span><br><span class="line">        System.out.println(Runtime.getRuntime().availableProcessors());</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; Runtime.getRuntime().availableProcessors()+<span class="number">1</span>; i++) &#123;</span><br><span class="line">            Future&lt;String&gt; submit = e.submit(() -&gt; &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    TimeUnit.SECONDS.sleep(<span class="number">2</span>);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e1) &#123;</span><br><span class="line">                    e1.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> Thread.currentThread().getName();</span><br><span class="line">            &#125;);</span><br><span class="line">            queue.offer(submit);</span><br><span class="line">        &#125;</span><br><span class="line">        e.shutdown();</span><br><span class="line"></span><br><span class="line">        queue.forEach(f-&gt; &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                System.out.println(f.get());</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException ex) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(ex);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (ExecutionException ex) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(ex);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">4</span></span><br><span class="line">ForkJoinPool-<span class="number">1</span>-worker-<span class="number">1</span></span><br><span class="line">ForkJoinPool-<span class="number">1</span>-worker-<span class="number">2</span></span><br><span class="line">ForkJoinPool-<span class="number">1</span>-worker-<span class="number">3</span></span><br><span class="line">ForkJoinPool-<span class="number">1</span>-worker-<span class="number">0</span></span><br><span class="line">ForkJoinPool-<span class="number">1</span>-worker-<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：Executors源码解析</li>
+        <li>Post author：Lisj</li>
+        <li>Create time：2022-09-19 23:04:37</li>
+        <li>
+            Post link：https://lisj98.github.io/2022/09/19/Executors源码解析/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/Executors/">#Executors</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/09/15/Timer%E5%AE%9A%E6%97%B6%E5%99%A8%E7%B1%BB%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Timer定时器类源码解析</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Lisj</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-text">1. 前置知识</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E5%87%A0%E4%B8%AA%E5%85%B8%E5%9E%8B%E6%96%B9%E6%B3%95"><span class="nav-text">2. 几个典型方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#newFixedThreadPool"><span class="nav-text">newFixedThreadPool</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#newSingleThreadExecutor"><span class="nav-text">newSingleThreadExecutor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#newScheduledThreadPool"><span class="nav-text">newScheduledThreadPool</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#newSingleThreadScheduledExecutor"><span class="nav-text">newSingleThreadScheduledExecutor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#newCachedThreadPool"><span class="nav-text">newCachedThreadPool</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#newWorkStealingPool"><span class="nav-text">newWorkStealingPool</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unconfigurableExecutorService"><span class="nav-text">unconfigurableExecutorService</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unconfigurableScheduledExecutorService"><span class="nav-text">unconfigurableScheduledExecutorService</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#defaultThreadFactory"><span class="nav-text">defaultThreadFactory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#privilegedThreadFactory"><span class="nav-text">privilegedThreadFactory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#callable"><span class="nav-text">callable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#x2F-x2F-TODO-privilegedCallable%E3%80%81privilegedCallableUsingCurrentClassLoader"><span class="nav-text">&#x2F;&#x2F;TODO privilegedCallable、privilegedCallableUsingCurrentClassLoader</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E5%86%85%E9%83%A8%E7%B1%BB"><span class="nav-text">3. 内部类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RunnableAdapter"><span class="nav-text">RunnableAdapter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#x2F-x2F-TODO-PrivilegedCallable%E3%80%81PrivilegedCallableUsingCurrentClassLoader"><span class="nav-text">&#x2F;&#x2F;TODO PrivilegedCallable、PrivilegedCallableUsingCurrentClassLoader</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DefaultThreadFactory"><span class="nav-text">DefaultThreadFactory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PrivilegedThreadFactory"><span class="nav-text">PrivilegedThreadFactory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DelegatedExecutorService"><span class="nav-text">DelegatedExecutorService</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FinalizableDelegatedExecutorService"><span class="nav-text">FinalizableDelegatedExecutorService</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DelegatedScheduledExecutorService"><span class="nav-text">DelegatedScheduledExecutorService</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E8%A1%A5%E5%85%85"><span class="nav-text">4. 补充</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B"><span class="nav-text">代码示例</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

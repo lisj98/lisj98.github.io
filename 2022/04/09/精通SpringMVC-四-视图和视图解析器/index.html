@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Java、数据结构">
+    <meta name="description" content="所见即所得">
+    <meta name="author" content="Lisj">
+    
+    <title>
+        
+            精通SpringMVC(四)-视图和视图解析器 |
+        
+        BlogOfLisj
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/l-solid.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"lisj98.github.io","root":"/","language":"en","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#FF00FF","avatar":"/images/Neymar.jpg","favicon":"/images/l-solid.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"What you see is what you get."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"trigger":"auto","unescape":false,"preload":true},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":true},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 6.0.0"><link rel="alternate" href="/atom.xml" title="BlogOfLisj" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                BlogOfLisj
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                TAGS
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">CATEGORIES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">TAGS</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">精通SpringMVC(四)-视图和视图解析器</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/Neymar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Lisj</span>
+                        
+                            <span class="author-label">中忍</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-04-09 12:40:56</span>
+        <span class="mobile">2022-04-09 12:40</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/SpringMVC/">SpringMVC</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>6.5k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>29 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>请求处理方法执行完成后，最终返回一个 ModelAndView 对象。对于那些返回 String、View 或 ModelMap 等类型的处理方法，Spring MVC 也会在内部将它们装配成一个 ModelAndView 对象，该对象包含了视图逻辑名和模型对象的信息。</p>
+<p>Spring MVC 借助视图解析器（ViewResolver）得到最终的视图对象（View）。</p>
+<p>对于最终究竟采取何种视图对象对模型数据进行渲染，处理器并不关心，处理器的工作重点聚焦在生产模型数据的工作上。</p>
+<h4 id="4-1-认识视图"><a href="#4-1-认识视图" class="headerlink" title="4.1 认识视图"></a>4.1 认识视图</h4><p>视图的作用是渲染模型数据，将模型里的数据以某种形式呈现给客户。视图对象可以是多种形式，如 JSP、PDF 等，Spring 在 <code>org.springframework.web.servlet</code> 包中定义了一个高度抽象的 View 接口，其中包含了两个方法：</p>
+<ul>
+<li>String getContentType()：获取视图对应的 MIME 类型，如 text&#x2F;html，application&#x2F;xml 等。</li>
+<li>void render(Map model, HttpServletRequest request, HttpServletResponse response)：将模型数据以某种 MIME 类型渲染出来。</li>
+</ul>
+<p>视图对象是一个 Bean，视图对象由视图解析器负责实例化。</p>
+<p>不同类型的视图实现技术对应不同的 View 实现类。常见的有如下几种：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E4%B8%8D%E5%90%8C%E7%9A%84%E8%A7%86%E5%9B%BE%E5%AE%9E%E7%8E%B0%E7%B1%BB.4wlxocnzqmm0.webp" alt="不同的视图实现类"></p>
+<h4 id="4-2-认识视图解析器"><a href="#4-2-认识视图解析器" class="headerlink" title="4.2 认识视图解析器"></a>4.2 认识视图解析器</h4><p>Spring MVC 为逻辑视图名的解析提供了不同的策略，可以在 Spring Web 上下文中配置一种或多种解析策略，并指定它们之间的先后顺序。每种解析策略对应一个具体的视图解析器实现类。视图解析器的工作比较单一，即将逻辑视图名解析为一个具体的视图对象。所有的视图解析器都实现了 ViewResolver 接口，该接口仅有一个方法：</p>
+<ul>
+<li>View resolveViewName(String viewName, Locale locale)</li>
+</ul>
+<p>该方法的签名（入参）清楚地展示了视图解析器的工作原理，根据逻辑视图名和本地化对象得到一个视图对象。</p>
+<p>Spring 拥有众多的视图解析器实现类，如：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E8%A7%86%E5%9B%BE%E8%A7%A3%E6%9E%90%E5%99%A8%E5%AE%9E%E7%8E%B0%E7%B1%BB.40vcxglbwfm0.webp" alt="视图解析器实现类"></p>
+<p>使用时可以选择单一视图解析器也可以混用多种视图解析器，每个视图解析器都实现了 Ordered 接口并开放出一个 orderNo 属性，可以通过该属性指定视图解析器的优先顺序，值越小优先级越高，值越大优先级越低。有些视图解析器默认为最高优先级（如 ContentNegotiatingViewResolver），而有些则默认为最低优先级（如 InternalResourceViewResolver、XstlViewResolver等）。</p>
+<p>Spring MVC 会根据视图解析器的优先级顺序对逻辑视图名进行解析，直到解析成功并返回视图对象，否则将抛出异常。</p>
+<h4 id="4-3-JSP-和-JSTL"><a href="#4-3-JSP-和-JSTL" class="headerlink" title="4.3 JSP 和 JSTL"></a>4.3 JSP 和 JSTL</h4><h5 id="1-使用-InternalResourceViewResolver"><a href="#1-使用-InternalResourceViewResolver" class="headerlink" title="1. 使用 InternalResourceViewResolver"></a>1. 使用 InternalResourceViewResolver</h5><p>使用 InternalResourceViewResolver 作为视图解析器的配置如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:prefix</span>=<span class="string">&quot;/WEB-INF/views/&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:suffix</span>=<span class="string">&quot;.jsp&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>控制器中的相关方法处理完成后返回一个 String 类型的逻辑视图名，InternalResourceViewResolver 对逻辑视图名进行解析，便得到相应的视图对象如 xxx.jsp 等。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E9%80%BB%E8%BE%91%E8%A7%86%E5%9B%BE%E5%90%8D%E8%A7%A3%E6%9E%90%E4%B8%BAuri%E8%B5%84%E6%BA%90.2mg2rhsyrpq0.webp" alt="逻辑视图名解析为uri资源"></p>
+<p>如果 JSP 使用了 JSTL 的国际化功能，确切地说，当 JSP 页面使用 JSTL 的 &lt;fmt:message&#x2F;&gt; 标签时，用户就需要使用 JstlView 替换默认的视图实现类，注意视图解析器和视图对象类不是一回事，如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:viewClass</span>=<span class="string">&quot;org.springframework.web.servlet.view.JstlView&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:prefix</span>=<span class="string">&quot;/WEB-INF/views/&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:suffix</span>=<span class="string">&quot;.jsp&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>举一个例子演示使用 JSTL 的 &lt;fmt:message&#x2F;&gt; 标签让 JSP 页面实现本地化输出，首先编写 UserController：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/showUserList&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">showUserList</span><span class="params">(ModelMap mm)</span>&#123;</span><br><span class="line">        <span class="type">GregorianCalendar</span> <span class="variable">calendar</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">GregorianCalendar</span>();</span><br><span class="line">        ArrayList&lt;User&gt; userList = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">        <span class="type">User</span> <span class="variable">user1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line">        user1.setUserName(<span class="string">&quot;tom&quot;</span>);</span><br><span class="line">        user1.setRealName(<span class="string">&quot;汤姆&quot;</span>);</span><br><span class="line">        calendar.set(<span class="number">2022</span>, <span class="number">4</span>, <span class="number">9</span>);</span><br><span class="line">        user1.setBirthday(calendar.getTime());</span><br><span class="line">        <span class="type">User</span> <span class="variable">user2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line">        user2.setUserName(<span class="string">&quot;john&quot;</span>);</span><br><span class="line">        user2.setRealName(<span class="string">&quot;约翰&quot;</span>);</span><br><span class="line">        user1.setBirthday(calendar.getTime());</span><br><span class="line">        userList.add(user1);</span><br><span class="line">        userList.add(user2);</span><br><span class="line">        mm.addAttribute(<span class="string">&quot;userList&quot;</span>, userList);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;user/userList&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>再编写 userList.jsp：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span> pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;%@ taglib prefix=<span class="string">&quot;c&quot;</span> uri=<span class="string">&quot;http://java.sun.com/jsp/jstl/core&quot;</span>%&gt;</span><br><span class="line">&lt;%@ taglib prefix=<span class="string">&quot;fmt&quot;</span> uri=<span class="string">&quot;http://java.sun.com/jsp/jstl/fmt&quot;</span>%&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">	&lt;head&gt;</span><br><span class="line">		&lt;title&gt;&lt;fmt:message key=<span class="string">&quot;website.title&quot;</span>/&gt;&lt;/title&gt;</span><br><span class="line">	&lt;/head&gt;</span><br><span class="line">	&lt;body&gt;</span><br><span class="line">		&lt;fmt:message  key=<span class="string">&quot;user.userList.title&quot;</span>/&gt;</span><br><span class="line">		&lt;table&gt;</span><br><span class="line">			&lt;c:forEach items=<span class="string">&quot;$&#123;userList&#125;&quot;</span> <span class="keyword">var</span>=<span class="string">&quot;user&quot;</span>&gt;</span><br><span class="line">				&lt;tr&gt;</span><br><span class="line">					&lt;td&gt;</span><br><span class="line">						&lt;a href=<span class="string">&quot;&lt;c:url value=&quot;</span>/user/showUser/$&#123;user.userName&#125;.html<span class="string">&quot;/&gt;&quot;</span>&gt;</span><br><span class="line">						$&#123;user.userName&#125;</span><br><span class="line">                        &lt;/a&gt;</span><br><span class="line">					&lt;/td&gt;</span><br><span class="line">					&lt;td&gt;</span><br><span class="line">						$&#123;user.realName&#125;</span><br><span class="line">					&lt;/td&gt;</span><br><span class="line">					&lt;td&gt;</span><br><span class="line">						&lt;fmt:formatDate value=<span class="string">&quot;$&#123;topic.createDate&#125;&quot;</span> pattern=<span class="string">&quot;yyyy-MM-dd&quot;</span> /&gt;</span><br><span class="line">					&lt;/td&gt;</span><br><span class="line">				&lt;/tr&gt;</span><br><span class="line">			&lt;/c:forEach&gt;</span><br><span class="line">			&lt;table&gt;</span><br><span class="line">	&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>userList.jsp 所使用的国际化资源在 content 资源文件中定义。</p>
+<p>content.properties 配置如下：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">website.title</span>=<span class="string">smart</span></span><br><span class="line"><span class="attr">user.userList.title</span>=<span class="string">user list</span></span><br></pre></td></tr></table></figure>
+
+<p>对应于 JSP 页面中的 key&#x3D;”website.title” 与 key&#x3D;”user.userList.title”，相应的 value 就是 smart 与 userList，采用的是一种键值对的形式，这样不同国家地区的用户在使用这一 JSP 页面时就不必频繁地更改页面了而是只用修改对应地国际化资源文件 content.properties 与 content_zh_CN.properties，国际化资源文件会根据键填充相应的值。</p>
+<p>更改 smart-servlet.xml 中 ResourceBundleMessageSource 的配置，添加此国际化资源：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;messageRecouce&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.context.support.ResourceBundleMessageSource&quot;</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;basenames&quot;</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">list</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">value</span>&gt;</span>i18n/messages<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">value</span>&gt;</span>i18n/content<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">list</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这样，userList.jsp 就会根据 i18n&#x2F;content 来寻找 content.properties 与 content_zh_CN.properties 文件，就可以根据客户端的不同显示相应的本地化页面，除了可以使用 JSTL 的标签外，还能使用 Spring 提供的表单标签。</p>
+<h5 id="2-使用表单标签"><a href="#2-使用表单标签" class="headerlink" title="2. 使用表单标签"></a>2. 使用表单标签</h5><p>通过 Spring 表单标签，可以很容易地将模型数据中地表单&#x2F;命令对象（实体类对象）绑定到 HTML 表单元素中。</p>
+<p>和使用任何 JSP 扩展标签一样，在使用 Spring 表单标签之前，必须在 JSP 页面中添加一行引用 Spring 表单标签的声明：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span> pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;%--引用表单标签的声明，声明后就可以使用了--%&gt;</span><br><span class="line">&lt;%<span class="meta">@taglib</span> uri=<span class="string">&quot;http://java.sun.com/jsp/jstl/core&quot;</span> prefix=<span class="string">&quot;c&quot;</span> %&gt;</span><br><span class="line">&lt;%@ taglib prefix=<span class="string">&quot;form&quot;</span> uri=<span class="string">&quot;http://www.springframework.org/tags/form&quot;</span> %&gt;</span><br></pre></td></tr></table></figure>
+
+<p>下面是一个使用 &lt;form:form&gt; 表单标签的实例，它将最终生成一个 HTML 的 form 表单：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;form:form modelAttribute=<span class="string">&quot;user&quot;</span>&gt;</span><br><span class="line">	用户名：&lt;form:input path=<span class="string">&quot;userName&quot;</span>/&gt;&lt;br&gt;</span><br><span class="line">	密码：&lt;form:input path=<span class="string">&quot;password&quot;</span>/&gt;&lt;br&gt;</span><br><span class="line">	真实姓名：&lt;form:input path=<span class="string">&quot;realName&quot;</span>/&gt;&lt;br&gt;</span><br><span class="line">	&lt;input type=<span class="string">&quot;submit&quot;</span> value=<span class="string">&quot;注册&quot;</span> name=<span class="string">&quot;testSubmit&quot;</span>&gt;</span><br><span class="line">	&lt;input type=<span class="string">&quot;reset&quot;</span> value=<span class="string">&quot;重置&quot;</span>&gt;</span><br><span class="line">&lt;/form:form&gt;</span><br></pre></td></tr></table></figure>
+
+<p>一般情况下，通过 GET 请求获取表单页面，通过 POST 请求提交表单页面。</p>
+<p>可以通过 modelAttribute 指定绑定的模型属性。如果 modelAttribute 不指定，那么默认从模型中尝试获取名为 command 的表单对象，如果 command 也不存在的话，则将发生错误。通过 action 指定处理表单提交的 URL 地址。此外， &lt;form:form&gt; 标签还拥有多种属性，此处不一一列举。</p>
+<p>Spring 提供了十多个表单组件标签，用以绑定表单对象的属性值，这些标签大都拥有如下属性：</p>
+<ul>
+<li>path：用属性路径表示的表单对象属性。如 userName、dept.deptName、dept.address.tel等。</li>
+<li>htmlEscape：表示绑定的表单属性值是否要对 HTML 特殊字符进行转换，默认值为 true。</li>
+<li>cssClass：表单组件对应的 CSS 样式类名。</li>
+<li>cssErrorClass：当表单组件的数据存在相应的错误时（提交表单后由服务器产生）采用的 CSS 样式类。</li>
+</ul>
+<p>常见表单标签如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/Spring%E8%A1%A8%E5%8D%95%E6%A0%87%E7%AD%BE1.7kxfz79o2cw0.webp" alt="Spring表单标签1"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/Spring%E8%A1%A8%E5%8D%95%E6%A0%87%E7%AD%BE2.nkrxn2xxfow.webp" alt="Spring表单标签2"></p>
+<h5 id="3-关于复选框、单选框、下拉框和表单对象属性的映射问题"><a href="#3-关于复选框、单选框、下拉框和表单对象属性的映射问题" class="headerlink" title="3. 关于复选框、单选框、下拉框和表单对象属性的映射问题"></a>3. 关于复选框、单选框、下拉框和表单对象属性的映射问题</h5><p>对于以下复选框标签：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;form:checkboxes path=<span class="string">&quot;preferences.interests&quot;</span> items=<span class="string">&quot;$&#123;interests&#125;&quot;</span>/&gt;</span><br></pre></td></tr></table></figure>
+
+<p>其生成的对应 HTML 如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">&quot;favorites1&quot;</span> <span class="attr">name</span>=<span class="string">&quot;favorites&quot;</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span> <span class="attr">checked</span>=<span class="string">&quot;checked&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">&quot;favorites2&quot;</span> <span class="attr">name</span>=<span class="string">&quot;favorites&quot;</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">value</span>=<span class="string">&quot;2&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">&quot;favorites3&quot;</span> <span class="attr">name</span>=<span class="string">&quot;favorites&quot;</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">value</span>=<span class="string">&quot;3&quot;</span> <span class="attr">checked</span>=<span class="string">&quot;checked&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">&quot;favorites4&quot;</span> <span class="attr">name</span>=<span class="string">&quot;favorites&quot;</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">value</span>=<span class="string">&quot;4&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span> <span class="attr">checked</span>=<span class="string">&quot;_favorites&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>为什么 HTML 后面多了一个 hidden 组件呢？因为当 HTML 页面中的所有复选框都没有勾选时，表单提交所对应的 HTTP 请求报文不会包含这个复选框的参数名，这样就给 Spring 的表单绑定机制带来了麻烦。解决方法就是在每个复选框后添加一个隐藏组件，并且在对应的复选框名字前添加一个下划线作为隐藏组件的名字，这样一来，就相当于告诉 Spring MVC ：在这个表单中存在这个复选框，Spring MVC 可以据此保证表单对象和页面表单组件数据的一致性。编写 HTML 页面时应当注意这一点。</p>
+<p>复选框、单选框及下拉框都有这个问题。</p>
+<h4 id="4-4-模板视图"><a href="#4-4-模板视图" class="headerlink" title="4.4 模板视图"></a>4.4 模板视图</h4><p>FreeMarker 和 Velocity 是除 JSP 外被使用最多的页面模板技术。页面模板编写好页面结构，模板页面中使用一些特殊的变量标识符绑定 Java 对象的动态数据。</p>
+<p>虽然 FreeMarker 具有一些编程能力，但通常由 Java 程序准备模型数据，FreeMarker 仅负责基于模板对模型数据进行渲染。</p>
+<h5 id="1-编写一个-FreeMarker-模板"><a href="#1-编写一个-FreeMarker-模板" class="headerlink" title="1. 编写一个 FreeMarker 模板"></a>1. 编写一个 FreeMarker 模板</h5><p>重新编写 userList.jsp，并把它放在&#x2F;WEB-INF&#x2F;ftl 目录下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;smart&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">用户列表</span><br><span class="line">&lt;table&gt;</span><br><span class="line">	&lt;%-- #list 用于对模型数据中的userList属性对象进行迭代 --%&gt;</span><br><span class="line">    &lt;#list userList as user&gt;</span><br><span class="line">        &lt;tr&gt;</span><br><span class="line">            &lt;td&gt;</span><br><span class="line">            	&lt;%-- 显示模型属性对象中的值 --%&gt;</span><br><span class="line">                &lt;a href=&quot;/user/showUser/$&#123;user.userName&#125;.html&#x27;/&gt;$&#123;user.userName&#125;</span><br><span class="line">                &lt;/a&gt;</span><br><span class="line">            &lt;/td&gt;</span><br><span class="line">            &lt;td&gt;$&#123;user.realName&#125;&lt;/td&gt;</span><br><span class="line">            &lt;%-- 格式化日期 --%&gt;</span><br><span class="line">            &lt;td&gt; $&#123;user.birthday?string(&quot;yyyy-MM-dd&quot;)&#125;&lt;/td&gt;</span><br><span class="line">        &lt;/tr&gt;</span><br><span class="line">    &lt;/#list&gt;</span><br><span class="line">    &lt;/table&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在 UserController 中添加一个处理方法，如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/showUserListByFtl&quot;)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">showUserListByFtl</span><span class="params">(ModelMap mm)</span>&#123;</span><br><span class="line">    ArrayList&lt;User&gt; userList = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    <span class="comment">// do sth</span></span><br><span class="line">    <span class="comment">//以userList为属性名，将User列表添加到模型数据中</span></span><br><span class="line">    mm.addAttribute(<span class="string">&quot;userList&quot;</span>, userList);</span><br><span class="line">    <span class="comment">//逻辑视图名为userListFtl</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;userListFtl&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后就需要在 Spring 上下文中装配好 FreeMarker 的工作环境及 FreeMarker 视图解析器了：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E8%A3%85%E9%85%8DFreeMarker%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD%E5%92%8C%E8%A7%A3%E6%9E%90%E5%99%A8.60k3mictbwc0.webp" alt="装配FreeMarker基础设施和解析器"></p>
+<h5 id="3-使用-Spring-为-FreeMaker-提供的宏"><a href="#3-使用-Spring-为-FreeMaker-提供的宏" class="headerlink" title="3. 使用 Spring 为 FreeMaker 提供的宏"></a>3. 使用 Spring 为 FreeMaker 提供的宏</h5><p>考虑以下如下代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/user/showUser/$&#123;user.userName&#125;.html&quot;</span>&gt;</span>$&#123;user.userName&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里使用的 URL 地址没有指定部署路径，如果部署路径不是 “&#x2F;”，则将发生错误。由于应用部署路径通常在最终部署时才能确定，因此不能直接通过硬编码的方式指定。在 JSP 中，通常使用 &lt;c:url&gt; 将 URL 转换为包含应用部署路径的绝对 URL。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;&lt;c:url value=&quot;</span>/<span class="attr">user</span>/<span class="attr">showUser</span>/$&#123;<span class="attr">user.userName</span>&#125;<span class="attr">.html</span>&quot;/&gt;</span>&quot;&gt;$&#123;topic.title&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在 FreeMaker 中，一般使用 Spring 的 FreeMaker 宏完成这一功能。此外，Spring 的 FreeMaker 宏还提供了本地化信息显示功能。</p>
+<p>使用 Spring 的 FreeMaker 宏：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E4%BD%BF%E7%94%A8Spring%E7%9A%84%E5%AE%8F.h3ezhdz1ir4.webp" alt="使用Spring的宏"></p>
+<p>Spring 为 FreeMaker 提供的宏有如下几种：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/Spring-%E4%B8%BA-FreeMaker-%E6%8F%90%E4%BE%9B%E7%9A%84%E5%AE%8F.6fhimc7jtjw0.webp" alt="Spring-为-FreeMaker-提供的宏"></p>
+<h4 id="4-5-Excel"><a href="#4-5-Excel" class="headerlink" title="4.5 Excel"></a>4.5 Excel</h4><p>如果希望使用 Excel 展示用户列表，则仅需扩展 Spring 的 AbstractExcelView 或者 AbstractJExcelView 即可。实现 buildExcelDocument() 方法，在方法中使用模型数据对象即可构造 Excel 文档。</p>
+<p>下面通过扩展 AbstractExcelView 定义显示用户列表的 Excel 视图类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserListExcelView</span> <span class="keyword">extends</span> <span class="title class_">AbstractExcelView</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">buildExcelDocument</span><span class="params">(Map&lt;String, Object&gt; model, org.apache.poi.hssf.usermodel.HSSFWorkbook workbook, HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        response.setHeader(<span class="string">&quot;Content-Disposition&quot;</span>, <span class="string">&quot;inline;filename=&quot;</span> + <span class="keyword">new</span> <span class="title class_">String</span>(<span class="string">&quot;用户列表&quot;</span>.getBytes(), <span class="string">&quot;iso-8859-1&quot;</span>));</span><br><span class="line">        List&lt;User&gt; userList = (List&lt;User&gt;) model.get(<span class="string">&quot;userList&quot;</span>);</span><br><span class="line">        <span class="type">HSSFSheet</span> <span class="variable">sheet</span> <span class="operator">=</span> workbook.createSheet(<span class="string">&quot;users&quot;</span>);</span><br><span class="line">        <span class="type">HSSFRow</span> <span class="variable">header</span> <span class="operator">=</span> sheet.createRow(<span class="number">0</span>);</span><br><span class="line">        header.createCell(<span class="number">0</span>).setCellValue(<span class="string">&quot;账号&quot;</span>);</span><br><span class="line">        header.createCell(<span class="number">1</span>).setCellValue(<span class="string">&quot;姓名&quot;</span>);</span><br><span class="line">        header.createCell(<span class="number">2</span>).setCellValue(<span class="string">&quot;生日&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> <span class="variable">rowNum</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (User user : userList) &#123;</span><br><span class="line">            <span class="type">HSSFRow</span> <span class="variable">row</span> <span class="operator">=</span> sheet.createRow(rowNum++);</span><br><span class="line">            row.createCell(<span class="number">0</span>).setCellValue(user.getUserName());</span><br><span class="line">            row.createCell(<span class="number">1</span>).setCellValue(user.getRealName());</span><br><span class="line">            <span class="type">SimpleDateFormat</span> <span class="variable">sdf</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SimpleDateFormat</span>(<span class="string">&quot;yyyy-MM-dd&quot;</span>);</span><br><span class="line">            <span class="type">String</span> <span class="variable">createDate</span> <span class="operator">=</span> sdf.format(user.getBirthday());</span><br><span class="line">            row.createCell(<span class="number">2</span>).setCellValue(createDate);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>response.setHeader(&quot;Content-Disposition&quot;, &quot;inline;filename=&quot; + new String(&quot;用户列表&quot;.getBytes(), &quot;iso-8859-1&quot;));</code> 处代码让浏览器直接在页面中显示 Excel 文件，而非显示一个对话框提示用户下载或打开文件。如果希望显示一个对话框提示用户下载或打开文件，则可以使用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">response.setHeader(<span class="string">&quot;Content-Disposition&quot;</span>, <span class="string">&quot;attchment;filename=&quot;</span> + <span class="keyword">new</span> <span class="title class_">String</span>(<span class="string">&quot;用户列表&quot;</span>.getBytes(), <span class="string">&quot;iso-8859-1&quot;</span>));</span><br></pre></td></tr></table></figure>
+
+<p>编写好 Excel 视图类后，必须在 smart-servlet.xml 中进行相应的配置：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.view.BeanNameViewResolver&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">p:order</span>=<span class="string">&quot;10&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;userListExcel&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.smart.controller.UserListExcelView&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>由于 UserListExcelView 代表的 Excel 视图对象是一个 Bean，因此我们使用 BeanNameViewResolver 作为视图解析器。</p>
+<p>在 UserController 中添加一个相应的请求处理方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/showUserListByXls&quot;)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">showUserListByXls</span><span class="params">(ModelMap mm)</span>&#123;</span><br><span class="line">    <span class="type">GregorianCalendar</span> <span class="variable">calendar</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">GregorianCalendar</span>();</span><br><span class="line">    ArrayList&lt;User&gt; userList = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    <span class="type">User</span> <span class="variable">user1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line">    user1.setUserName(<span class="string">&quot;tom&quot;</span>);</span><br><span class="line">    user1.setRealName(<span class="string">&quot;汤姆&quot;</span>);</span><br><span class="line">    calendar.set(<span class="number">2022</span>, <span class="number">4</span>, <span class="number">9</span>);</span><br><span class="line">    user1.setBirthday(calendar.getTime());</span><br><span class="line">    <span class="type">User</span> <span class="variable">user2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line">    user2.setUserName(<span class="string">&quot;john&quot;</span>);</span><br><span class="line">    user2.setRealName(<span class="string">&quot;约翰&quot;</span>);</span><br><span class="line">    user1.setBirthday(calendar.getTime());</span><br><span class="line">    userList.add(user1);</span><br><span class="line">    userList.add(user2);</span><br><span class="line">    mm.addAttribute(<span class="string">&quot;userList&quot;</span>, userList);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;userListExcel&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在浏览器输入 <code>http://localhost:8080/springmvc4/user/showUserListByXls.html</code> 根据浏览器的不同，将显示或下载一个 Excel 文件。</p>
+<h4 id="4-6-PDF"><a href="#4-6-PDF" class="headerlink" title="4.6 PDF"></a>4.6 PDF</h4><p>PDF 视图和 Excel 类似，也使用一个 Bean 作为视图对象。</p>
+<p>先编写 PDF 视图类，PDF 视图类需继承 AbstractPdfView：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserListPdfView</span> <span class="keyword">extends</span> <span class="title class_">AbstractPdfView</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">buildPdfDocument</span><span class="params">(Map&lt;String, Object&gt; model,</span></span><br><span class="line"><span class="params">			Document document, PdfWriter writer, HttpServletRequest request,</span></span><br><span class="line"><span class="params">			HttpServletResponse response)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">		response.setHeader(<span class="string">&quot;Content-Disposition&quot;</span>, <span class="string">&quot;inline; filename=&quot;</span>+ </span><br><span class="line">				<span class="keyword">new</span> <span class="title class_">String</span>(<span class="string">&quot;用户列表&quot;</span>.getBytes(), <span class="string">&quot;iso8859-1&quot;</span>));  </span><br><span class="line">		List&lt;User&gt; userList = (List&lt;User&gt;) model.get(<span class="string">&quot;userList&quot;</span>);</span><br><span class="line">		<span class="type">Table</span> <span class="variable">table</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Table</span>(<span class="number">3</span>);</span><br><span class="line">		table.setWidth(<span class="number">80</span>);</span><br><span class="line">		table.setBorder(<span class="number">1</span>);</span><br><span class="line">		table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);</span><br><span class="line">		table.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);</span><br><span class="line">		</span><br><span class="line">		<span class="type">BaseFont</span> <span class="variable">cnBaseFont</span> <span class="operator">=</span> BaseFont.createFont(<span class="string">&quot;STSongStd-Light&quot;</span>, <span class="string">&quot;UniGB-UCS2-H&quot;</span>, <span class="literal">false</span>);</span><br><span class="line">	    <span class="type">Font</span> <span class="variable">cnFont</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Font</span>(cnBaseFont, <span class="number">10</span>, Font.NORMAL, Color.BLUE);</span><br><span class="line"></span><br><span class="line">		table.addCell(buildFontCell(<span class="string">&quot;帐号&quot;</span>,cnFont));</span><br><span class="line">		table.addCell(buildFontCell(<span class="string">&quot;姓名&quot;</span>,cnFont));</span><br><span class="line">		table.addCell(buildFontCell(<span class="string">&quot;生日&quot;</span>,cnFont));</span><br><span class="line">		<span class="keyword">for</span> (User user : userList) &#123;</span><br><span class="line">			table.addCell( user.getUserName());</span><br><span class="line">			table.addCell(buildFontCell(user.getRealName(),cnFont));</span><br><span class="line">			<span class="type">String</span> <span class="variable">createDate</span> <span class="operator">=</span> DateFormatUtils.format(user.getBirthday(),</span><br><span class="line">					<span class="string">&quot;yyyy-MM-dd&quot;</span>);</span><br><span class="line">			table.addCell(createDate);</span><br><span class="line">		&#125;</span><br><span class="line">		document.add(table);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> Cell <span class="title function_">buildFontCell</span><span class="params">(String content,Font font)</span> <span class="keyword">throws</span> RuntimeException&#123; </span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			 <span class="type">Phrase</span> <span class="variable">phrase</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Phrase</span>(content, font);</span><br><span class="line">			 <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Cell</span>(phrase);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">		&#125;		</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>UserListPdfView 和 UserListExcelView 视图一样，可以采用 BeanNameViewResolver 作为视图解析器，在 smart-servlet.xml 中添加视图 Bean 声明即可：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;userListPdf&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.smart.controller.UserListPdfView&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>同样，在 UserController 中添加一个 showUserListInPdf() 方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/showUserListByPdf&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">showUserListByPdf</span><span class="params">(ModelMap mm)</span>&#123;</span><br><span class="line">        <span class="type">GregorianCalendar</span> <span class="variable">calendar</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">GregorianCalendar</span>();</span><br><span class="line">        ArrayList&lt;User&gt; userList = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">        <span class="type">User</span> <span class="variable">user1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line">        user1.setUserName(<span class="string">&quot;tom&quot;</span>);</span><br><span class="line">        user1.setRealName(<span class="string">&quot;汤姆&quot;</span>);</span><br><span class="line">        calendar.set(<span class="number">2022</span>, <span class="number">4</span>, <span class="number">9</span>);</span><br><span class="line">        user1.setBirthday(calendar.getTime());</span><br><span class="line">        <span class="type">User</span> <span class="variable">user2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line">        user2.setUserName(<span class="string">&quot;john&quot;</span>);</span><br><span class="line">        user2.setRealName(<span class="string">&quot;约翰&quot;</span>);</span><br><span class="line">        user1.setBirthday(calendar.getTime());</span><br><span class="line">        userList.add(user1);</span><br><span class="line">        userList.add(user2);</span><br><span class="line">        mm.addAttribute(<span class="string">&quot;userList&quot;</span>, userList);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;userListPdf&quot;</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>在浏览器输入 <code>http://localhost:8080/springmvc4/user/showUserListByPdf.html</code> 根据浏览器的不同，将显示或下载一个 PDF 文件。</p>
+<h4 id="4-7-输出-XML"><a href="#4-7-输出-XML" class="headerlink" title="4.7 输出 XML"></a>4.7 输出 XML</h4><p>Spring MVC 还可以将模型中的数据以 XML 的形式输出，其对应的视图对象为 MashallingView。</p>
+<p>在 smart-servlet.xml 中添加 MashallingView 的配置：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;userListXml&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.view.xml.MarshallingView&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:modelKey</span>=<span class="string">&quot;userList&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:marshaller-ref</span>=<span class="string">&quot;xmlMarshaller&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;xmlMarshaller&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.oxm.xstream.XStreamMarshaller&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;streamDriver&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;com.thoughtworks.xstream.io.xml.StaxDriver&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;annotatedClasses&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">list</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">value</span>&gt;</span>com.smart.domain.User<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">list</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>MarshallingView 使用 Marshaller 将模型数据转换为 XML，通过 marshaller 属性注入一个 Marshaller 实例。在默认情况下，MarshallingView 会将模型中的所有属性都转换为 XML。由于模型属性包含很多隐式数据，直接将模型中的所有数据全部输出往往并不是我们所期望的。MarshallingView 允许通过 modelKey 指定模型中的哪个属性需要输出为 XML。</p>
+<p>在 UserController 中添加一个方法，返回 userListXml 逻辑视图名：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/showUserListByXml&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">showUserListByXml</span><span class="params">(ModelMap mm)</span>&#123;</span><br><span class="line">        <span class="type">GregorianCalendar</span> <span class="variable">calendar</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">GregorianCalendar</span>();</span><br><span class="line">        ArrayList&lt;User&gt; userList = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">        <span class="type">User</span> <span class="variable">user1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line">        user1.setUserName(<span class="string">&quot;tom&quot;</span>);</span><br><span class="line">        user1.setRealName(<span class="string">&quot;汤姆&quot;</span>);</span><br><span class="line">        calendar.set(<span class="number">2022</span>, <span class="number">4</span>, <span class="number">9</span>);</span><br><span class="line">        user1.setBirthday(calendar.getTime());</span><br><span class="line">        <span class="type">User</span> <span class="variable">user2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line">        user2.setUserName(<span class="string">&quot;john&quot;</span>);</span><br><span class="line">        user2.setRealName(<span class="string">&quot;约翰&quot;</span>);</span><br><span class="line">        user1.setBirthday(calendar.getTime());</span><br><span class="line">        userList.add(user1);</span><br><span class="line">        userList.add(user2);</span><br><span class="line">        mm.addAttribute(<span class="string">&quot;userList&quot;</span>, userList);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;userListXml&quot;</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>在浏览器输入 <code>http://localhost:8080/springmvc4/user/showUserListByXml.html</code> 将返回 XML 内容的响应。</p>
+<h4 id="4-8-输出-JSON"><a href="#4-8-输出-JSON" class="headerlink" title="4.8 输出 JSON"></a>4.8 输出 JSON</h4><p>Spring MVC 的 MappingJackson2JsonView 借助 Jackson 框架的 ObjectMapper 将模型数据转换为 JSON 格式输出。由于 MappingJackson2JsonView 也是一个 Bean，因此可以通过 BeanNameViewResolver 进行解析，因此仅需在 smart-servlet.xml 中配置即可：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;userListJson&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.view.json.MappingJackson2JsonView&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:modelKeys</span>=<span class="string">&quot;userList&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>默认情况下，MappingJackson2JsonView 会将模型中的所有数据全部输出为 JSON，这显然是不合理的，可以通过 modelKeys 属性指定模型中的哪些属性需要输出。</p>
+<p>在 UserController 中添加一个方法，返回 userListJson 逻辑视图名：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/showUserListByJson&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">showUserListByJson</span><span class="params">(ModelMap mm)</span>&#123;</span><br><span class="line">        <span class="type">GregorianCalendar</span> <span class="variable">calendar</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">GregorianCalendar</span>();</span><br><span class="line">        ArrayList&lt;User&gt; userList = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">        <span class="type">User</span> <span class="variable">user1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line">        user1.setUserName(<span class="string">&quot;tom&quot;</span>);</span><br><span class="line">        user1.setRealName(<span class="string">&quot;汤姆&quot;</span>);</span><br><span class="line">        calendar.set(<span class="number">2022</span>, <span class="number">4</span>, <span class="number">9</span>);</span><br><span class="line">        user1.setBirthday(calendar.getTime());</span><br><span class="line">        <span class="type">User</span> <span class="variable">user2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line">        user2.setUserName(<span class="string">&quot;john&quot;</span>);</span><br><span class="line">        user2.setRealName(<span class="string">&quot;约翰&quot;</span>);</span><br><span class="line">        user1.setBirthday(calendar.getTime());</span><br><span class="line">        userList.add(user1);</span><br><span class="line">        userList.add(user2);</span><br><span class="line">        mm.addAttribute(<span class="string">&quot;userList&quot;</span>, userList);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;userListJson&quot;</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>在浏览器输入 <code>http://localhost:8080/springmvc4/user/showUserListByJson.html</code> 将以 JOSN 格式输出模型中名为 userList 的属性对象。</p>
+<h4 id="4-9-使用-XmlViewResolver"><a href="#4-9-使用-XmlViewResolver" class="headerlink" title="4.9 使用 XmlViewResolver"></a>4.9 使用 XmlViewResolver</h4><p>XmlViewResolver 和 BeanNameViewResolver 功能相似，唯一不同的是它可以将视图 Bean 定义在一个独立的 XML 文件中，而不是将所有视图 Bean 都定义在 smart-servlet.xml 中。</p>
+<p>要使用 XmlViewResolver，必须在 smart-servlet.xml 中添加：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.view.XmlViewResolver&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:order</span>=<span class="string">&quot;20&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:location</span>=<span class="string">&quot;WEB-INF/views/smart-views.xml&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>默认情况下，XmlViewResolver 在 WEB-INF&#x2F;views.xml 中查找视图 Bean 的定义，我们将视图 Bean 定义在 WEB-INF&#x2F;views&#x2F;smart-views.xml 中，所以需要通过 location 显示指定。</p>
+<p>定义 smart-views.xml 文件，和普通的 Spring 配置文件没有任何区别：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:context</span>=<span class="string">&quot;http://www.springframework.org/schema/context&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:p</span>=<span class="string">&quot;http://www.springframework.org/schema/p&quot;</span> <span class="attr">xmlns:mvc</span>=<span class="string">&quot;http://www.springframework.org/schema/mvc&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd</span></span></span><br><span class="line"><span class="string"><span class="tag">    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">&quot;com.smart.*&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;userListJson1&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.view.json.MappingJackson2JsonView&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:modelKeys</span>=<span class="string">&quot;userList&quot;</span>/&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;userListExcel1&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.smart.controller.UserListExcelView&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">mvc:annotation-driven</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>不过在 smart-views.xml 文件中定义的 Bean 不能被 Spring Web 上下文的其他 Bean 引用，它是被 XmlViewResolver 独享的。</p>
+<h4 id="4-10-使用-ResourceBundleViewResolver"><a href="#4-10-使用-ResourceBundleViewResolver" class="headerlink" title="4.10 使用 ResourceBundleViewResolver"></a>4.10 使用 ResourceBundleViewResolver</h4><p>对于同一个逻辑视图名，如果希望为不同地区的用户提供不同类型的视图，则应该考虑使用 ResourceBundleViewResolver。和 XmlViewResolver 将视图定义在 XML 文件中不同，ResourceBundleViewResolver 通过一个国家化资源文件定义视图对象。</p>
+<p>假如有个需求，对同一个页面的展现方式，一个人要求用 HTML 展现，另一个人要求用 PDF 展现，这个时候就可以通过 ResourceBundleViewResolver 来实现。</p>
+<p>在 smart-servlet.xml 中添加代码：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.view.ResourceBundleViewResolver&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:order</span>=<span class="string">&quot;30&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:basenames</span>=<span class="string">&quot;i18n/views&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>通过 basenames 属性指定视图国际化资源文件的基名，对应于中国大陆的视图资源文件为 views_zh_CN.properties，内容为：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">userListi18n.(class)</span>=<span class="string">org.springframework.web.servlet.view.JstlView</span></span><br><span class="line"><span class="attr">userListi18n.url</span>=<span class="string">/WEB-INF/views/user/userList.jsp</span></span><br></pre></td></tr></table></figure>
+
+<p>其中通过 &lt;逻辑视图名&gt;.(class) 属性设置试图实现类。</p>
+<p>通过 &lt;逻辑视图名&gt;.url 设置 URL 资源。</p>
+<p>对应的 views_en_US.properties 内容为：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">userListi18n.(class)</span>=<span class="string">com.smart.web.UserListPdfView</span></span><br></pre></td></tr></table></figure>
+
+<p>ResourceBundleViewResolver 视图解析器会根据具体的用户请求调用不同的 properties。</p>
+<p>在一个视图国际化资源中也可以定义多个视图对象：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 第一个视图</span></span><br><span class="line"><span class="attr">welcomeView.(class)</span>=<span class="string">org.springframework.web.servlet.view.JstlView</span></span><br><span class="line"><span class="attr">welcomeView.url</span>=<span class="string">/WEB-INF/jsp/welcome.jsp</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 第二个视图</span></span><br><span class="line"><span class="attr">vetsView.(class)</span>=<span class="string">org.springframework.web.servlet.view.JstlView</span></span><br><span class="line"><span class="attr">vetsView.url</span>=<span class="string">/WEB-INF/jsp/vets.jsp</span></span><br><span class="line"><span class="attr">...</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="4-11-混合使用多种视图技术"><a href="#4-11-混合使用多种视图技术" class="headerlink" title="4.11 混合使用多种视图技术"></a>4.11 混合使用多种视图技术</h4><h5 id="1-ContentNegotiatingViewResolver"><a href="#1-ContentNegotiatingViewResolver" class="headerlink" title="1. ContentNegotiatingViewResolver"></a>1. ContentNegotiatingViewResolver</h5><p>先前介绍过使用了 HttpMessageConverter 对标注了 @ResponseBody 或返回值为 ResponseEntity 的处理器方法进行响应信息转换的内容。Spring MVC 可以根据请求报文头的 Accept 属性选择合适的 HttpMessageConverter 将处理方法的返回值以 XML、JSON 等不同形式输出响应。也就是说，调用者可以通过设置请求报文头的 Accept 值控制服务器端返回的数据格式，从而实现对同一资源采用相同 URL 的 REST 编程风格。</p>
+<p>但是基于 HttpMessageConverter 的实现方式存在以下限制：</p>
+<ul>
+<li>只能通过请求报文头的 Accept 值控制服务器端返回的数据格式。如果客户端是浏览器，那么很难控制 Accept 报文头的值，一般情况下，该值是由浏览器自己决定的。</li>
+<li>无法通过 URL 扩展名或请求参数控制服务器端的资源输出形式，因此无法将其对应一个 URL 发布出去。</li>
+<li>如果希望使用 XML、JSON、一个网页等形式输出资源，则 HttpMessageConverter 很难达到要求。因为 HttpMessageConverter 很难调用一个视图对象渲染模型，它直接负责将资源输出为某一内容形式。</li>
+</ul>
+<p>所以，如果希望将资源以 XML、JSON 等纯数据的格式输出，且不在意使用报文头控制资源输出，那么适合选择 HttpMessageConverter 实现方式。否则，建议采用 Spring MVC 的 ContentNegotiatingViewResolver 视图解析器。</p>
+<p>ContentNegotiatingViewResolver 并不是一个传统的视图解析器，它实际上更像是一个中介人，根据请求信息从上下文中选择一个合适的视图解析器进行解析。因此，一般将 ContentNegotiatingViewResolver 的优先级设为最高，以便它可以方便的选择其他视图解析器。</p>
+<p>ContentNegotiatingViewResolver 根据请求所要求的资源类型决定由哪个视图解析器负责处理，它按照如下方式工作：</p>
+<ol>
+<li>如果其 favorPathExtension 属性设置为 true，则根据 URL 中的文件扩展名确定其 MIME 类型（如userList.xml，userList.json 等）。</li>
+<li>如果其 favorPathExtension 属性设置为 true，则根据请求参数的值确定其 MIME 类型。默认的请求参数是 formart。可以通过 parameterName 属性指定一个自定义的参数。</li>
+<li>如果还没有找到对应的 MIME 类型，且 Java Activation Framework（JAF）位于类路径下，则通过 JAF 的 FileTypeMap.getContentType(url) 方法对 URL 进行判断，以便获取对应的 MIME 类型。</li>
+<li>如果以上步骤都失败，且 ignoreAcceptHeader 属性设置为 false，则采用 Accept 请求报文头的值确定 MIME 类型。由于不同浏览器产生的 Accept 头都是不一样的，所以一般不建议采用 Accept 确定 MIME 类型。</li>
+</ol>
+<h5 id="2-使用同一-URL-获取不同形式的返回内容"><a href="#2-使用同一-URL-获取不同形式的返回内容" class="headerlink" title="2. 使用同一 URL 获取不同形式的返回内容"></a>2. 使用同一 URL 获取不同形式的返回内容</h5><p>假设希望使用以下 REST 风格的 URL 以不同的 MIME 格式获取相同的资源：</p>
+<ul>
+<li>&#x2F;user&#x2F;showUserListMix.html：返回一个 HTML 页面显示的用户列表。</li>
+<li>&#x2F;user&#x2F;showUserListMix.html?content&#x3D;xml：返回一个 XML 格式的用户列表。</li>
+<li>&#x2F;user&#x2F;showUserListMix.html?content&#x3D;json：返回一个 JSON 格式的用户列表。</li>
+</ul>
+<p>首先，在 UserController 中添加一个处理方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/showUserListMix&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">showUserListMix</span><span class="params">(ModelMap mm)</span>&#123;</span><br><span class="line">        <span class="type">GregorianCalendar</span> <span class="variable">calendar</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">GregorianCalendar</span>();</span><br><span class="line">        ArrayList&lt;User&gt; userList = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">        <span class="type">User</span> <span class="variable">user1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line">        user1.setUserName(<span class="string">&quot;tom&quot;</span>);</span><br><span class="line">        user1.setRealName(<span class="string">&quot;汤姆&quot;</span>);</span><br><span class="line">        calendar.set(<span class="number">2022</span>, <span class="number">4</span>, <span class="number">9</span>);</span><br><span class="line">        user1.setBirthday(calendar.getTime());</span><br><span class="line">        <span class="type">User</span> <span class="variable">user2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line">        user2.setUserName(<span class="string">&quot;john&quot;</span>);</span><br><span class="line">        user2.setRealName(<span class="string">&quot;约翰&quot;</span>);</span><br><span class="line">        user1.setBirthday(calendar.getTime());</span><br><span class="line">        userList.add(user1);</span><br><span class="line">        userList.add(user2);</span><br><span class="line">        mm.addAttribute(<span class="string">&quot;userList&quot;</span>, userList);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;userListMix&quot;</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>接着，在 smart-servlet.xml 中添加以下配置片段，配置一个 ContentNegotiatingViewResolver，采用请求参数指定内容资源的返回类型：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;contentNegotiationManager&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.accept.ContentNegotiationManagerFactoryBean&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:ignoreAcceptHeader</span>=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:favorPathExtension</span>=<span class="string">&quot;false&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:favorParameter</span>=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:parameterName</span>=<span class="string">&quot;format&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:defaultContentType</span>=<span class="string">&quot;text/html&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;mediaTypes&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">value</span>&gt;</span></span><br><span class="line">                html=text/html</span><br><span class="line">                xml=application/xml</span><br><span class="line">                json=application/json</span><br><span class="line">            <span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 协商多种视图解析器 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.view.ContentNegotiatingViewResolver&quot;</span> <span class="attr">p:order</span>=<span class="string">&quot;0&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;contentNegotiationManager&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;contentNegotiationManager&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;defaultViews&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">list</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.view.json.MappingJackson2JsonView&quot;</span></span></span><br><span class="line"><span class="tag">                      <span class="attr">p:modelKeys</span>=<span class="string">&quot;userList&quot;</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.view.xml.MarshallingView&quot;</span></span></span><br><span class="line"><span class="tag">                      <span class="attr">p:modelKey</span>=<span class="string">&quot;userList&quot;</span> <span class="attr">p:marshaller-ref</span>=<span class="string">&quot;xmlMarshaller&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">list</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">加上之前配置的视图解析器</span><br></pre></td></tr></table></figure>
+
+<p>ContentNegotiatingViewResolver 会在上下文中查找和 MIME 类型匹配的视图解析器，并委托它们进行视图解析。这样通过 content 请求参数就可以控制资源的输出格式了。</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：精通SpringMVC(四)-视图和视图解析器</li>
+        <li>Post author：Lisj</li>
+        <li>Create time：2022-04-09 12:40:56</li>
+        <li>
+            Post link：https://lisj98.github.io/2022/04/09/精通SpringMVC-四-视图和视图解析器/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2022/04/11/%E7%B2%BE%E9%80%9ASpringMVC-%E4%BA%94-%E6%9C%AC%E5%9C%B0%E5%8C%96%E8%A7%A3%E6%9E%90/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">精通SpringMVC(五)-本地化解析</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/04/07/%E7%B2%BE%E9%80%9ASpringMVC-%E4%B8%89-%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">精通SpringMVC(三)-处理方法的数据绑定</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Lisj</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-%E8%AE%A4%E8%AF%86%E8%A7%86%E5%9B%BE"><span class="nav-text">4.1 认识视图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-%E8%AE%A4%E8%AF%86%E8%A7%86%E5%9B%BE%E8%A7%A3%E6%9E%90%E5%99%A8"><span class="nav-text">4.2 认识视图解析器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-JSP-%E5%92%8C-JSTL"><span class="nav-text">4.3 JSP 和 JSTL</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E4%BD%BF%E7%94%A8-InternalResourceViewResolver"><span class="nav-text">1. 使用 InternalResourceViewResolver</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E4%BD%BF%E7%94%A8%E8%A1%A8%E5%8D%95%E6%A0%87%E7%AD%BE"><span class="nav-text">2. 使用表单标签</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-%E5%85%B3%E4%BA%8E%E5%A4%8D%E9%80%89%E6%A1%86%E3%80%81%E5%8D%95%E9%80%89%E6%A1%86%E3%80%81%E4%B8%8B%E6%8B%89%E6%A1%86%E5%92%8C%E8%A1%A8%E5%8D%95%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7%E7%9A%84%E6%98%A0%E5%B0%84%E9%97%AE%E9%A2%98"><span class="nav-text">3. 关于复选框、单选框、下拉框和表单对象属性的映射问题</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-4-%E6%A8%A1%E6%9D%BF%E8%A7%86%E5%9B%BE"><span class="nav-text">4.4 模板视图</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA-FreeMarker-%E6%A8%A1%E6%9D%BF"><span class="nav-text">1. 编写一个 FreeMarker 模板</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-%E4%BD%BF%E7%94%A8-Spring-%E4%B8%BA-FreeMaker-%E6%8F%90%E4%BE%9B%E7%9A%84%E5%AE%8F"><span class="nav-text">3. 使用 Spring 为 FreeMaker 提供的宏</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-5-Excel"><span class="nav-text">4.5 Excel</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-6-PDF"><span class="nav-text">4.6 PDF</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-7-%E8%BE%93%E5%87%BA-XML"><span class="nav-text">4.7 输出 XML</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-8-%E8%BE%93%E5%87%BA-JSON"><span class="nav-text">4.8 输出 JSON</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-9-%E4%BD%BF%E7%94%A8-XmlViewResolver"><span class="nav-text">4.9 使用 XmlViewResolver</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-10-%E4%BD%BF%E7%94%A8-ResourceBundleViewResolver"><span class="nav-text">4.10 使用 ResourceBundleViewResolver</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-11-%E6%B7%B7%E5%90%88%E4%BD%BF%E7%94%A8%E5%A4%9A%E7%A7%8D%E8%A7%86%E5%9B%BE%E6%8A%80%E6%9C%AF"><span class="nav-text">4.11 混合使用多种视图技术</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-ContentNegotiatingViewResolver"><span class="nav-text">1. ContentNegotiatingViewResolver</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E4%BD%BF%E7%94%A8%E5%90%8C%E4%B8%80-URL-%E8%8E%B7%E5%8F%96%E4%B8%8D%E5%90%8C%E5%BD%A2%E5%BC%8F%E7%9A%84%E8%BF%94%E5%9B%9E%E5%86%85%E5%AE%B9"><span class="nav-text">2. 使用同一 URL 获取不同形式的返回内容</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

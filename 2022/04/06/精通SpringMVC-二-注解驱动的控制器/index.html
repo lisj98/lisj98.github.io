@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Java、数据结构">
+    <meta name="description" content="所见即所得">
+    <meta name="author" content="Lisj">
+    
+    <title>
+        
+            精通SpringMVC(二)-注解驱动的控制器 |
+        
+        BlogOfLisj
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/l-solid.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"lisj98.github.io","root":"/","language":"en","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#FF00FF","avatar":"/images/Neymar.jpg","favicon":"/images/l-solid.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"What you see is what you get."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"trigger":"auto","unescape":false,"preload":true},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":true},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 6.0.0"><link rel="alternate" href="/atom.xml" title="BlogOfLisj" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                BlogOfLisj
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                TAGS
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">CATEGORIES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">TAGS</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">精通SpringMVC(二)-注解驱动的控制器</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/Neymar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Lisj</span>
+                        
+                            <span class="author-label">中忍</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-04-06 21:12:22</span>
+        <span class="mobile">2022-04-06 21:12</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/SpringMVC/">SpringMVC</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>7.3k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>30 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>本系列笔记所有代码地址：<a class="link"   target="_blank" rel="noopener" href="https://github.com/lisj98/SpringMVCSource.git" >https://github.com/lisj98/SpringMVCSource.git<i class="fas fa-external-link-alt"></i></a></p>
+<h4 id="2-1-使用-RequestMapping-映射请求"><a href="#2-1-使用-RequestMapping-映射请求" class="headerlink" title="2.1 使用 @RequestMapping 映射请求"></a>2.1 使用 @RequestMapping 映射请求</h4><p>在 POJO 类定义 <strong>@Controller</strong>，再通过 <code>&lt;context:component-scan&gt;</code> 扫描相应的类包，即可使 POJO 成为一个能处理 HTTP 请求的控制器。</p>
+<p>可以创建数量不限的控制器，用来分别处理不同的请求。每个控制器同样可以拥有多个方法，负责不同的请求操作。如何将每个请求毫无差错的映射到对应的控制器方法中是 Spring MVC 框架的重要任务之一，这项任务由 <strong>@RequestMapping</strong> 承担。</p>
+<p>在控制器的类定义和方法定义处都可以标注 @RequestMapping。<strong>类定义处的 @RequestMapping</strong> 提供初步的请求映射信息，表示该类下的所有请求都必须先经过类定义处的路径；<strong>方法定义处的 @RequestMapping</strong> 提供进一步更加细分的请求映射信息。DispatcherServlet 截获请求后，就能通过控制器上的 @RequestMapping 确定具体的处理方法。</p>
+<p>将请求映射到控制器处理方法的工作包含一系列映射规则，这些规则是根据请求中的各种信息制定的，具体包括<strong>请求 URL</strong>、<strong>请求参数</strong>、<strong>请求方法</strong>、<strong>请求头</strong>这4个方面的信息。</p>
+<h5 id="通过请求-URL-进行映射"><a href="#通过请求-URL-进行映射" class="headerlink" title="通过请求 URL 进行映射"></a>通过请求 URL 进行映射</h5><p>@RequestMapping 使用 value 值指定请求的 URL，如 @RequestMapping(“&#x2F;user”)。</p>
+<p>@RequestMapping 在<strong>类定义处指定的 URL</strong> 相对于 Web 应用的部署路径，而在<strong>方法定义处指定的 URL</strong> 则相对于类定义处指定的 URL。如果类定义处未标注 @RequestMapping，则方法定义处指定的 URL 同样也要相对于 Web 应用的部署路径。比如你在 Tomcat 里部署的根路径是 &#x2F;springmvc2，那么类定义处的 URL 实际是 &#x2F;springmvc2&#x2F;user，方法定义处的 URL 是 &#x2F;user&#x2F;register.html，当然前面还是要经过&#x2F;springmvc2。而如果类定义处没有标注 @RequestMapping，那么方法定义处的 URL 就是 &#x2F;springmvc2&#x2F;register.html</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/@RequestMapping%E8%B7%AF%E5%BE%84%E7%A4%BA%E4%BE%8B.6aoikpjxpfw0.webp" alt="@RequestMapping路径示例"></p>
+<p>@RequestMapping 不但支持标准的 URL，还支持 Ant 风格（？、* 和 ** 字符）和带 {xxx} 占位符的 URL。如：</p>
+<ul>
+<li>&#x2F;user&#x2F;*&#x2F;createUser：匹配 &#x2F;user&#x2F;aaa&#x2F;createUser，&#x2F;user&#x2F;bbb&#x2F;createUser 等；</li>
+<li>&#x2F;user&#x2F;**&#x2F;createUser：匹配 &#x2F;user&#x2F;aaa&#x2F;bbb&#x2F;createUser，&#x2F;user&#x2F;createUser 等；</li>
+<li>&#x2F;user&#x2F;createUser??：匹配 &#x2F;user&#x2F;createUseraa，&#x2F;user&#x2F;createUserbb 等；</li>
+<li>&#x2F;user&#x2F;{userId}：匹配 user&#x2F;123，user&#x2F;456 等；</li>
+<li>&#x2F;user&#x2F;**&#x2F;{userId}：匹配 user&#x2F;aaa&#x2F;bbb&#x2F;123，user&#x2F;aaa&#x2F;456 等；</li>
+<li>company&#x2F;{companyId}&#x2F;user&#x2F;{userId}&#x2F;detail：匹配 company&#x2F;123&#x2F;user&#x2F;456&#x2F;detail 等。</li>
+</ul>
+<p>通过 <strong>@PathVariable</strong> 可以将 URL 中的占位符参数绑定到控制器处理方法的入参中，这样调用该方法时控制器方法中参数的值就是 URL 中占位符参数的值。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/@PathVariable%E7%BB%91%E5%AE%9A%E5%85%A5%E5%8F%82.65mr1umlcqs0.webp" alt="@PathVariable绑定入参"></p>
+<p>如果 @PathVariable 后面的括号中包含了参数名称，则必须和 URL 占位符参数一致，如果未指定参数名称，则控制器方法入参要和 URL 占位符参数一致。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/@PathVariable%E5%90%8E%E4%B8%8D%E6%8C%87%E5%AE%9A%E5%8F%82%E6%95%B0%E5%90%8D%E7%A7%B0.3rvbb384x2g0.webp" alt="@PathVariable后不指定参数名称"></p>
+<p>不过在默认情况下，Java 类的反射对象并未包含方法入参的名称，在 Java 8.0 中可以通过 javac -parameter 生成方法入参的元数据信息，在低版本的 Java 中则可以通过 javac -g 打开生成所有调试信息的开发，这样也会包含方法入参名的元数据信息。所以要使 findPet() 方法入参成功绑定 URL 中的占位符操作，必须保证在编译时输出方法名元信息。在 Maven 中可以显式配置 maven-compile-plugin 编译插件，开启编译输出调试信息的开关。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-compile-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">source</span>&gt;</span>$&#123;java.version&#125;<span class="tag">&lt;/<span class="name">source</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">target</span>&gt;</span>$&#123;java.version&#125;<span class="tag">&lt;/<span class="name">target</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">encoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">encoding</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">debug</span>&gt;</span>true<span class="tag">&lt;/<span class="name">debug</span>&gt;</span>		# 开启开关</span><br><span class="line">    <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>不过编译时打开 debug 开关会使目标类变大，对运行效率也有一定影响，正式场景往往将此开关关闭。因此在<strong>使用 @PathVariable 时最好显式地指定绑定的参数名</strong>。</p>
+<h5 id="通过请求参数、请求方法或请求头进行映射"><a href="#通过请求参数、请求方法或请求头进行映射" class="headerlink" title="通过请求参数、请求方法或请求头进行映射"></a>通过请求参数、请求方法或请求头进行映射</h5><p>一个标准的 HTTP 请求报文结构：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/HTTP%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87.4onp7yy3cgi0.webp" alt="HTTP请求报文"></p>
+<p>①<strong>请求方法</strong>，包含 GET、POST、HEAD、DELETE、OPTIONS、PUT、TRACE 等。</p>
+<p>②<strong>请求 URL</strong>，和报文头的 Host 属性组成完整的请求 URL。</p>
+<p>③<strong>协议名称及版本号</strong>。</p>
+<p>④<strong>报文头</strong>，包含若干属性，格式为“属性名:属性值”，服务器端根据报文头获取客户端的信息。</p>
+<p>⑤<strong>报文体</strong>，它将表单页面中的组件值通过 param&#x3D;value1&amp;param2&#x3D;value2 的键值对形式编码成一个格式化串，不但报文体可以传递请求参数，URL 也可以通过类似于 &#x2F;springmvc2&#x2F;user.html?param&#x3D;value1&amp;param2&#x3D;value2 的方式传递请求参数。</p>
+<p>@RequestMapping 不仅可以使用 URL 映射请求，还可以使用请求方法、请求头参数及请求参数（报文体和 URL 包含的请求参数）映射请求。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E4%BD%BF%E7%94%A8%E5%85%B6%E4%BB%96%E4%BF%A1%E6%81%AF%E6%98%A0%E5%B0%84%E8%AF%B7%E6%B1%82.39rkwt04qpg0.webp" alt="使用其他信息映射请求"></p>
+<p>params 和 headers 支持简单的映射表达式，如：</p>
+<ul>
+<li>“param1”：表示请求需包含名为 param1 的请求参数。</li>
+<li>“!param1”：表示请求不能包含名为 param1 的请求参数。</li>
+<li>“param1!&#x3D;value1”：表示请求包含名为 param1 的请求参数，但值不能为 value1。</li>
+<li>{“param1&#x3D;value1”,”param2”}：表示请求必须包含名为 param1 和 param2 的请求参数，且 param1 的值必须为 value1。</li>
+</ul>
+<h4 id="2-2-请求处理方法签名"><a href="#2-2-请求处理方法签名" class="headerlink" title="2.2 请求处理方法签名"></a>2.2 请求处理方法签名</h4><p>Spring MVC 通过<strong>分析处理方法的签名</strong>（就是入参），将 HTTP 请求信息绑定到处理方法的相应入参中，然后再调用处理方法得到返回值，最后对返回值进行处理并响应。</p>
+<p>一般情况下，处理方法的返回值类型为 <strong>ModelAndView</strong> 或者 <strong>String</strong>，前者包含模型和逻辑视图名，后者仅包含一个逻辑视图名。</p>
+<p>几种典型的方法签名：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//请求参数按名称匹配的方式绑定到方法入参中，方法返回的字符串代表逻辑视图名</span></span><br><span class="line"><span class="meta">@RequestMapping(path = &quot;/handle1&quot;)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">handle1</span><span class="params">(<span class="meta">@RequestParam(&quot;userName&quot;)</span> String userName,</span></span><br><span class="line"><span class="params">                      <span class="meta">@RequestParam(&quot;password&quot;)</span> String password,</span></span><br><span class="line"><span class="params">                      <span class="meta">@RequestParam(&quot;realName&quot;)</span> String realName)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;success&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//将Cookie值及报文头属性绑定到入参中，方法返回ModelAndView</span></span><br><span class="line"><span class="meta">@RequestMapping(path = &quot;/handle2&quot;)</span></span><br><span class="line"><span class="keyword">public</span> ModelAndView <span class="title function_">handle2</span><span class="params">(<span class="meta">@CookieValue(&quot;JSESSIONID&quot;)</span> String sessionId,</span></span><br><span class="line"><span class="params">                            <span class="meta">@RequestHeader(&quot;Accept-Language&quot;)</span> String acceptLanguage)</span>&#123;</span><br><span class="line">    <span class="type">ModelAndView</span> <span class="variable">mav</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ModelAndView</span>();</span><br><span class="line">    mav.setViewName(<span class="string">&quot;success&quot;</span>);</span><br><span class="line">    mav.addObject(<span class="string">&quot;user&quot;</span>, <span class="keyword">new</span> <span class="title class_">User</span>());</span><br><span class="line">    <span class="keyword">return</span> mav;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//请求参数按名称匹配的方式绑定到user的属性中，方法返回的字符串代表逻辑视图名</span></span><br><span class="line"><span class="meta">@RequestMapping(path = &quot;/handle3&quot;)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">handle3</span><span class="params">(User user)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;success&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//直接将HTTP请求对象传递给处理方法，方法返回的字符串代表逻辑视图名</span></span><br><span class="line"><span class="meta">@RequestMapping(path = &quot;/hanlde4&quot;)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">handle4</span><span class="params">(HttpServletRequest request)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;success&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-3-使用矩阵变量绑定参数"><a href="#2-3-使用矩阵变量绑定参数" class="headerlink" title="2.3 使用矩阵变量绑定参数"></a>2.3 使用矩阵变量绑定参数</h4><p>在 Spring MVC 3.2 中出现了 <strong>@MatrixVariable</strong> 注解，该注解能够将请求中的<strong>矩阵变量</strong>（Matrix Variable，即请求路径中的一个&#x2F;*&#x2F;中有多个变量）绑定到处理器的方法参数中。</p>
+<p>在 Matrix Variable 中，多个变量可以使用“;”分隔，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/books;author=Tom;year=2022</span><br></pre></td></tr></table></figure>
+
+<p> 如果一个变量对应多个值，那么可以使用“,”分隔，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">author=smart1,smart2,smart3</span><br></pre></td></tr></table></figure>
+
+<p>或者使用重复的变量名，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">author=smart1;author=smart2;author=smart3</span><br></pre></td></tr></table></figure>
+
+<p>举一个例子来说明矩阵变量：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// GET /books/22;a=11;b=22</span></span><br><span class="line"><span class="meta">@RequestMapping(value = &quot;/books/&#123;bookId&#125;&quot;, method = RequestMethod.GET)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">findBookId</span><span class="params">(<span class="meta">@PathVariable</span> String bookId, <span class="meta">@MatrixVariable</span> <span class="type">int</span> a)</span>&#123;</span><br><span class="line">    <span class="comment">// do sth</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当 URL 输入 &#x2F;books&#x2F;22;a&#x3D;11;b&#x3D;22（22;a&#x3D;11;b&#x3D;22就是矩阵变量） 时，相应的 bookId 和 a 都会被映射到 findBookId() 方法中，如果映射不到，则会报错。如果 URL 中没有相应的 a 和 b 的值，则需要指定空值（@MatrixVariable(required&#x3D;false)）才不会报错。</p>
+<p>再来看一个复杂的例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//GET /books/42;a=11/authors/21;q=22</span></span><br><span class="line"><span class="meta">@RequestMapping(value = &quot;/books/&#123;bookId&#125;/authors/&#123;authorId&#125;&quot;, method = RequestMethod.GET)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">findBook</span><span class="params">(<span class="meta">@MatrixVariable(value = &quot;a&quot;, pathVar = &quot;bookId&quot;)</span> <span class="type">int</span> q1,</span></span><br><span class="line"><span class="params">                     <span class="meta">@MatrixVariable(value = &quot;b&quot;, pathVar = &quot;authorId&quot;)</span> <span class="type">int</span> q2)</span>&#123;</span><br><span class="line">    <span class="comment">// q1=11</span></span><br><span class="line">    <span class="comment">// q2=22</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>针对每个 Path Variable 绑定一个 Matrix Variable，然后使用 value 和 pathVar 属性就能找到该值。根据 bookId 和 a 就能确定值在哪个 &#x2F;*&#x2F; 中，进而就可以绑定参数的值。所以取参数名称时应该避免重复。</p>
+<p>Matrix Variable 也自带了一些属性可供选择，例如是否必须，默认值等。</p>
+<p>默认 Matrix Variable 功能是开启的，如果要关闭该功能，则需要手工将 RequestMappingHandlerMapping 中的 removeSemicolonContent 属性设置为 true，按照 xml 的方式就是 <code>&lt;mvc:annotation-driven enable-matrix-varibale=&quot;true&quot;&gt;</code>。</p>
+<h4 id="2-4-请求处理方法签名详细说明"><a href="#2-4-请求处理方法签名详细说明" class="headerlink" title="2.4 请求处理方法签名详细说明"></a>2.4 请求处理方法签名详细说明</h4><h5 id="使用-RequestParam-绑定请求参数值"><a href="#使用-RequestParam-绑定请求参数值" class="headerlink" title="使用 @RequestParam 绑定请求参数值"></a>使用 @RequestParam 绑定请求参数值</h5><p>由于 Java 类反射对象默认不记录方法入参的名称，因此需要在方法入参处使用 <strong>@RequestParam</strong> 注解来指定其对应的请求参数，该注解有以下 3 个参数：</p>
+<ul>
+<li><strong>value</strong>：参数名。</li>
+<li><strong>required</strong>：是否必须，默认为 true，表示必须包含对应参数名。</li>
+<li><strong>defaultValue</strong>：默认参数名，不推荐使用该参数。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//将请求参数userName和age绑定到handle11()方法的userName和age参数中，并自动完成类型转换，age参数是必须的</span></span><br><span class="line"><span class="meta">@RequestMapping(path = &quot;/handle11&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handle11</span><span class="params">(<span class="meta">@RequestParam(value = &quot;userName&quot;,required = false)</span> String userName, <span class="meta">@RequestParam(&quot;age&quot;)</span> <span class="type">int</span> age)</span>&#123;</span><br><span class="line">    <span class="comment">// do sth</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="使用-CookieValue-绑定请求中的-Cookie-值"><a href="#使用-CookieValue-绑定请求中的-Cookie-值" class="headerlink" title="使用 @CookieValue 绑定请求中的 Cookie 值"></a>使用 @CookieValue 绑定请求中的 Cookie 值</h5><p><strong>@CookieValue</strong> 和 @RequestParam 拥有 3 个一样的参数。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/handle12&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handle12</span><span class="params">(<span class="meta">@CookieValue(value = &quot;sessionId&quot;,required = false)</span> String sessionId, <span class="meta">@RequestParam(&quot;age&quot;)</span> <span class="type">int</span> age)</span>&#123;</span><br><span class="line">    <span class="comment">// do sth</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="使用-RequestHeader-绑定请求报文头的属性值"><a href="#使用-RequestHeader-绑定请求报文头的属性值" class="headerlink" title="使用 @RequestHeader 绑定请求报文头的属性值"></a>使用 @RequestHeader 绑定请求报文头的属性值</h5><p>根据 HTTP 报文的结构可知，请求报文头包含了若干个报文头属性，服务器可以据此获知客户端的信息，通过 <strong>@RequestHeader</strong> 即可将报文头属性值绑定到处理方法的入参中。@RequestHeader 和 @RequestParam 拥有 3 个一样的参数。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/handle13&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handle13</span><span class="params">(<span class="meta">@RequestHeader(&quot;Accept-Encoding&quot;)</span> String encoding,</span></span><br><span class="line"><span class="params">                     <span class="meta">@RequestHeader(&quot;Keep-Alive&quot;)</span> <span class="type">long</span> keepAlive)</span>&#123;</span><br><span class="line">    <span class="comment">// do sth</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="使用命令-x2F-表单对象绑定请求参数值"><a href="#使用命令-x2F-表单对象绑定请求参数值" class="headerlink" title="使用命令&#x2F;表单对象绑定请求参数值"></a>使用命令&#x2F;表单对象绑定请求参数值</h5><p>所谓命令&#x2F;表单对象不需要实现任何接口，仅仅是一个拥有若干属性的 POJO 。下述代码中的 user 就是一个命令&#x2F;表单对象，前端传来的表单数据和 user 对象根据具体属性值一一绑定在一起（详情可见 <a href="https://lisj98.github.io/2022/04/06/%E7%B2%BE%E9%80%9ASpringMVC-%E4%B8%80-SpringMVC%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/">https://lisj98.github.io/2022/04/06/%E7%B2%BE%E9%80%9ASpringMVC-%E4%B8%80-SpringMVC%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/</a> 的”编写视图对象“部分）。Spring MVC 会按照请求参数名和命令&#x2F;表单对象属性名匹配的方式，自动为该对象填充属性值。支持级联的属性名，如 dept.deptId，dept.address.tel 等。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/handle14&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handle14</span><span class="params">(User user)</span>&#123;</span><br><span class="line">    <span class="comment">// do sth</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/handle14.html?userName=tom&amp;dept.deptId=<span class="number">1</span>&amp;dept.address.tel=<span class="number">102</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="使用-Servlet-API-对象作为入参"><a href="#使用-Servlet-API-对象作为入参" class="headerlink" title="使用 Servlet API 对象作为入参"></a>使用 Servlet API 对象作为入参</h5><p>在 Spring MVC 中，控制器类可以不依赖任何 Servlet API 对象，但是 Spring MVC 并不能阻止我们使用 Servlet API 的类作为处理方法的入参。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//同时使用HttpServletRequest和HttpServletResponse作为入参</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/handle21&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handle21</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span>&#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">userName</span> <span class="operator">=</span> WebUtils.findParameterValue(request, <span class="string">&quot;userName&quot;</span>);</span><br><span class="line">    response.addCookie(<span class="keyword">new</span> <span class="title class_">Cookie</span>(<span class="string">&quot;userName&quot;</span>, userName));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//仅使用HttpServletRequest作为入参</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/handle22&quot;)</span></span><br><span class="line"><span class="keyword">public</span> ModelAndView <span class="title function_">handle22</span><span class="params">(HttpServletRequest request)</span>&#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">userName</span> <span class="operator">=</span> WebUtils.findParameterValue(request, <span class="string">&quot;userName&quot;</span>);</span><br><span class="line">    <span class="type">ModelAndView</span> <span class="variable">mav</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ModelAndView</span>();</span><br><span class="line">    mav.setViewName(<span class="string">&quot;success&quot;</span>);</span><br><span class="line">    mav.addObject(<span class="string">&quot;userName&quot;</span>, userName);</span><br><span class="line">    <span class="keyword">return</span> mav;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用HttpSession作为入参</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/handle23&quot;)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">handle23</span><span class="params">(HttpSession session)</span>&#123;</span><br><span class="line">    session.setAttribute(<span class="string">&quot;sessionId&quot;</span>, <span class="number">1234</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;success&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//既使用HttpServletRequest，又使用基本类型的入参</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/handle24&quot;)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">handle24</span><span class="params">(HttpServletRequest request, <span class="meta">@RequestParam(&quot;userName&quot;)</span> String userName)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;success&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在使用 Servlet API 的类作为入参时，Spring MVC 会自动将 Web 层对应的 Servlet 对象传递给处理方法的入参。处理方法入参可以同时使用 Servlet API 类的入参和其他符合要求的入参，它们之间的位置顺序没有要求。</p>
+<p>Spring MVC 在 <code>org.sprnigframework.web.context.request</code> 包中定义了若干个可代理 Servlet 原生 API 类的接口，如 <strong>WebRequest</strong> 和 <strong>NativeRequest</strong>，它们也允许作为处理类的入参，通过这些代理类可访问请求对象的任何信息。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/handle25&quot;)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">handle25</span><span class="params">(WebRequest request)</span>&#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">userName</span> <span class="operator">=</span> request.getParameter(<span class="string">&quot;userName&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;success&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="使用-I-x2F-O-对象作为入参"><a href="#使用-I-x2F-O-对象作为入参" class="headerlink" title="使用 I&#x2F;O 对象作为入参"></a>使用 I&#x2F;O 对象作为入参</h5><p>Servlet 的 <strong>ServletRequest</strong> 拥有 <strong>getInputStream()</strong> 和 <strong>getReader()</strong> 方法，可以通过它们读取请求的信息。相应的，Servlet 的 <strong>ServletResponse</strong> 拥有 <strong>getOutputStream()</strong> 和 <strong>getWriter()</strong> 方法，可以通过它们输出响应信息。</p>
+<p>Spring MVC 允许控制器的处理方法使用 <code>java.io.InputStream</code>&#x2F;<code>java.io.Reader</code> 及 <code>java.io.OutputStream</code>&#x2F;<code>java.io.Writer</code> 作为方法的入参，Spring MVC 将获取 ServletRequest 的 InputStream&#x2F;Reader 或 ServletResponse 的 OutputStream&#x2F;Writer，然后传递给控制器的处理方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用OutputStream输出一张图片</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;handle31&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handle31</span><span class="params">(OutputStream os)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    <span class="type">Resource</span> <span class="variable">res</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassPathResource</span>(<span class="string">&quot;/image.jpg&quot;</span>); <span class="comment">//读取类路径下的图片文件</span></span><br><span class="line">    FileCopyUtils.copy(res.getInputStream(), os);   <span class="comment">//将图片写到输出流中</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="其他类型的参数"><a href="#其他类型的参数" class="headerlink" title="其他类型的参数"></a>其他类型的参数</h5><p>控制器处理方法的入参除了支持以上类型的参数外，还支持 <code>java.util.Locale</code>、<code>java.security.Principal</code>，可以通过 Servlet 的 HttpServletRequest 的 getLocale() 和 getUserPrinciple() 方法得到相应的值，如果处理方法的入参类型为 Locale 或 Principle ，则 Spring MVC 会自动从请求对象中获取相应的对象并传递给处理方法的入参。</p>
+<h4 id="2-5-使用-HttpMessageConverter-lt-T-gt"><a href="#2-5-使用-HttpMessageConverter-lt-T-gt" class="headerlink" title="2.5 使用 HttpMessageConverter&lt;T&gt;"></a>2.5 使用 HttpMessageConverter&lt;T&gt;</h4><p><strong>HttpMessageConverter&lt;T&gt;</strong> 负责将请求信息转换为一个对象（类型为 T），将对象（类型为 T）输出为响应信息。</p>
+<p>DispatcherServlet 默认安装了 <strong>RequestMappingHandlerAdapter</strong> 作为 HandlerAdapter 的组件实现类，HttpMessageConverter 即由 RequestMappingHandlerAdapter 使用，将请求信息转换为对象，或将对象转换为响应信息。</p>
+<p>HttpMessageConverter&lt;T&gt;接口定义了以下几个方法：</p>
+<ul>
+<li>**Boolean canRead(Class&lt;?&gt; clazz, MediaType mediaType)**：指定转换器可以读取的对象类型，即转换器可将请求信息转换为 clazz 类型的对象；同时指定支持的 MIME 媒体类型（如 text&#x2F;html，application&#x2F;json 等）。</li>
+<li>**Boolean canWrite(Class&lt;?&gt; clazz, MediaType mediaType)**：指定转换器可以将 clazz 类型的对象写到相应流中。</li>
+<li>**List&lt;MediaType &gt; getSupportedMediaTypes()**：该转换器支持的媒体类型。</li>
+<li>**T read(Class&lt;? extends T&gt; clazz, HttpInputMessage inputMessage)**：将请求信息流转换为T类型的对象。</li>
+<li>**void write(T t, MediaType contentType, HttpOutputMessage outputMessage)**：将 T 类型的对象写到响应流中，同时指定的媒体类型为 contentType。</li>
+</ul>
+<h5 id="HttpMessageConverter-lt-T-gt-的实现类"><a href="#HttpMessageConverter-lt-T-gt-的实现类" class="headerlink" title="HttpMessageConverter&lt;T&gt; 的实现类"></a>HttpMessageConverter&lt;T&gt; 的实现类</h5><p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/HttpMessageConverter%E7%9A%84%E5%AE%9E%E7%8E%B0%E7%B1%BB1.3os5c4txvlk0.webp" alt="HttpMessageConverter的实现类1"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/HttpMessageConverter%E7%9A%84%E5%AE%9E%E7%8E%B0%E7%B1%BB2.250rgbrxarr4.webp" alt="HttpMessageConverter的实现类2"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/HttpMessageConverter%E7%9A%84%E5%AE%9E%E7%8E%B0%E7%B1%BB3.27ym0dlkj0lc.webp" alt="HttpMessageConverter的实现类3"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/HttpMessageConverter%E7%9A%84%E5%AE%9E%E7%8E%B0%E7%B1%BB4.trzs189qv8g.webp" alt="HttpMessageConverter的实现类4"></p>
+<p>RequestMappingHandlerAdapter 默认已经装配了以下 HttpMessageConverter：</p>
+<ul>
+<li>StringHttpMessageConverter</li>
+<li>ByteArrayHttpMessageConverter</li>
+<li>SourceHttpMessageConverter</li>
+<li>AllEncompassingFormHttpMessageConverter</li>
+</ul>
+<p>如果需要装配其他类型的 HttpMessageConverter ，只需在 Spring 容器的 Web 容器上下文（smart-servlet.xml）中自行定义一个 RequestMappingHandlerAdapter。如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--定义一个RequestMappingHandlerAdapter --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">p:messageConverters-ref</span>=<span class="string">&quot;messageConverters&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--HttpMessageConverter列表--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">util:list</span> <span class="attr">id</span>=<span class="string">&quot;messageConverters&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.http.converter.BufferedImageHttpMessageConverter&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.http.converter.ByteArrayHttpMessageConverter&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.http.converter.StringHttpMessageConverter&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">util:list</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果显式定义了一个 RequestMappingHandlerAdapter ，则 Spring MVC 将会覆盖默认的 RequestMappingHandlerAdapter。</p>
+<h5 id="使用-HttpMessageConverter-lt-T-gt"><a href="#使用-HttpMessageConverter-lt-T-gt" class="headerlink" title="使用 HttpMessageConverter&lt;T&gt;"></a>使用 HttpMessageConverter&lt;T&gt;</h5><p>如何使用 HttpMessageConverter&lt;T&gt; 将请求信息转换并绑定到处理方法的入参中呢？Spring MVC 提供了两种途径。</p>
+<ul>
+<li>使用 <strong>@RequestBody&#x2F;@ResponseBody</strong> 对处理方法进行标注。</li>
+<li>使用 <strong>HttpEntity&lt;T&gt;&#x2F;ResponseEntity&lt;T&gt;</strong> 作为处理方法的入参或返回值。</li>
+</ul>
+<p>@RequestBody&#x2F;@ResponseBody 的例子：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E4%BD%BF%E7%94%A8@RequestBody%E4%B8%8E@ResponseBody.75sqoa12vvs0.webp" alt="使用@RequestBody与@ResponseBody"></p>
+<p>接下来编写代码进行测试：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserControllerTest</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testHandle41</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="type">RestTemplate</span> <span class="variable">restTemplate</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">RestTemplate</span>();</span><br><span class="line">        LinkedMultiValueMap&lt;String, String&gt; form = <span class="keyword">new</span> <span class="title class_">LinkedMultiValueMap</span>&lt;&gt;();</span><br><span class="line">        form.add(<span class="string">&quot;userName&quot;</span>, <span class="string">&quot;tom&quot;</span>);</span><br><span class="line">        form.add(<span class="string">&quot;password&quot;</span>, <span class="string">&quot;123456&quot;</span>);</span><br><span class="line">        form.add(<span class="string">&quot;age&quot;</span>, <span class="string">&quot;45&quot;</span>);</span><br><span class="line">        <span class="comment">//第一个参数为URL，第二个参数通过MultiValueMap准备报文体的参数数据</span></span><br><span class="line">        restTemplate.postForLocation(<span class="string">&quot;http://localhost:8080/springmvc2/user/handle41.html&quot;</span>, form);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testHandle42</span><span class="params">()</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="type">RestTemplate</span> <span class="variable">restTemplate</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">RestTemplate</span>();</span><br><span class="line">        <span class="comment">//第一个参数为URL，第二个参数为报文体参数数据，第三个参数指定方法的返回值类型，第四个参数为URL占位符参数的值</span></span><br><span class="line">        <span class="type">byte</span>[] response = restTemplate.postForObject(<span class="string">&quot;http://localhost:8080/springmvc2/user/handle42/&#123;itemId&#125;.html&quot;</span>, <span class="literal">null</span>, <span class="type">byte</span>[].class, <span class="string">&quot;1233&quot;</span>);</span><br><span class="line">        <span class="type">Resource</span> <span class="variable">outFile</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileSystemResource</span>(<span class="string">&quot;d:/image_copy.jpg&quot;</span>);</span><br><span class="line">        FileCopyUtils.copy(response, outFile.getFile());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>RestTemplate</strong> 是 Spring 的模板类，在客户端程序中可使用该类调用 Web 服务器端的服务，它支持 REST 风格的 URL。此外，它像 RequestMappingHandlerAdapter 一样拥有一张 HttpMessageConverter 的注册表，默认注册了以下 HttpMessageConverter：</p>
+<ul>
+<li>ByteArrayHttpMessageConverter</li>
+<li>StringHttpMessageConverter</li>
+<li>ResourceHttpMessageConverter</li>
+<li>SourceHttpMessageConverter</li>
+<li>AllEncompassingFormHttpMessageConverter</li>
+</ul>
+<p>在默认情况下，RestTemplate 可使用这些 HttpMessageConverter 对响应数据进行相应的转换处理。也可通过 RestTemplate 的 <strong>setMessageConverters(List&lt;HttpMessageConverter&lt;?&gt;&gt; messageConverters)</strong> 方法手工注册 HttpMessageConverter。</p>
+<p>和 @RequestBody&#x2F;@ResponseBody 类似，<strong>HttpEntity&lt;?&gt;</strong> 不但可以访问请求和响应报文体的数据，还可以访问请求和响应报文头的数据，Spring MVC 根据 HttpEntity 的泛型类型查找对应的 HttpMessageConverter。</p>
+<p>HttpEntity&lt;T&gt;&#x2F;ResponseEntity&lt;T&gt; 的例子：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E4%BD%BF%E7%94%A8HttpEntity%E5%92%8CResponseEntity.22kmxyjd4g4g.webp" alt="使用HttpEntity和ResponseEntity"></p>
+<p>通过以上实例，可以得出如下结论：</p>
+<ul>
+<li>当控制器处理方法使用 @RequestBody&#x2F;@ResponseBody 或者 HttpEntity&lt;T&gt;&#x2F;ResponseEntity&lt;T&gt; 时，Spring MVC 才使用注册的 HttpMessageConverter 对请求&#x2F;响应消息进行处理。</li>
+<li>当控制器处理方法使用 @RequestBody&#x2F;@ResponseBody 或者 HttpEntity&lt;T&gt;&#x2F;ResponseEntity&lt;T&gt; 时，Spring 首先根据请求头或响应头的 Accept 属性选择匹配的 HttpMessageConverter ，然后根据参数类型或泛型类型的过滤得到匹配的 HttpMessageConverter ，如果找不到可用的 HttpMessageConverter 则报错。</li>
+<li>@RequestBody 和 @ResponseBody 不需要成对出现。如果方法入参使用了 @RequestBody，则 Spring MVC 选择匹配的 HttpMessageConverter 将请求消息转换并绑定到入参中；如果处理方法标注了 @ResponseBody 则 Spring MVC 选择匹配的 HttpMessageConverter 将方法返回值转换并输出响应消息。</li>
+<li>HttpEntity&lt;T&gt;&#x2F;ResponseEntity&lt;T&gt; 的功能和 @RequestBody&#x2F;@ResponseBody 几乎一致。</li>
+</ul>
+<h5 id="处理-XML-和-JSON"><a href="#处理-XML-和-JSON" class="headerlink" title="处理 XML 和 JSON"></a>处理 XML 和 JSON</h5><p>Spring MVC 提供了几个处理 XML 和 JSON 格式的请求&#x2F;响应消息的 HttpMessageConverter。</p>
+<ul>
+<li><strong>MarshallingHttpMessageConverter</strong>：处理 XML 格式的请求或响应消息。</li>
+<li><strong>Jaxb2RootElementHttpMessageConverter</strong>：同上，底层使用 JXAB。</li>
+<li><strong>MappingJackson2HttpMessageConverter</strong>：处理 JSON 格式的请求或响应消息。</li>
+</ul>
+<p>只要在 Spring Web 容器中为 RequestMappingHandlerAdapter 装配好相应的处理 XML 和 JSON 格式的请求&#x2F;响应消息的 HttpMessageConverter，并在交互中通过请求的 Accept 指定 MIME 类型，Spring MVC 就可使服务器端的处理方法和客户端透明地通过 XML 或 JSON 格式的消息进行通信，开发者无需关心通信层数据格式的问题，可以将精力集中到业务层的处理上。</p>
+<p>首先为 RequestMappingHandlerAdapter 装配可处理 XML 和 JSON 格式的请求&#x2F;响应消息的 HttpMessageConverter：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--定义一个RequestMappingHandlerAdapter --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">p:messageConverters-ref</span>=<span class="string">&quot;messageConverters&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--HttpMessageConverter列表--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">util:list</span> <span class="attr">id</span>=<span class="string">&quot;messageConverters&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.http.converter.BufferedImageHttpMessageConverter&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.http.converter.ByteArrayHttpMessageConverter&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.http.converter.StringHttpMessageConverter&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.http.converter.xml.MarshallingHttpMessageConverter&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:marshaller-ref</span>=<span class="string">&quot;xmlMarshaller&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:unmarshaller-ref</span>=<span class="string">&quot;xmlMarshaller&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.http.converter.json.MappingJackson2HttpMessageConverter&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">util:list</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--声明Marshaller，使用XStream技术--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;xmlMarshaller&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.oxm.xstream.XStreamMarshaller&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;streamDriver&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--使用STAX对XML消息进行处理，STAX占用内存少，响应速度也很快--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;com.thoughtworks.xstream.io.xml.StaxDriver&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;annotatedClasses&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">list</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--使用XStream的注解定义XML转换规则，使用XStream注解的类在此声明--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">value</span>&gt;</span>com.smart.entity.User<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">list</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>再在控制器中编写响应的方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/handle51&quot;)</span></span><br><span class="line"><span class="keyword">public</span> ResponseEntity&lt;User&gt; <span class="title function_">handle51</span><span class="params">(HttpEntity&lt;User&gt; requestEntity)</span>&#123;</span><br><span class="line">    <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> requestEntity.getBody();</span><br><span class="line">    user.setUserName(<span class="string">&quot;tom&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ResponseEntity</span>&lt;User&gt;(user, HttpStatus.OK);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于服务器端的处理方法而言，除使用 @RequestBody&#x2F;@ResponseBody 或 HttpEntity&lt;T&gt;&#x2F;ResponseEntity&lt;T&gt; 进行方法签名外，不需要进行任何额外的处理，借由 Spring MVC 中装配的 HttpMessageConverter，它便拥有了处理 XML 和 JSON 格式的消息的能力。</p>
+<p>在接收到一个 HTTP 请求时，handle51() 如何知道请求消息的格式？在处理完后又根据什么确定响应消息的格式？答案很简单：通过请求头的 <strong>Content-Type</strong> （请求）及 <strong>Accept</strong>（响应） 属性确定。</p>
+<p>下面编写测试程序：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用RestTemplate测试UserController#handle51()方法</span></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testHandle51</span><span class="params">()</span> <span class="keyword">throws</span> IOException&#123;</span><br><span class="line">    <span class="type">RestTemplate</span> <span class="variable">restTemplate</span> <span class="operator">=</span> buildRestTemplate();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//创建User对象，它将通过RestTemplate流化为XML请求报文</span></span><br><span class="line">    <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line">    user.setUserName(<span class="string">&quot;tom&quot;</span>);</span><br><span class="line">    user.setPassword(<span class="string">&quot;1234&quot;</span>);</span><br><span class="line">    user.setRealName(<span class="string">&quot;汤姆&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//指定请求的报文头信息</span></span><br><span class="line">    <span class="type">HttpHeaders</span> <span class="variable">entityHeaders</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HttpHeaders</span>();</span><br><span class="line">    entityHeaders.setContentType(MediaType.valueOf(<span class="string">&quot;application/xml;UTF-8&quot;</span>));</span><br><span class="line">    entityHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_XML));</span><br><span class="line"></span><br><span class="line">    <span class="comment">//将User流化为XML，放到报文体中，同时指定请求方法和报文头</span></span><br><span class="line">    HttpEntity&lt;User&gt; requestEntity = <span class="keyword">new</span> <span class="title class_">HttpEntity</span>&lt;&gt;(user, entityHeaders);</span><br><span class="line">    ResponseEntity&lt;User&gt; responseEntity = restTemplate.exchange(<span class="string">&quot;http://localhost:8080/springmvc2/user/handle51.html&quot;</span>, HttpMethod.POST, requestEntity, User.class);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//将请求响应消息转换为User对象，并将响应值进行判断</span></span><br><span class="line">    <span class="type">User</span> <span class="variable">responseUser</span> <span class="operator">=</span> responseEntity.getBody();</span><br><span class="line">    Assert.assertNotNull(responseUser);</span><br><span class="line">    Assert.assertEquals(<span class="string">&quot;tom&quot;</span>, responseUser.getUserName());</span><br><span class="line">    Assert.assertEquals(<span class="string">&quot;1234&quot;</span>, responseUser.getPassword());</span><br><span class="line">    Assert.assertEquals(<span class="string">&quot;汤姆&quot;</span>,responseUser.getRealName());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//创建RestTemplate实例</span></span><br><span class="line">    <span class="keyword">private</span> RestTemplate <span class="title function_">buildRestTemplate</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="type">RestTemplate</span> <span class="variable">restTemplate</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">RestTemplate</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//使用XStream流化器，使用STAX技术处理XML，同时加载使用了XStream注解的User类</span></span><br><span class="line">    <span class="type">XStreamMarshaller</span> <span class="variable">xmlMarshaller</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">XStreamMarshaller</span>();</span><br><span class="line">    xmlMarshaller.setStreamDriver(<span class="keyword">new</span> <span class="title class_">StaxDriver</span>());</span><br><span class="line">    xmlMarshaller.setAnnotatedClasses(<span class="keyword">new</span> <span class="title class_">Class</span>[]&#123;User.class&#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//创建处理XML报文的HttpMessageConverter，将其组装到RestTemplate中</span></span><br><span class="line">    <span class="type">MarshallingHttpMessageConverter</span> <span class="variable">xmlConverter</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MarshallingHttpMessageConverter</span>();</span><br><span class="line">    xmlConverter.setMarshaller(xmlMarshaller);</span><br><span class="line">    xmlConverter.setUnmarshaller(xmlMarshaller);</span><br><span class="line">    restTemplate.getMessageConverters().add(xmlConverter);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//创建处理JSON报文的HttpMessageConverter，将其组装到RestTemplate中</span></span><br><span class="line">    <span class="type">MappingJackson2HttpMessageConverter</span> <span class="variable">jsonConverter</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MappingJackson2HttpMessageConverter</span>();</span><br><span class="line">    restTemplate.getMessageConverters().add(jsonConverter);</span><br><span class="line">    <span class="keyword">return</span> restTemplate;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行测试方法，观察浏览器控制台，我们可以知道客户端的 User 对象被流化为一段对应的 XML 报文，同时通过报文头属性 Accept 和 Content-Type 被指定接收的 MIME 类型和本请求的报文内容均为 applicaion&#x2F;xml。</p>
+<p>请求报文被服务器端的 UserController#handle51() 方法正确处理，它根据请求的报文头属性 Accept 决定将服务器端的 User 对象流化为 XML 并返回 HTTP 响应报文，同时指定响应报文的 Content-Type 属性为 application.xml。</p>
+<p>如果希望通过 JSON 方式通信，则更改代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//指定请求的报文头信息</span></span><br><span class="line"><span class="type">HttpHeaders</span> <span class="variable">entityHeaders</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HttpHeaders</span>();</span><br><span class="line"><span class="comment">//JSON</span></span><br><span class="line">entityHeaders.setContentType(MediaType.valueOf(<span class="string">&quot;application/json;UTF-8&quot;</span>)); entityHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-6-使用-RestController-和-AsyncRestTemplate"><a href="#2-6-使用-RestController-和-AsyncRestTemplate" class="headerlink" title="2.6 使用 @RestController 和 AsyncRestTemplate"></a>2.6 使用 @RestController 和 AsyncRestTemplate</h4><h5 id="RestController"><a href="#RestController" class="headerlink" title="@RestController"></a>@RestController</h5><p><strong>@RestController</strong> 注解包含了 @ResponseBody 和 @Controller。在控制器上标注 @RestController，就不用再标注 @ResponseBody 和 @Controller了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> <span class="meta">@RestController</span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当使用 REST 风格开发应用程序时，Spring MVC 仅需以下两行配置就行了：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">&quot;com.smart.*&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mvc:annotation-driven</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="AsyncRestTemplate"><a href="#AsyncRestTemplate" class="headerlink" title="AsyncRestTemplate"></a>AsyncRestTemplate</h5><p><strong>AsyncRestTemplate</strong> 支持以异步无阻塞方式进行服务访问。</p>
+<p>我们模拟一个执行时间为10秒的服务器方法，如果客户端使用 RestTemplate，则将以同步方式进行调用，也就是说客户端代码必须等待服务器执行完毕且返回后才会继续执行。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> UserService userService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">UserController</span><span class="params">(UserService userService)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.userService = userService;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/api&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Callable&lt;User&gt; <span class="title function_">api</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;=====hello&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Callable</span>&lt;User&gt;() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> User <span class="title function_">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">                Thread.sleep(<span class="number">10L</span>*<span class="number">1000</span>); <span class="comment">//暂停10s</span></span><br><span class="line">                <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line">                user.setUserName(<span class="string">&quot;haha&quot;</span>);</span><br><span class="line">                user.setPassword(<span class="string">&quot;111&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> user;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来使用 AsyncRestTemplate 以异步的方式进行服务调用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">AsyncRestTemplate</span> <span class="variable">template</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AsyncRestTemplate</span>();</span><br><span class="line">        </span><br><span class="line">    <span class="comment">//调用完后立即返回（没有阻塞）</span></span><br><span class="line">    ListenableFuture&lt;ResponseEntity&lt;User&gt;&gt; future = template.getForEntity(<span class="string">&quot;http://localhost:8080/springmvc2/api&quot;</span>, User.class);</span><br><span class="line">        </span><br><span class="line">    <span class="comment">//处理服务器端响应的异步回调方法，待服务器端返回请求响应后，该处注册的回调函数会被自动异步调用</span></span><br><span class="line">    future.addCallback(<span class="keyword">new</span> <span class="title class_">ListenableFutureCallback</span>&lt;ResponseEntity&lt;User&gt;&gt;() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onFailure</span><span class="params">(Throwable throwable)</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;=====client failure : &quot;</span>+ throwable);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onSuccess</span><span class="params">(ResponseEntity&lt;User&gt; userResponseEntity)</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;=====client get result : &quot;</span>+ userResponseEntity.getBody());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    System.out.println(<span class="string">&quot;==no wait&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-7-处理模型数据"><a href="#2-7-处理模型数据" class="headerlink" title="2.7 处理模型数据"></a>2.7 处理模型数据</h4><p>在 MVC 框架中，<strong>控制（C）</strong>是为了产生<strong>模型数据（M）</strong>，而<strong>视图（V）</strong>则是为了渲染模型数据。</p>
+<p>在 Spring MVC 中，方法入参绑定请求消息只是处理方法的第一步，还需要根据入参执行相应的逻辑，产生模型数据，导向到特定视图中。</p>
+<p>Spring MVC 提供了多种途径输出模型数据：</p>
+<ul>
+<li><strong>ModelAndView</strong>：可设置逻辑视图名，包含模型数据。</li>
+<li><strong>@ModelAttribute</strong>：主要针对于方法入参是对象，以及初始化入参对象功能。</li>
+<li><strong>Map 及 Model</strong>：可以提前调用模型中的数据（隐含模型）。</li>
+<li><strong>@SessionAttributes</strong>：可用于不同请求共用模型数据。</li>
+</ul>
+<h5 id="ModelAndView"><a href="#ModelAndView" class="headerlink" title="ModelAndView"></a>ModelAndView</h5><p>控制器处理方法的返回值如果为 ModelAndView，则其既包含视图信息，也包含模型数据信息。</p>
+<p>有如下两种方法添加模型数据：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ModelAndView <span class="title function_">addObject</span><span class="params">(String attributeName, Object attributeValue)</span></span><br><span class="line"></span><br><span class="line">ModelAndView <span class="title function_">addAllObjects</span><span class="params">(Map&lt;String,?&gt; modelMap)</span></span><br></pre></td></tr></table></figure>
+
+<p>有如下两种方法设置视图：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//指定一个具体的视图对象</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">setView</span><span class="params">(View view)</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">//指定一个逻辑视图名</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">setViewName</span><span class="params">(String viewName)</span></span><br></pre></td></tr></table></figure>
+
+<p>ModelAndView 的使用可以参照 1.3 节的实例。</p>
+<h5 id="ModelAttribute"><a href="#ModelAttribute" class="headerlink" title="@ModelAttribute"></a>@ModelAttribute</h5><p>用于将方法入参对象添加到模型中，主要用于对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/handle61&quot;)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">handle61</span><span class="params">(<span class="meta">@ModelAttribute(&quot;user&quot;)</span> User user)</span>&#123;</span><br><span class="line">    user.setPassword(<span class="string">&quot;123&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;user/createSuccess&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Spring MVC 将请求消息绑定到 User 对象中，再以 @ModelAttribute 后跟的参数为键，将 User 对象作为值添加到模型中，在对视图进行渲染前，Spring MVC 会将模型中的数据转储到视图上下文，进而暴露给视图对象，然后视图对象（xxx.jsp）就可以使用占位符（如${user.userName}）等方式访问模型中的数据了。模型中的数据可以理解为对象所包含的属性，或者请求消息中带过来的数据。</p>
+<p>除了可以在方法入参上使用 @ModelAttribute 外，还可以在方法定义处使用。Spring MVC 在调用目标处理方法前，会先逐个调用在方法级上标注了 @ModelAttribute 注解的方法，并将这些方法的返回值添加到模型中。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E5%9C%A8%E6%96%B9%E6%B3%95%E5%AE%9A%E4%B9%89%E5%A4%84%E4%BD%BF%E7%94%A8%E7%9A%84@ModelAttribute.7tiw6dc3wa4.webp" alt="在方法定义处使用的@ModelAttribute"></p>
+<h5 id="Map-及-Model"><a href="#Map-及-Model" class="headerlink" title="Map 及 Model"></a>Map 及 Model</h5><p>Spring MVC 使用 <code>org.springframework.ui.Model</code> 接口存储模型数据，<code>org.springframework.ui.ModelMap</code> 实现了 Map 接口，而 <code>org.springframework.ui.ExtendedModelMap</code> 扩展于 ModelMap 的同时实现了 Model 接口。</p>
+<p>Spring MVC 在调用方法前会创建一个隐含的模型对象，作为存储模型数据的存储容器，被称之为”隐含模型“。如果处理方法的入参为 Map 或 Model 类型，则 Spring MVC 会将隐含模型的引用传递给这些入参，进而开发者们可以通过这些入参对象访问到隐含模型中的所有数据，也可以其中添加新的数据。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E4%BD%BF%E7%94%A8ModelMap%E7%9A%84%E5%85%A5%E5%8F%82.ggdiw5j8cw8.webp" alt="使用ModelMap的入参"></p>
+<h5 id="SessionAttribute"><a href="#SessionAttribute" class="headerlink" title="@SessionAttribute"></a>@SessionAttribute</h5><p>标注了 @SessionAttribute 注解后，Spring MVC 会将模型中对应的属性暂存到 HttpSession 中，那么就可以在多个请求之间公用这个模型数据了。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E4%BD%BF%E7%94%A8@SessionAttribute%E6%B3%A8%E8%A7%A3.1i57jq85241s.webp" alt="使用@SessionAttribute注解"></p>
+<p>但是上述代码会产生一个 HttpSessionRequiredException，原因如下：</p>
+<p>Spring MVC 对 @ModelAttribute 及 @SessionAttribute 的处理遵循一个特定流程，当流程条件不满足时就会报错，这个流程为：</p>
+<ol>
+<li>Spring MVC 在调用处理方法前，在请求线程中自动创建一个隐含的模型对象。</li>
+<li>调用所有标注了 @ModelAttribute 的方法，并将方法返回值添加到隐含模型中。</li>
+<li>查看 Session 中是否存在 @SessionAttribute(“xxx”) 所指定的 xxx 属性，如果有，则将其添加到隐含模型中，如果隐含模型中已有 xxx 属性，则该步操作会覆盖模型中已有的属性值。</li>
+<li>对标注了 @ModelAttribute(“xxx”) 处理方法的入参按如下流程处理：<ul>
+<li>如果隐含模型拥有名为 xxx 的属性，则将其赋给该入参，再用请求消息填充该入参对象直接返回，否则执行下一步。</li>
+<li>如果 xxx 是会话属性，即在处理类定义处标注了 @SessionAttribute(“xxx”) ，则尝试从会话中获取该属性，并将其赋给该入参，然后再用请求消息填充该入参对象。如果在会话中找不到对应的属性，则抛出 HttpSessionRequiredException 异常，否则执行下一步。</li>
+<li>如果隐含模型中不存在 xxx 属性，且 xxx 也不是会话属性，则创建入参的对象实例，然后再用请求消息填充该入参。</li>
+</ul>
+</li>
+</ol>
+<p>解决方法：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E8%A7%A3%E5%86%B3HttpSessionRequiredException%E9%97%AE%E9%A2%98.6mqu9jth8as0.webp" alt="解决HttpSessionRequiredException问题"></p>
+<p>@SessionAttribute 还可以通过模型属性的对象类型指定哪些模型属性可以放到会话中，如 @SessionAttribute(types&#x3D;User.class)。</p>
+<p>此外，@SessionAttribute 还可以通过属性名和 types 类型一起指定，二者允许多值。</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：精通SpringMVC(二)-注解驱动的控制器</li>
+        <li>Post author：Lisj</li>
+        <li>Create time：2022-04-06 21:12:22</li>
+        <li>
+            Post link：https://lisj98.github.io/2022/04/06/精通SpringMVC-二-注解驱动的控制器/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2022/04/07/%E7%B2%BE%E9%80%9ASpringMVC-%E4%B8%89-%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">精通SpringMVC(三)-处理方法的数据绑定</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/04/06/Spring-MVC%E9%94%99%E8%AF%AF%E9%9B%86/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Spring MVC错误集</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Lisj</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-%E4%BD%BF%E7%94%A8-RequestMapping-%E6%98%A0%E5%B0%84%E8%AF%B7%E6%B1%82"><span class="nav-text">2.1 使用 @RequestMapping 映射请求</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E8%AF%B7%E6%B1%82-URL-%E8%BF%9B%E8%A1%8C%E6%98%A0%E5%B0%84"><span class="nav-text">通过请求 URL 进行映射</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0%E3%80%81%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95%E6%88%96%E8%AF%B7%E6%B1%82%E5%A4%B4%E8%BF%9B%E8%A1%8C%E6%98%A0%E5%B0%84"><span class="nav-text">通过请求参数、请求方法或请求头进行映射</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95%E7%AD%BE%E5%90%8D"><span class="nav-text">2.2 请求处理方法签名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-%E4%BD%BF%E7%94%A8%E7%9F%A9%E9%98%B5%E5%8F%98%E9%87%8F%E7%BB%91%E5%AE%9A%E5%8F%82%E6%95%B0"><span class="nav-text">2.3 使用矩阵变量绑定参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95%E7%AD%BE%E5%90%8D%E8%AF%A6%E7%BB%86%E8%AF%B4%E6%98%8E"><span class="nav-text">2.4 请求处理方法签名详细说明</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-RequestParam-%E7%BB%91%E5%AE%9A%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0%E5%80%BC"><span class="nav-text">使用 @RequestParam 绑定请求参数值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-CookieValue-%E7%BB%91%E5%AE%9A%E8%AF%B7%E6%B1%82%E4%B8%AD%E7%9A%84-Cookie-%E5%80%BC"><span class="nav-text">使用 @CookieValue 绑定请求中的 Cookie 值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-RequestHeader-%E7%BB%91%E5%AE%9A%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87%E5%A4%B4%E7%9A%84%E5%B1%9E%E6%80%A7%E5%80%BC"><span class="nav-text">使用 @RequestHeader 绑定请求报文头的属性值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%91%BD%E4%BB%A4-x2F-%E8%A1%A8%E5%8D%95%E5%AF%B9%E8%B1%A1%E7%BB%91%E5%AE%9A%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0%E5%80%BC"><span class="nav-text">使用命令&#x2F;表单对象绑定请求参数值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-Servlet-API-%E5%AF%B9%E8%B1%A1%E4%BD%9C%E4%B8%BA%E5%85%A5%E5%8F%82"><span class="nav-text">使用 Servlet API 对象作为入参</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-I-x2F-O-%E5%AF%B9%E8%B1%A1%E4%BD%9C%E4%B8%BA%E5%85%A5%E5%8F%82"><span class="nav-text">使用 I&#x2F;O 对象作为入参</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%8F%82%E6%95%B0"><span class="nav-text">其他类型的参数</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-%E4%BD%BF%E7%94%A8-HttpMessageConverter-lt-T-gt"><span class="nav-text">2.5 使用 HttpMessageConverter&lt;T&gt;</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#HttpMessageConverter-lt-T-gt-%E7%9A%84%E5%AE%9E%E7%8E%B0%E7%B1%BB"><span class="nav-text">HttpMessageConverter&lt;T&gt; 的实现类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-HttpMessageConverter-lt-T-gt"><span class="nav-text">使用 HttpMessageConverter&lt;T&gt;</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A4%84%E7%90%86-XML-%E5%92%8C-JSON"><span class="nav-text">处理 XML 和 JSON</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-%E4%BD%BF%E7%94%A8-RestController-%E5%92%8C-AsyncRestTemplate"><span class="nav-text">2.6 使用 @RestController 和 AsyncRestTemplate</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#RestController"><span class="nav-text">@RestController</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#AsyncRestTemplate"><span class="nav-text">AsyncRestTemplate</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-7-%E5%A4%84%E7%90%86%E6%A8%A1%E5%9E%8B%E6%95%B0%E6%8D%AE"><span class="nav-text">2.7 处理模型数据</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#ModelAndView"><span class="nav-text">ModelAndView</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ModelAttribute"><span class="nav-text">@ModelAttribute</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Map-%E5%8F%8A-Model"><span class="nav-text">Map 及 Model</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SessionAttribute"><span class="nav-text">@SessionAttribute</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

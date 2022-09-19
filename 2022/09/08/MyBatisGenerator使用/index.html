@@ -1,0 +1,1722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Java、数据结构">
+    <meta name="description" content="所见即所得">
+    <meta name="author" content="Lisj">
+    
+    <title>
+        
+            MyBatisGenerator使用 |
+        
+        BlogOfLisj
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/l-solid.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"lisj98.github.io","root":"/","language":"en","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#FF00FF","avatar":"/images/Neymar.jpg","favicon":"/images/l-solid.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"What you see is what you get."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"trigger":"auto","unescape":false,"preload":true},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":true},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 6.0.0"><link rel="alternate" href="/atom.xml" title="BlogOfLisj" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                BlogOfLisj
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                TAGS
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">CATEGORIES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">TAGS</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">MyBatisGenerator使用</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/Neymar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Lisj</span>
+                        
+                            <span class="author-label">中忍</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-09-08 23:29:19</span>
+        <span class="mobile">2022-09-08 23:29</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/MyBatisGenerator/">MyBatisGenerator</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/MyBatisGenerator/">MyBatisGenerator</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/MyBatis/">MyBatis</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>11.5k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>50 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>MyBaits Generator 三部曲：<br>1、<a href="https://lisj98.github.io/2022/09/08/MyBatisGenerator%E7%AE%80%E4%BB%8B/">MyBatis Generator 简介</a><br>2、<a href="https://lisj98.github.io/2022/09/08/MyBatisGenerator%E4%BD%BF%E7%94%A8/">MyBatis Generator 使用</a><br>3、MyBatis Generator 扩展 <a class="link"   target="_blank" rel="noopener" href="http://mybatis.org/generator/reference/intro.html" >官方文档<i class="fas fa-external-link-alt"></i></a></p>
+<h1 id="1、快速开始"><a href="#1、快速开始" class="headerlink" title="1、快速开始"></a>1、快速开始</h1><p>要快速启动和运行 MyBatis 生成器（MBG），需要遵循以下步骤（此处为命令行方式生成，还可使用 Maven 插件或 Java 代码生成，见下方 <a href="#2">2、运行 MBG</a>）：<br>1、创建并编写一个配置文件<br>2、将文件保存在一些方便的位置(如 \temp\generatorConfig.xml)<br>3、在命令行中使用如下命令运行MBG：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar mybatis-generator-core-x.x.x.jar -configfile \temp\generatorConfig.xml -overwrite</span><br></pre></td></tr></table></figure>
+
+<p>这将告诉 MBG 使用自定义的配置文件运行。它还会告诉 MBG 用相同的名称覆盖任何现有的 Java 文件。如果您想保存任何现有文件，那么可以省略 <code>-overwrite</code> 参数。如果有冲突，MBG 将以唯一的名称保存新生成的文件(例如 MyClass.java.1)。</p>
+<p>如此便生成了所需的代码。</p>
+<p>根据配置的不同，MBG 生成的代码也会不同，这是通过在配置元素上指定 <code>targetRuntime</code> 属性（generatorConfig.xml 中）来控制的。</p>
+<p>targetRuntime 属性有以下四种选择：</p>
+<ul>
+<li><p><code>MyBatis3DynamicSql</code>（默认值）</p>
+<ul>
+<li>生成 Java 代码</li>
+<li>不生成 XML 文件，只生成注解</li>
+<li>生成的实体类对象是扁平的——没有单独的主键对象（即只有一个 Record 类）</li>
+<li>生成的代码依赖于 MyBatis 动态 SQL 库</li>
+<li>生成的代码相对较少</li>
+<li>生成的代码在查询条件构造方面具有极大的灵活性</li>
+</ul>
+<p>  配置示例：</p>
+</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">generatorConfiguration</span> <span class="keyword">PUBLIC</span></span></span><br><span class="line"><span class="meta"> <span class="string">&quot;-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN&quot;</span></span></span><br><span class="line"><span class="meta"> <span class="string">&quot;http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">generatorConfiguration</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">context</span> <span class="attr">id</span>=<span class="string">&quot;dsql&quot;</span> <span class="attr">targetRuntime</span>=<span class="string">&quot;MyBatis3DynamicSql&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">jdbcConnection</span> <span class="attr">driverClass</span>=<span class="string">&quot;org.hsqldb.jdbcDriver&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">connectionURL</span>=<span class="string">&quot;jdbc:hsqldb:mem:aname&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">javaModelGenerator</span> <span class="attr">targetPackage</span>=<span class="string">&quot;example.model&quot;</span> <span class="attr">targetProject</span>=<span class="string">&quot;src/main/java&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">javaClientGenerator</span> <span class="attr">targetPackage</span>=<span class="string">&quot;example.mapper&quot;</span> <span class="attr">targetProject</span>=<span class="string">&quot;src/main/java&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">table</span> <span class="attr">tableName</span>=<span class="string">&quot;FooTable&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">context</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">generatorConfiguration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>MyBatis3Kotlin</code>（省略，见官网）</p>
+</li>
+<li><p><code>MyBatis3</code>（MBG 1.3.6版本之前大多使用该属性）</p>
+<ul>
+<li>生成 Java 代码</li>
+<li>生成 MyBatis3 兼容的 XML 配置文件或者不带配置文件的注解（即既能生成 XML 文件，又能生成注解，通过 &lt;javaClientGenerator type&#x3D;”xxx”&#x2F;&gt; 指定）</li>
+<li>生成的实体类对象可能具有单独的主键对象或者带有 BLOB 字段的单独对象（即有一个 Record 类、一个主键类、一个 Record With BLOBs 类，最后会合并为一个实体类展现）</li>
+<li>生成的代码没有外部依赖项</li>
+<li>生成的代码量非常大</li>
+<li>生成的代码查询条件构造能力有限，很难扩展</li>
+</ul>
+<p>  配置示例：</p>
+</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">generatorConfiguration</span> <span class="keyword">PUBLIC</span></span></span><br><span class="line"><span class="meta"> <span class="string">&quot;-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN&quot;</span></span></span><br><span class="line"><span class="meta"> <span class="string">&quot;http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">generatorConfiguration</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">context</span> <span class="attr">id</span>=<span class="string">&quot;simple&quot;</span> <span class="attr">targetRuntime</span>=<span class="string">&quot;MyBatis3&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">jdbcConnection</span> <span class="attr">driverClass</span>=<span class="string">&quot;org.hsqldb.jdbcDriver&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">connectionURL</span>=<span class="string">&quot;jdbc:hsqldb:mem:aname&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!--生成的实体类位置--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">javaModelGenerator</span> <span class="attr">targetPackage</span>=<span class="string">&quot;example.model&quot;</span> <span class="attr">targetProject</span>=<span class="string">&quot;src/main/java&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!--生成的 Mapper.xml 映射文件位置--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">sqlMapGenerator</span> <span class="attr">targetPackage</span>=<span class="string">&quot;example.mapper&quot;</span> <span class="attr">targetProject</span>=<span class="string">&quot;src/main/resources&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!--生成的 Mapper 接口位置--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">javaClientGenerator</span> <span class="attr">type</span>=<span class="string">&quot;XMLMAPPER&quot;</span> <span class="attr">targetPackage</span>=<span class="string">&quot;example.mapper&quot;</span> <span class="attr">targetProject</span>=<span class="string">&quot;src/main/java&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">table</span> <span class="attr">tableName</span>=<span class="string">&quot;FooTable&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">context</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">generatorConfiguration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>MyBatis3Simple</code>（MyBatis3 简化版）</p>
+<ul>
+<li>生成Java代码</li>
+<li>生成 MyBatis3 兼容的 XML 配置文件或者不带配置文件的注解（即既能生成 XML 文件，又能生成注解）</li>
+<li>生成的实体类对象是扁平的——没有单独的主键对象（即只有一个 Record 类）</li>
+<li>生成的代码没有外部依赖项</li>
+<li>生成的代码相对较少</li>
+<li>不生成“by example”或“selective”方法，即生成的代码不包括用于动态查询构造的方法，很难扩展</li>
+</ul>
+<p>  配置示例：</p>
+</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">generatorConfiguration</span> <span class="keyword">PUBLIC</span></span></span><br><span class="line"><span class="meta"> <span class="string">&quot;-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN&quot;</span></span></span><br><span class="line"><span class="meta"> <span class="string">&quot;http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">generatorConfiguration</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">context</span> <span class="attr">id</span>=<span class="string">&quot;simple&quot;</span> <span class="attr">targetRuntime</span>=<span class="string">&quot;MyBatis3Simple&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">jdbcConnection</span> <span class="attr">driverClass</span>=<span class="string">&quot;org.hsqldb.jdbcDriver&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">connectionURL</span>=<span class="string">&quot;jdbc:hsqldb:mem:aname&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">javaModelGenerator</span> <span class="attr">targetPackage</span>=<span class="string">&quot;example.model&quot;</span> <span class="attr">targetProject</span>=<span class="string">&quot;src/main/java&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">javaClientGenerator</span> <span class="attr">type</span>=<span class="string">&quot;ANNOTATEDMAPPER&quot;</span> <span class="attr">targetPackage</span>=<span class="string">&quot;example.mapper&quot;</span> <span class="attr">targetProject</span>=<span class="string">&quot;src/main/java&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">table</span> <span class="attr">tableName</span>=<span class="string">&quot;FooTable&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">context</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">generatorConfiguration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><a id="2"></a></p>
+<h1 id="2、运行-MBG"><a href="#2、运行-MBG" class="headerlink" title="2、运行 MBG"></a>2、运行 MBG</h1><p>运行 MBG 有①<code>命令行</code>、②<code>Ant</code>、③<code>Maven 插件</code>、④<code>Java 代码</code>、⑤<code>Eclipse</code> 五种方式，这里只介绍 Maven 插件和 Java 代码的方式。</p>
+<h2 id="2-1、Maven-插件方式"><a href="#2-1、Maven-插件方式" class="headerlink" title="2.1、Maven 插件方式"></a>2.1、Maven 插件方式</h2><p>直接将 MBG 插件配置到 pom.xml 中：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">...</span>&gt;</span></span><br><span class="line">     ...</span><br><span class="line">     <span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">       ...</span><br><span class="line">       <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis.generator<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-generator-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.4.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">overwrite</span>&gt;</span>false<span class="tag">&lt;/<span class="name">overwrite</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">verbose</span>&gt;</span>true<span class="tag">&lt;/<span class="name">verbose</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">tableNames</span>&gt;</span>fb_player,fb_score<span class="tag">&lt;/<span class="name">tableNames</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">contexts</span>&gt;</span>mbg1,mbg2<span class="tag">&lt;/<span class="name">contexts</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">version</span>&gt;</span>8.0.30<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">      ...</span><br><span class="line">    <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line">    ...</span><br><span class="line">  <span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>需要注意的是</code>：由于是直接使用插件，而 generatorConfig.xml 中需要指定 jdbcDriver 的值，而 jdbcDriver 的值又需要 mysql-connector-java 这个依赖包，因此不能将依赖包放在插件的外面，而是要将这个依赖包加到插件中来，这样插件启动的时候才能找到 jdbc 驱动。</p>
+<p><img src="https://cdn.staticaly.com/gh/lisj98/image-hosting@master/MyBatis/MBG-Maven%E6%96%B9%E5%BC%8F%E5%8F%82%E6%95%B0.1c6y9ycmtyu8.webp" alt="MBG-Maven方式参数"></p>
+<p>可选参数如下：</p>
+<table>
+<thead>
+<tr>
+<th align="left">参数名</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">configurationFile</td>
+<td align="left">MBG 配置文件的位置，默认值为 ${basedir}&#x2F;src&#x2F;main&#x2F;resources&#x2F;generatorConfig.xml</td>
+</tr>
+<tr>
+<td align="left">contexts</td>
+<td align="left">和 tableNames 使用方法一致</td>
+</tr>
+<tr>
+<td align="left">jdbcDriver</td>
+<td align="left">数据库驱动</td>
+</tr>
+<tr>
+<td align="left">jdbcPassword</td>
+<td align="left">数据库密码</td>
+</tr>
+<tr>
+<td align="left">jdbcURL</td>
+<td align="left">数据库地址</td>
+</tr>
+<tr>
+<td align="left">jdbcUserId</td>
+<td align="left">数据库用户名</td>
+</tr>
+<tr>
+<td align="left">outputDirectory</td>
+<td align="left">MBG 生成的新文件被放置的目录，当 targetProject 被指定为“MAVEN”（大小写敏感）时用到，默认值为 ${project.build.directory}&#x2F;generated-sources&#x2F;mybatis-generator</td>
+</tr>
+<tr>
+<td align="left">overwrite</td>
+<td align="left">默认值为 false。①如果为真，那么如果现有的 Java 文件与生成的文件具有相同的名称，现有的 Java 文件将被覆盖；②如果没有指定或者为假，并且已经存在与生成的文件同名的 Java 文件，那么 MBG 将新生成唯一的名称，与旧文件写入同一目录；③MBG 总是会合并和覆盖旧 XML 文件</td>
+</tr>
+<tr>
+<td align="left">sqlScript</td>
+<td align="left">生成代码之前要运行的 SQL 脚本文件的位置，值可以指定为文件系统中的一个位置，如果前缀为“classpath”，则可以指定构建类路径上的一个位置。①如果为null，则不运行任何脚本；②如果不为空，则还必须提供 jdbcDriver、jdbcURL等</td>
+</tr>
+<tr>
+<td align="left">tableNames</td>
+<td align="left">指定哪些表需要生成代码（注意需要和 generatorConfig.xml 中 table 标签指定的表名一致，即必须要在该文件中找到这个表名，找不到或者名字错误均不生成代码），不指定则为 generatorConfig.xml 中所有 table 标签指定的表生成代码</td>
+</tr>
+<tr>
+<td align="left">verbose</td>
+<td align="left">如果为真，则 MBG 将把进度消息写入构建日志</td>
+</tr>
+<tr>
+<td align="left">includeCompileDependencies</td>
+<td align="left">如果为真，那么范围为”compile”， “provided”和”system”的依赖项将被添加到生成器的类路径中</td>
+</tr>
+<tr>
+<td align="left">includeAllDependencies</td>
+<td align="left">如果为真，那么任何作用域的依赖项都将添加到生成器的类路径中</td>
+</tr>
+</tbody></table>
+<p><code>targetProject 属性备注</code>：<br>当使用 Maven 运行时，生成器对配置的 targetProject 属性的解释是不同的。如果设置为特殊值”MAVEN”(区分大小写)，则 targetProject 将被设置为插件的输出目录（outputDirectory），如果该目录不存在，则会创建该目录。如果没有设置为”MAVEN”，那么 targetProject 将被 MBG 解释为常规目录，它必须被设置为一个已经存在的目录。</p>
+<p><code>使用方法</code>：<br>首先在 <code>generator.properties</code> 中配置好数据库连接信息：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">jdbc.driverClass=com.mysql.cj.jdbc.Driver</span><br><span class="line">jdbc.connectionURL=jdbc:mysql://localhost:3306/mbg?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=Asia/Shanghai</span><br><span class="line">jdbc.userId=root</span><br><span class="line">jdbc.password=root</span><br></pre></td></tr></table></figure>
+
+<p>编写好 <code>generatorConfig.xml</code> 文件：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">generatorConfiguration</span> <span class="keyword">PUBLIC</span></span></span><br><span class="line"><span class="meta">        <span class="string">&quot;-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN&quot;</span></span></span><br><span class="line"><span class="meta">        <span class="string">&quot;http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">generatorConfiguration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">properties</span> <span class="attr">resource</span>=<span class="string">&quot;generator.properties&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">context</span> <span class="attr">id</span>=<span class="string">&quot;mbg1&quot;</span> <span class="attr">targetRuntime</span>=<span class="string">&quot;MyBatis3&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">jdbcConnection</span> <span class="attr">driverClass</span>=<span class="string">&quot;$&#123;jdbc.driverClass&#125;&quot;</span></span></span><br><span class="line"><span class="tag">                        <span class="attr">connectionURL</span>=<span class="string">&quot;$&#123;jdbc.connectionURL&#125;&quot;</span></span></span><br><span class="line"><span class="tag">                        <span class="attr">userId</span>=<span class="string">&quot;$&#123;jdbc.userId&#125;&quot;</span></span></span><br><span class="line"><span class="tag">                        <span class="attr">password</span>=<span class="string">&quot;$&#123;jdbc.password&#125;&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;nullCatalogMeansCurrent&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">jdbcConnection</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!--生成的实体类位置--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">javaModelGenerator</span> <span class="attr">targetPackage</span>=<span class="string">&quot;com.lsj.model&quot;</span> <span class="attr">targetProject</span>=<span class="string">&quot;src/main/java&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!--生成的 Mapper.xml 映射文件位置--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">sqlMapGenerator</span> <span class="attr">targetPackage</span>=<span class="string">&quot;com.lsj.mapper&quot;</span> <span class="attr">targetProject</span>=<span class="string">&quot;src/main/resources&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!--生成的 Mapper 接口位置--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">javaClientGenerator</span> <span class="attr">type</span>=<span class="string">&quot;XMLMAPPER&quot;</span> <span class="attr">targetPackage</span>=<span class="string">&quot;com.lsj.mapper&quot;</span> <span class="attr">targetProject</span>=<span class="string">&quot;src/main/java&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">table</span> <span class="attr">tableName</span>=<span class="string">&quot;fb_score&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">context</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">context</span> <span class="attr">id</span>=<span class="string">&quot;mbg2&quot;</span> <span class="attr">targetRuntime</span>=<span class="string">&quot;MyBatis3&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">jdbcConnection</span> <span class="attr">driverClass</span>=<span class="string">&quot;$&#123;jdbc.driverClass&#125;&quot;</span></span></span><br><span class="line"><span class="tag">                        <span class="attr">connectionURL</span>=<span class="string">&quot;$&#123;jdbc.connectionURL&#125;&quot;</span></span></span><br><span class="line"><span class="tag">                        <span class="attr">userId</span>=<span class="string">&quot;$&#123;jdbc.userId&#125;&quot;</span></span></span><br><span class="line"><span class="tag">                        <span class="attr">password</span>=<span class="string">&quot;$&#123;jdbc.password&#125;&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;nullCatalogMeansCurrent&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">jdbcConnection</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!--生成的实体类位置--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">javaModelGenerator</span> <span class="attr">targetPackage</span>=<span class="string">&quot;com.lsj.model&quot;</span> <span class="attr">targetProject</span>=<span class="string">&quot;src/main/java&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!--生成的 Mapper.xml 映射文件位置--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">sqlMapGenerator</span> <span class="attr">targetPackage</span>=<span class="string">&quot;com.lsj.mapper&quot;</span> <span class="attr">targetProject</span>=<span class="string">&quot;src/main/resources&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!--生成的 Mapper 接口位置--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">javaClientGenerator</span> <span class="attr">type</span>=<span class="string">&quot;XMLMAPPER&quot;</span> <span class="attr">targetPackage</span>=<span class="string">&quot;com.lsj.mapper&quot;</span> <span class="attr">targetProject</span>=<span class="string">&quot;src/main/java&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">table</span> <span class="attr">tableName</span>=<span class="string">&quot;fb_player&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">context</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">generatorConfiguration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>最后运行插件生成结果：</p>
+<p><img src="https://cdn.staticaly.com/gh/lisj98/image-hosting@master/MyBatis/MBG%E7%94%9F%E6%88%90%E7%9B%AE%E5%BD%95.wdxfiurxmkg.webp" alt="MBG生成目录"></p>
+<p>插件：</p>
+<p><img src="https://cdn.staticaly.com/gh/lisj98/image-hosting@master/MyBatis/MBG%E6%8F%92%E4%BB%B6.1bh4x8qubcl.webp" alt="MBG插件"></p>
+<h2 id="2-2、Java-代码方式"><a href="#2-2、Java-代码方式" class="headerlink" title="2.2、Java 代码方式"></a>2.2、Java 代码方式</h2><p>编写一个 MBG 启动类，指定配置文件即可：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MBG</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> XMLParserException, IOException, InvalidConfigurationException, SQLException, InterruptedException &#123;</span><br><span class="line">        List&lt;String&gt; warnings = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;String&gt;();</span><br><span class="line">        <span class="type">boolean</span> <span class="variable">overwrite</span> <span class="operator">=</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="type">InputStream</span> <span class="variable">is</span> <span class="operator">=</span> MBG.class.getResourceAsStream(<span class="string">&quot;/generatorConfig.xml&quot;</span>);</span><br><span class="line">        <span class="type">ConfigurationParser</span> <span class="variable">cp</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ConfigurationParser</span>(warnings);</span><br><span class="line">        <span class="type">Configuration</span> <span class="variable">config</span> <span class="operator">=</span> cp.parseConfiguration(is);</span><br><span class="line">        <span class="type">DefaultShellCallback</span> <span class="variable">callback</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DefaultShellCallback</span>(overwrite);</span><br><span class="line">        <span class="type">MyBatisGenerator</span> <span class="variable">myBatisGenerator</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MyBatisGenerator</span>(config, callback, warnings);</span><br><span class="line">        myBatisGenerator.generate(<span class="literal">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>同样需要注意的是</code>：这次要将 mysql-connector-java 这个依赖包放在外面，因为此时没有直接使用到 MBG 插件。</p>
+<p>这样的话，实体类、Mapper 接口、Mapper 映射文件就都自动生成了，接下来就是配置 mybatis.mapper-locations 和 @MapperScan 来扫描接口和映射文件了，这一部分和不使用 MBG 的步骤一致，不再赘述。</p>
+<h1 id="3、生成代码过程详解"><a href="#3、生成代码过程详解" class="headerlink" title="3、生成代码过程详解"></a>3、生成代码过程详解</h1><p>MBG 根据 targetRuntime 属性的配置生成不同的对象。具体有 MyBatis3DynamicSql（推荐）、MyBatis3 或 MyBatis3Simple（传统）这三种。</p>
+<h2 id="3-1、使用-MyBatis-Dynamic-SQL-生成对象"><a href="#3-1、使用-MyBatis-Dynamic-SQL-生成对象" class="headerlink" title="3.1、使用 MyBatis Dynamic SQL 生成对象"></a>3.1、使用 MyBatis Dynamic SQL 生成对象</h2><p>即使用 MyBatis3DynamicSql。<br>这种情况下，对于每一个表，MBG 生成三个类：</p>
+<ul>
+<li>一个 <code>Record 类</code>代表数据库表的一行记录（即我们通常意义上的实体类）</li>
+<li>一个 <code>Support 类</code>包括表和所有列的定义（主要用于 Mapper 接口中拼接 where 子句）</li>
+<li>一个 <code>Mapper 接口</code>带有所有通用 SQL 方法</li>
+</ul>
+<p>关于生成的代码，还有几点要说明：</p>
+<ul>
+<li><code>没有 XML 文件生成</code></li>
+<li><code>没有单独的&quot;Example&quot;类生成</code></li>
+<li><code>没有单独的处理“BLOB”字段的方法</code></li>
+<li><code>生成的实体类总是采用“flat”模式，即只生成一个 Record 类，不含主键类和 Record With BLOB 类</code></li>
+</ul>
+<h3 id="3-1-1、Support-类的形式"><a href="#3-1-1、Support-类的形式" class="headerlink" title="3.1.1、Support 类的形式"></a>3.1.1、Support 类的形式</h3><p>每一个表都有一个”Support”类，这个类包括表和所有列的定义。这些定义通常用于 Mapper 中某些 SQL 语句的输入——最常<code>用于 where 子句的输入</code>。<br>示例：有一个“TABLE_CODE”表，模式为”MYSCHEMA”，其中有”ID”和“DESCRIPTION”两个字段，那么，最后生成的 support 类将是这样的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.lsj.mapper;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.sql.JDBCType;</span><br><span class="line"><span class="keyword">import</span> javax.annotation.Generated;</span><br><span class="line"><span class="keyword">import</span> org.mybatis.dynamic.sql.AliasableSqlTable;</span><br><span class="line"><span class="keyword">import</span> org.mybatis.dynamic.sql.SqlColumn;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">Mybatis3dynamicsqlDynamicSqlSupport</span> &#123;</span><br><span class="line">    <span class="meta">@Generated(value=&quot;org.mybatis.generator.api.MyBatisGenerator&quot;, date=&quot;2022-07-31T15:55:56.194+08:00&quot;, comments=&quot;Source Table: mybatis3dynamicsql&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">Mybatis3dynamicsql</span> <span class="variable">mybatis3dynamicsql</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Mybatis3dynamicsql</span>();</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Generated(value=&quot;org.mybatis.generator.api.MyBatisGenerator&quot;, date=&quot;2022-07-31T15:55:56.194+08:00&quot;, comments=&quot;Source field: mybatis3dynamicsql.id&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> SqlColumn&lt;Integer&gt; id = mybatis3dynamicsql.id;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Generated(value=&quot;org.mybatis.generator.api.MyBatisGenerator&quot;, date=&quot;2022-07-31T15:55:56.194+08:00&quot;, comments=&quot;Source field: mybatis3dynamicsql.description&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> SqlColumn&lt;String&gt; description = mybatis3dynamicsql.description;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Generated(value=&quot;org.mybatis.generator.api.MyBatisGenerator&quot;, date=&quot;2022-07-31T15:55:56.194+08:00&quot;, comments=&quot;Source Table: mybatis3dynamicsql&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">Mybatis3dynamicsql</span> <span class="keyword">extends</span> <span class="title class_">AliasableSqlTable</span>&lt;Mybatis3dynamicsql&gt; &#123;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">final</span> SqlColumn&lt;Integer&gt; id = column(<span class="string">&quot;id&quot;</span>, JDBCType.INTEGER);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">final</span> SqlColumn&lt;String&gt; description = column(<span class="string">&quot;description&quot;</span>, JDBCType.VARCHAR);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="title function_">Mybatis3dynamicsql</span><span class="params">()</span> &#123;</span><br><span class="line">            <span class="built_in">super</span>(<span class="string">&quot;mybatis3dynamicsql&quot;</span>, Mybatis3dynamicsql::<span class="keyword">new</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Mapper 接口是这样的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.lsj.mapper;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> com.lsj.mapper.Mybatis3dynamicsqlDynamicSqlSupport.*;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.mybatis.dynamic.sql.SqlBuilder.isEqualTo;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Mybatis3dynamicsqlMapper</span> <span class="keyword">extends</span> <span class="title class_">CommonCountMapper</span>, CommonDeleteMapper, CommonInsertMapper&lt;Mybatis3dynamicsql&gt;, CommonUpdateMapper &#123;</span><br><span class="line">    <span class="meta">@Generated(value=&quot;org.mybatis.generator.api.MyBatisGenerator&quot;, date=&quot;2022-07-31T15:55:56.203+08:00&quot;, comments=&quot;Source Table: mybatis3dynamicsql&quot;)</span></span><br><span class="line">    BasicColumn[] selectList = BasicColumn.columnList(id, description);</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Generated(value=&quot;org.mybatis.generator.api.MyBatisGenerator&quot;, date=&quot;2022-07-31T15:55:56.195+08:00&quot;, comments=&quot;Source Table: mybatis3dynamicsql&quot;)</span></span><br><span class="line">    <span class="meta">@SelectProvider(type=SqlProviderAdapter.class, method=&quot;select&quot;)</span></span><br><span class="line">    <span class="meta">@Results(id=&quot;Mybatis3dynamicsqlResult&quot;, value = &#123;</span></span><br><span class="line"><span class="meta">        @Result(column=&quot;id&quot;, property=&quot;id&quot;, jdbcType=JdbcType.INTEGER, id=true),</span></span><br><span class="line"><span class="meta">        @Result(column=&quot;description&quot;, property=&quot;description&quot;, jdbcType=JdbcType.VARCHAR)</span></span><br><span class="line"><span class="meta">    &#125;)</span></span><br><span class="line">    List&lt;Mybatis3dynamicsql&gt; <span class="title function_">selectMany</span><span class="params">(SelectStatementProvider selectStatement)</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Generated(value=&quot;org.mybatis.generator.api.MyBatisGenerator&quot;, date=&quot;2022-07-31T15:55:56.198+08:00&quot;, comments=&quot;Source Table: mybatis3dynamicsql&quot;)</span></span><br><span class="line">    <span class="keyword">default</span> <span class="type">int</span> <span class="title function_">deleteByPrimaryKey</span><span class="params">(Integer id_)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> delete(c -&gt; </span><br><span class="line">            c.where(id, isEqualTo(id_))</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>项目结构是这样的：</p>
+<p><img src="https://cdn.staticaly.com/gh/lisj98/image-hosting@master/MyBatis/Mybatis3dynamicsql%E7%A4%BA%E4%BE%8B.ypx2ar9wh80.webp" alt="Mybatis3dynamicsql示例"></p>
+<p>这个”Support”类中的”id”和“description”就对应数据库表中的”id”和“description”，Mapper 接口中用到 where 子句时就可以先把这个类导进来，然后直接使用这两个属性了，就不用又重新定义对象，再通过对象调用属性了。</p>
+<h3 id="3-1-2、Mapper-接口的使用"><a href="#3-1-2、Mapper-接口的使用" class="headerlink" title="3.1.2、Mapper 接口的使用"></a>3.1.2、Mapper 接口的使用</h3><p>使用 MyBatis3DynamicSQL 时<code>没有“by example”方法生成</code>，取而代之的是一些可以<code>用 lamda 表达式代替 where 子句</code>的方法。数据处理时可以直接用 lamda 表达式调用下列通用方法，也可以直接使用 Support 类提供的写好了的方法。<br>MBG 将创建下列通用方法：</p>
+<ul>
+<li>count</li>
+<li>delete</li>
+<li>select</li>
+<li>selectDistinct</li>
+<li>selectOne</li>
+<li>update</li>
+</ul>
+<p>每个方法都能在调用时通过 lamda 表达式动态指定附加条件来取代 where 子句。<br>例如：通过 count 方法计算表中的记录数：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">long</span> <span class="variable">totalRows</span> <span class="operator">=</span> mapper.count(c -&gt; c);</span><br><span class="line"><span class="comment">// or</span></span><br><span class="line"> <span class="type">long</span> <span class="variable">totalRows</span> <span class="operator">=</span> mapper.count(CountDSLCompleter.allRows());</span><br></pre></td></tr></table></figure>
+
+<p>select 语句示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;TableCode&gt; allRecords = mapper.select(c -&gt; c);</span><br><span class="line"><span class="comment">// or</span></span><br><span class="line">List&lt;TableCode&gt; allRecords = mapper.select(SelectDSLCompleter.allRows());</span><br></pre></td></tr></table></figure>
+
+<p>当然也可以将 where 子句加进来，但是要使用到上一节提到的”Support”类和“SqlBuilder”类，然后就可以编写任意复杂的 where 子句和 order by 子句。<br>例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Generated(value=&quot;org.mybatis.generator.api.MyBatisGenerator&quot;, date=&quot;2022-07-31T15:55:56.198+08:00&quot;, comments=&quot;Source Table: mybatis3dynamicsql&quot;)</span></span><br><span class="line"><span class="keyword">default</span> <span class="type">int</span> <span class="title function_">deleteByPrimaryKey</span><span class="params">(Integer id_)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> delete(c -&gt; </span><br><span class="line">        c.where(id, isEqualTo(id_))</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>update 语句示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.lsj.mapper;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> com.lsj.mapper.Mybatis3dynamicsqlDynamicSqlSupport.*;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.mybatis.dynamic.sql.SqlBuilder.isEqualTo;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Mybatis3dynamicsqlMapper</span> <span class="keyword">extends</span> <span class="title class_">CommonCountMapper</span>, CommonDeleteMapper, CommonInsertMapper&lt;Mybatis3dynamicsql&gt;, CommonUpdateMapper &#123;</span><br><span class="line">    <span class="meta">@Generated(value=&quot;org.mybatis.generator.api.MyBatisGenerator&quot;, date=&quot;2022-07-31T15:55:56.205+08:00&quot;, comments=&quot;Source Table: mybatis3dynamicsql&quot;)</span></span><br><span class="line">    <span class="keyword">default</span> <span class="type">int</span> <span class="title function_">update</span><span class="params">(UpdateDSLCompleter completer)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> MyBatis3Utils.update(<span class="built_in">this</span>::update, mybatis3dynamicsql, completer);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Generated(value=&quot;org.mybatis.generator.api.MyBatisGenerator&quot;, date=&quot;2022-07-31T15:55:56.206+08:00&quot;, comments=&quot;Source Table: mybatis3dynamicsql&quot;)</span></span><br><span class="line">    <span class="keyword">static</span> UpdateDSL&lt;UpdateModel&gt; <span class="title function_">updateAllColumns</span><span class="params">(Mybatis3dynamicsql row, UpdateDSL&lt;UpdateModel&gt; dsl)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> dsl.set(id).equalTo(row::getId)</span><br><span class="line">                .set(description).equalTo(row::getDescription);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Generated(value=&quot;org.mybatis.generator.api.MyBatisGenerator&quot;, date=&quot;2022-07-31T15:55:56.206+08:00&quot;, comments=&quot;Source Table: mybatis3dynamicsql&quot;)</span></span><br><span class="line">    <span class="keyword">static</span> UpdateDSL&lt;UpdateModel&gt; <span class="title function_">updateSelectiveColumns</span><span class="params">(Mybatis3dynamicsql row, UpdateDSL&lt;UpdateModel&gt; dsl)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> dsl.set(id).equalToWhenPresent(row::getId)</span><br><span class="line">                .set(description).equalToWhenPresent(row::getDescription);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Generated(value=&quot;org.mybatis.generator.api.MyBatisGenerator&quot;, date=&quot;2022-07-31T15:55:56.207+08:00&quot;, comments=&quot;Source Table: mybatis3dynamicsql&quot;)</span></span><br><span class="line">    <span class="keyword">default</span> <span class="type">int</span> <span class="title function_">updateByPrimaryKey</span><span class="params">(Mybatis3dynamicsql row)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> update(c -&gt;</span><br><span class="line">            c.set(description).equalTo(row::getDescription)</span><br><span class="line">            .where(id, isEqualTo(row::getId))</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Generated(value=&quot;org.mybatis.generator.api.MyBatisGenerator&quot;, date=&quot;2022-07-31T15:55:56.207+08:00&quot;, comments=&quot;Source Table: mybatis3dynamicsql&quot;)</span></span><br><span class="line">    <span class="keyword">default</span> <span class="type">int</span> <span class="title function_">updateByPrimaryKeySelective</span><span class="params">(Mybatis3dynamicsql row)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> update(c -&gt;</span><br><span class="line">            c.set(description).equalToWhenPresent(row::getDescription)</span><br><span class="line">            .where(id, isEqualTo(row::getId))</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-1-5、新插件"><a href="#3-1-5、新插件" class="headerlink" title="3.1.5、新插件"></a>3.1.5、新插件</h3><p>因为“*ByExample”方法已经被移除了，因此通过 XML 文件中的 &lt;table&gt; 元素中的属性（如 &lt;enableInsert&gt;，&lt;enableSelectByExample&gt; 等）来控制生成的方法已经没有意义了，这时候可以使用 MBG 提供的新插件来控制：</p>
+<ul>
+<li><code>org.mybatis.generator.plugins.dsql.DisableDeletePlugin</code>：不生成删除方法</li>
+<li><code>org.mybatis.generator.plugins.dsql.DisableInsertPlugin</code>：不生成插入方法</li>
+<li><code>org.mybatis.generator.plugins.dsql.DisableUpdatePlugin</code>：不生成更新方法</li>
+<li><code>org.mybatis.generator.plugins.dsql.ReadOnlyPlugin</code>：：不生成所有删除、插入、更新方法</li>
+</ul>
+<h2 id="3-2、使用传统方式生成对象"><a href="#3-2、使用传统方式生成对象" class="headerlink" title="3.2、使用传统方式生成对象"></a>3.2、使用传统方式生成对象</h2><p>即使用 MyBatis3 或 MyBatis3Simple。<br>这种情况下，对于每一个表，MBG 生成三个对象：</p>
+<ul>
+<li>一个 <code>实体类</code></li>
+<li>一个 <code>Mapper.xml</code></li>
+<li>一个 <code>Mapper 接口</code></li>
+<li>一个 <code>Example 类</code></li>
+</ul>
+<h3 id="3-2-1、实体类"><a href="#3-2-1、实体类" class="headerlink" title="3.2.1、实体类"></a>3.2.1、实体类</h3><p>根据 &lt;context&gt; 元素中子元素 <code>&lt;defaultModelType&gt;</code> 的值或者 &lt;table&gt; 元素中子元素 <code>&lt;modelType&gt;</code> 值的不同，MBG 会生成不同的类。</p>
+<h4 id="3-2-1-1、主键类"><a href="#3-2-1-1、主键类" class="headerlink" title="3.2.1.1、主键类"></a>3.2.1.1、主键类</h4><p>该类将包含表主键每个字段的属性。</p>
+<h4 id="3-2-1-2、Record-类"><a href="#3-2-1-2、Record-类" class="headerlink" title="3.2.1.2、Record 类"></a>3.2.1.2、Record 类</h4><p>该类将包含表中非 BLOB 字段和非主键字段的属性。如果有主键类的话将扩展主键类。</p>
+<h4 id="3-2-1-3、Record-With-BLOBs-类"><a href="#3-2-1-3、Record-With-BLOBs-类" class="headerlink" title="3.2.1.3、Record With BLOBs 类"></a>3.2.1.3、Record With BLOBs 类</h4><p>该类将包含表中每个 BLOB 字段的属性。如果有 Record 类，它将扩展 Record 类；如果只有主键类，它将扩展主键类。<br>上述三种类通常会一层一层扩展，最后合并为一个实体类，例如：</p>
+<p><img src="https://cdn.staticaly.com/gh/lisj98/image-hosting@master/MyBatis/Model%E7%B1%BB%E7%A4%BA%E4%BE%8B.48jndgopqhs0.webp" alt="Model类示例"></p>
+<h4 id="3-2-1-4、Example-类"><a href="#3-2-1-4、Example-类" class="headerlink" title="3.2.1.4、Example 类"></a>3.2.1.4、Example 类</h4><p>该类<code>用于为以下方法构造动态 where 子句</code>：</p>
+<ul>
+<li>selectByExample</li>
+<li>selectByExampleWithBLOBs</li>
+<li>deleteByExample</li>
+<li>countByExample</li>
+<li>updateByExample</li>
+</ul>
+<p>该类不会扩展任何其他实体类。如果启用了任何<code>“*ByExample”方法</code>，就会生成这个类。<br>例如：</p>
+<p><img src="https://cdn.staticaly.com/gh/lisj98/image-hosting@master/MyBatis/Example%E7%B1%BB%E7%A4%BA%E4%BE%8B.20isf489iwn4.webp" alt="Example类示例"></p>
+<p>具体使用见<a href="#3.2.4">3.2.4</a></p>
+<h3 id="3-2-2、Mapper-映射文件"><a href="#3-2-2、Mapper-映射文件" class="headerlink" title="3.2.2、Mapper 映射文件"></a>3.2.2、Mapper 映射文件</h3><p>MBG 将为每个指定的表生成一个不同的 SQL Map 文件。SQL Map 的名称空间是表的名称(如果存在模式和目录，则由模式和目录限定)。MBG 不会将 SQL Map 条目添加到 MyBatis 配置文件中——必须手动完成这一操作（MyBatis.mapper-locations）。注意：每个新生成的 Mapper 文件都将覆盖旧文件。</p>
+<h4 id="3-2-2-1、Result-Map"><a href="#3-2-2-1、Result-Map" class="headerlink" title="3.2.2.1、Result Map"></a>3.2.2.1、Result Map</h4><p>此元素用于指定表字段类型和生成类的属性类型的映射规则。<br>例如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;BaseResultMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;com.lsj.model.FbPlayer&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span> <span class="attr">column</span>=<span class="string">&quot;id&quot;</span> <span class="attr">jdbcType</span>=<span class="string">&quot;INTEGER&quot;</span> <span class="attr">property</span>=<span class="string">&quot;id&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;name&quot;</span> <span class="attr">jdbcType</span>=<span class="string">&quot;VARCHAR&quot;</span> <span class="attr">property</span>=<span class="string">&quot;name&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;nationality&quot;</span> <span class="attr">jdbcType</span>=<span class="string">&quot;VARCHAR&quot;</span> <span class="attr">property</span>=<span class="string">&quot;nationality&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;club&quot;</span> <span class="attr">jdbcType</span>=<span class="string">&quot;VARCHAR&quot;</span> <span class="attr">property</span>=<span class="string">&quot;club&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-2-2-2、带-BLOB-字段的-Result-Map"><a href="#3-2-2-2、带-BLOB-字段的-Result-Map" class="headerlink" title="3.2.2.2、带 BLOB 字段的 Result Map"></a>3.2.2.2、带 BLOB 字段的 Result Map</h4><p>添加 BLOB 字段类型的映射规则。</p>
+<h4 id="3-2-2-3、where-子句"><a href="#3-2-2-3、where-子句" class="headerlink" title="3.2.2.3、where 子句"></a>3.2.2.3、where 子句</h4><p>此元素包含一个可重用的 where 子句，由“by example”方法使用。where 子句中将不包含任何 BLOB 字段。如果启用了任何“by example”语句，就会生成此元素。</p>
+<p><img src="https://cdn.staticaly.com/gh/lisj98/image-hosting@master/MyBatis/where%E5%AD%90%E5%8F%A5.4kajvmapoe00.webp" alt="where子句"></p>
+<h4 id="3-2-2-4、Select-By-Primary-Key、Select-by-Example、Select-by-Example-With-BLOBs、Insert、Insert-Selective、Update-By-Primary-Key、Update-By-Primary-Key-With-BLOBs、Update-By-Primary-Key-Selective、Delete-By-Primary-Key、Delete-By-Example、Count-By-Example、Update-By-Example、Update-By-Example-With-BLOBs、Update-By-Example-Selective"><a href="#3-2-2-4、Select-By-Primary-Key、Select-by-Example、Select-by-Example-With-BLOBs、Insert、Insert-Selective、Update-By-Primary-Key、Update-By-Primary-Key-With-BLOBs、Update-By-Primary-Key-Selective、Delete-By-Primary-Key、Delete-By-Example、Count-By-Example、Update-By-Example、Update-By-Example-With-BLOBs、Update-By-Example-Selective" class="headerlink" title="3.2.2.4、Select By Primary Key、Select by Example、Select by Example With BLOBs、Insert、Insert Selective、Update By Primary Key、Update By Primary Key With BLOBs、Update By Primary Key Selective、Delete By Primary Key、Delete By Example、Count By Example、Update By Example、Update By Example With BLOBs、Update By Example Selective"></a>3.2.2.4、Select By Primary Key、Select by Example、Select by Example With BLOBs、Insert、Insert Selective、Update By Primary Key、Update By Primary Key With BLOBs、Update By Primary Key Selective、Delete By Primary Key、Delete By Example、Count By Example、Update By Example、Update By Example With BLOBs、Update By Example Selective</h4><p>看名字就知道，条件 CRUD 方法。</p>
+<h3 id="3-2-3、Mapper-接口"><a href="#3-2-3、Mapper-接口" class="headerlink" title="3.2.3、Mapper 接口"></a>3.2.3、Mapper 接口</h3><p>Mapper 接口将生成如下方法：</p>
+<ul>
+<li>countByExample</li>
+<li>deleteByPrimaryKey</li>
+<li>deleteByExample</li>
+<li>insert</li>
+<li>insertSelective</li>
+<li>selectByPrimaryKey</li>
+<li>selectByExample</li>
+<li>selectByExampleWithBLOBs</li>
+<li>updateByPrimaryKey</li>
+<li>updateByPrimaryKeySelective</li>
+<li>updateByExample</li>
+<li>updateByExampleSelective</li>
+</ul>
+<p>使用示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">SqlSession</span> <span class="variable">sqlSession</span> <span class="operator">=</span> sqlSessionFactory.openSession();</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="type">MyTableMapper</span> <span class="variable">mapper</span> <span class="operator">=</span> sqlSession.getMapper(MyTableMapper.class);</span><br><span class="line">    List&lt;MyTable&gt; allRecords = mapper.selectByExample(<span class="literal">null</span>);</span><br><span class="line">  &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">   sqlSession.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a id="3.2.4"></a></p>
+<h3 id="3-2-4、Example-类的使用"><a href="#3-2-4、Example-类的使用" class="headerlink" title="3.2.4、Example 类的使用"></a>3.2.4、Example 类的使用</h3><p>Example 类指定如何构建动态 where 子句，表中的每个非 BLOB 列都可以有选择地包含在 where 子句中。<br>Example 类包含一个名为 Criteria 的静态内部类，该类保存了将在 where 子句中组合在一起的条件列表。使用不同的 Criteria 类集可以生成几乎无限种 where 子句类型。<br><code>具体来说就是构建 where 子句时需要调用 GeneratedCriteria 内部类中的 addxxx 方法，而每调用一次都会将之后 where 子句中要用到的 condition 和 value 加入到 criteria 对象列表中，最后解析 xml 文件时就可以获取到对应的 condition 和 value 了，也就完成了 where 子句的构建。</code></p>
+<p><img src="https://cdn.staticaly.com/gh/lisj98/image-hosting@master/MyBatis/where%E5%AD%90%E5%8F%A5%E6%9E%84%E9%80%A0%E8%BF%87%E7%A8%8B.75cow4ht7z80.webp" alt="where子句构造过程"></p>
+<p>Criteria 对象可以使用 <code>createCriteria</code> 方法或 Example 类中的 <code>or</code> 方法创建。当使用 createCriteria 方法创建第一个 Criteria 对象时，它会被自动添加到 Criteria 对象列表中——这使得编写一个简单的 where 子句或组合多个子句变得很容易。当使用 or 方法时，Criteria 对象将被添加到所有实例列表中。<br>建议使用 or 方法来创建 Criteria 对象，这种方法可以使代码更具可读性。</p>
+<p><img src="https://cdn.staticaly.com/gh/lisj98/image-hosting@master/MyBatis/Example%E7%B1%BB%E7%BB%93%E6%9E%84.6fruthlk3jg0.webp" alt="Example类结构"></p>
+<h4 id="3-2-4-1、简单查询"><a href="#3-2-4-1、简单查询" class="headerlink" title="3.2.4.1、简单查询"></a>3.2.4.1、简单查询</h4><p>示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">TestTableExample</span> <span class="variable">example</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TestTableExample</span>();</span><br><span class="line">example.createCriteria().andField1EqualTo(<span class="number">5</span>);</span><br><span class="line"><span class="comment">// 或者</span></span><br><span class="line"><span class="type">TestTableExample</span> <span class="variable">example</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TestTableExample</span>();</span><br><span class="line">example.or().andField1EqualTo(<span class="number">5</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这两种方法创建的 where 子句等同于：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">where</span> field1 <span class="operator">=</span> <span class="number">5</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-2-4-2、复杂查询"><a href="#3-2-4-2、复杂查询" class="headerlink" title="3.2.4.2、复杂查询"></a>3.2.4.2、复杂查询</h4><p>示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">TestTableExample</span> <span class="variable">example</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TestTableExample</span>();</span><br><span class="line"></span><br><span class="line">  example.or()</span><br><span class="line">    .andField1EqualTo(<span class="number">5</span>)</span><br><span class="line">    .andField2IsNull();</span><br><span class="line"></span><br><span class="line">  example.or()</span><br><span class="line">    .andField3NotEqualTo(<span class="number">9</span>)</span><br><span class="line">    .andField4IsNotNull();</span><br><span class="line"></span><br><span class="line">  List&lt;Integer&gt; field5Values = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Integer&gt;();</span><br><span class="line">  field5Values.add(<span class="number">8</span>);</span><br><span class="line">  field5Values.add(<span class="number">11</span>);</span><br><span class="line">  field5Values.add(<span class="number">14</span>);</span><br><span class="line">  field5Values.add(<span class="number">22</span>);</span><br><span class="line"></span><br><span class="line">  example.or()</span><br><span class="line">    .andField5In(field5Values);</span><br><span class="line"></span><br><span class="line">  example.or()</span><br><span class="line">    .andField6Between(<span class="number">3</span>, <span class="number">7</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这种方法创建的 where 子句等同于：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">where</span> (field1 <span class="operator">=</span> <span class="number">5</span> <span class="keyword">and</span> field2 <span class="keyword">is</span> <span class="keyword">null</span>)</span><br><span class="line">   <span class="keyword">or</span> (field3 <span class="operator">&lt;&gt;</span> <span class="number">9</span> <span class="keyword">and</span> field4 <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">null</span>)</span><br><span class="line">   <span class="keyword">or</span> (field5 <span class="keyword">in</span> (<span class="number">8</span>, <span class="number">11</span>, <span class="number">14</span>, <span class="number">22</span>))</span><br><span class="line">   <span class="keyword">or</span> (field6 <span class="keyword">between</span> <span class="number">3</span> <span class="keyword">and</span> <span class="number">7</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-2-4-3、差异查询"><a href="#3-2-4-3、差异查询" class="headerlink" title="3.2.4.3、差异查询"></a>3.2.4.3、差异查询</h4><p>可以通过调用 Example 类的 setDistinct(true) 方法强制查询为 DISTINCT。</p>
+<h4 id="3-2-4-4、Criteria-类"><a href="#3-2-4-4、Criteria-类" class="headerlink" title="3.2.4.4、Criteria 类"></a>3.2.4.4、Criteria 类</h4><p>Criteria 内部类包含针对每个字段的 andXXX 方法：</p>
+<p><img src="https://cdn.staticaly.com/gh/lisj98/image-hosting@master/MyBatis/Criteria%E7%B1%BB.mask8qxiuyo.webp" alt="Criteria类"></p>
+<p>标准SQL谓词包括：</p>
+<ul>
+<li>IS NULL</li>
+<li>IS NOT NULL</li>
+<li>&#x3D; (equal)</li>
+<li>&lt;&gt; (not equal)</li>
+<li>&gt; (greater than)</li>
+<li>&gt;&#x3D; (greater than or equal) </li>
+<li>&lt; (less than)</li>
+<li>&lt;&#x3D; (less than or equal)</li>
+<li>LIKE</li>
+<li>NOT LIKE</li>
+<li>BETWEEN</li>
+<li>NOT BETWEEN</li>
+<li>IN</li>
+<li>NOT IN</li>
+</ul>
+<h3 id="3-2-5、扩展-Example-类"><a href="#3-2-5、扩展-Example-类" class="headerlink" title="3.2.5、扩展 Example 类"></a>3.2.5、扩展 Example 类</h3><p>可以通过编写插件或者继承<code>org.mybatis.generator.plugins.CaseInsensitiveLikePlugin</code>类来扩展 Example 类。<br>MBG 生成的 SQL 片段支持四种类型的 SQL 谓词。对于每种 SQL 谓词类型，在 GeneratedCriteria 内部类中都有一个对应的方法，可用于将谓词添加到动态 where 子句中。</p>
+<h4 id="3-2-5-1、Simple-String-Substitution（简单字符串替换）"><a href="#3-2-5-1、Simple-String-Substitution（简单字符串替换）" class="headerlink" title="3.2.5.1、Simple String Substitution（简单字符串替换）"></a>3.2.5.1、Simple String Substitution（简单字符串替换）</h4><p>当不需要将参数对象中的属性替换到 where 子句中时，使用该类型的谓词。<br>例如：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">FIRST_NAME <span class="keyword">is</span> <span class="keyword">null</span></span><br><span class="line">LAST_NAME <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">null</span></span><br></pre></td></tr></table></figure>
+
+<p>这种谓词对应的 GeneratedCriteria 类方法是<code>addCriterion(String anyString)</code>。<br>使用场景：假设你想使用 SOUNDEX 函数来执行“sounds like”的名称搜索。在MySQL中，谓词应该是这样的:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SOUNDEX(FIRST_NAME) <span class="operator">=</span> SOUNDEX(<span class="string">&#x27;frod&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这个谓词太复杂，不能使用任何其他方法，因此必须通过简单字符串替换将它插入到 where 子句中。</p>
+<p>①自定义方法，将对应谓词加入到 Criterion 对象列表中</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Criteria <span class="title function_">andFirstNameSoundsLike</span><span class="params">(String value)</span> &#123;</span><br><span class="line">  <span class="type">StringBuffer</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuffer</span>(<span class="string">&quot;SOUNDEX(FIRST_NAME) = SOUNDEX(&#x27;&quot;</span>);</span><br><span class="line">  sb.append(value);</span><br><span class="line">  sb.append(<span class="string">&quot;&#x27;)&quot;</span>);</span><br><span class="line"></span><br><span class="line">  addCriterion(sb.toString());</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>②使用方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">CustomerExample</span> <span class="variable">example</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CustomerExample</span>();</span><br><span class="line"><span class="type">Criteria</span> <span class="variable">criteria</span> <span class="operator">=</span> example.createCriteria();</span><br><span class="line">criteria.andFirstNameSoundsLike(<span class="string">&quot;frod&quot;</span>);</span><br><span class="line"><span class="type">List</span> <span class="variable">results</span> <span class="operator">=</span> selectByExample(example);</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-2-5-2、Single-Parameter-Predicates（单一参数谓词）"><a href="#3-2-5-2、Single-Parameter-Predicates（单一参数谓词）" class="headerlink" title="3.2.5.2、Single Parameter Predicates（单一参数谓词）"></a>3.2.5.2、Single Parameter Predicates（单一参数谓词）</h4><p>当参数对象中有一个属性要代入 where 子句时，使用该谓词类型。<br>例如：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">FIRST_NAME <span class="operator">=</span> ?</span><br><span class="line">LAST_NAME <span class="operator">&lt;&gt;</span> ?</span><br></pre></td></tr></table></figure>
+<p>这种谓词对应的 Criteria 类方法是 <code>addCriterion(String anyString, Object anyObject, String propertyName)</code>。<br>使用场景：假设你想对某些列执行不区分大小写的搜索。在MySQL中，谓词看起来像这样：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">upper</span>(FIRST_NAME) <span class="keyword">like</span> ?</span><br></pre></td></tr></table></figure>
+<p>此谓词符合单个参数谓词的功能——一个字符串值后跟一个参数。</p>
+<p>①自定义方法，将对应谓词加入到 Criterion 对象列表中</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> ExtendedCriteria <span class="title function_">andFirstNameLikeInsensitive</span><span class="params">(String value)</span> &#123;</span><br><span class="line">  addCriterion(<span class="string">&quot;upper(FIRST_NAME) like&quot;</span>,</span><br><span class="line">    value.toUpperCase(), <span class="string">&quot;firstName&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>②使用方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ExtendedExample</span> <span class="variable">example</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ExtendedExample</span>();</span><br><span class="line"><span class="type">ExtendedCriteria</span> <span class="variable">criteria</span> <span class="operator">=</span> (ExtendedCriteria) example.createCriteria();</span><br><span class="line">criteria.andFirstNameLikeInsensitive(<span class="string">&quot;fred%&quot;</span>);</span><br><span class="line"><span class="type">List</span> <span class="variable">results</span> <span class="operator">=</span> selectByExample(example);</span><br></pre></td></tr></table></figure>
+<h4 id="3-2-5-3、List-Predicates（列表谓词）"><a href="#3-2-5-3、List-Predicates（列表谓词）" class="headerlink" title="3.2.5.3、List Predicates（列表谓词）"></a>3.2.5.3、List Predicates（列表谓词）</h4><p>列表谓词用于将长度可变的列表作为参数添加到 where 子句中。<br>例如：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">FIRST_NAME <span class="keyword">IN</span> (?, ?, ?)</span><br><span class="line">LAST_NAME <span class="keyword">NOT</span> <span class="keyword">IN</span> (?, ?, ?, ?)</span><br></pre></td></tr></table></figure>
+<p>这种谓词对应的 Criteria 类方法是 <code>addCriterion(String anyString, List listOfObjects, String propertyName)</code>。</p>
+<h4 id="3-2-5-3、Between-Predicates（区间谓词）"><a href="#3-2-5-3、Between-Predicates（区间谓词）" class="headerlink" title="3.2.5.3、Between Predicates（区间谓词）"></a>3.2.5.3、Between Predicates（区间谓词）</h4><p>区间谓词用于以特定格式向 where 子句添加两个参数。<br>例如：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">FIRST_NAME <span class="keyword">BETWEEN</span> ? <span class="keyword">AND</span> ?</span><br><span class="line">LAST_NAME <span class="keyword">NOT</span> <span class="keyword">BETWEEN</span> ? <span class="keyword">AND</span> ?</span><br></pre></td></tr></table></figure>
+<p>这种谓词对应的 Criteria 类方法是 <code>addCriterion(String anyString, Object object1, Object object2, String propertyName)</code>。</p>
+<p>基本上 GeneratedCriteria 内部类或者其子类中都有相应谓词的对应方法，直接调用就行。没有的方法就需要自定义扩展。</p>
+<h1 id="4、XML-配置参考"><a href="#4、XML-配置参考" class="headerlink" title="4、XML 配置参考"></a>4、XML 配置参考</h1><p>一个完整的 generatorConfig.xml 文件长这样：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">generatorConfiguration</span></span></span><br><span class="line"><span class="meta">  <span class="keyword">PUBLIC</span> <span class="string">&quot;-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN&quot;</span></span></span><br><span class="line"><span class="meta">  <span class="string">&quot;http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">generatorConfiguration</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">classPathEntry</span> <span class="attr">location</span>=<span class="string">&quot;/Program Files/IBM/SQLLIB/java/db2java.zip&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">context</span> <span class="attr">id</span>=<span class="string">&quot;DB2Tables&quot;</span> <span class="attr">targetRuntime</span>=<span class="string">&quot;MyBatis3&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">jdbcConnection</span> <span class="attr">driverClass</span>=<span class="string">&quot;COM.ibm.db2.jdbc.app.DB2Driver&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">connectionURL</span>=<span class="string">&quot;jdbc:db2:TEST&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">userId</span>=<span class="string">&quot;db2admin&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">password</span>=<span class="string">&quot;db2admin&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">jdbcConnection</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">javaTypeResolver</span> &gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;forceBigDecimals&quot;</span> <span class="attr">value</span>=<span class="string">&quot;false&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">javaTypeResolver</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">javaModelGenerator</span> <span class="attr">targetPackage</span>=<span class="string">&quot;test.model&quot;</span> <span class="attr">targetProject</span>=<span class="string">&quot;\MBGTestProject\src&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;enableSubPackages&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;trimStrings&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">javaModelGenerator</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">sqlMapGenerator</span> <span class="attr">targetPackage</span>=<span class="string">&quot;test.xml&quot;</span>  <span class="attr">targetProject</span>=<span class="string">&quot;\MBGTestProject\src&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;enableSubPackages&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">sqlMapGenerator</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">javaClientGenerator</span> <span class="attr">type</span>=<span class="string">&quot;XMLMAPPER&quot;</span> <span class="attr">targetPackage</span>=<span class="string">&quot;test.dao&quot;</span>  <span class="attr">targetProject</span>=<span class="string">&quot;\MBGTestProject\src&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;enableSubPackages&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">javaClientGenerator</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">table</span> <span class="attr">schema</span>=<span class="string">&quot;DB2ADMIN&quot;</span> <span class="attr">tableName</span>=<span class="string">&quot;ALLTYPES&quot;</span> <span class="attr">domainObjectName</span>=<span class="string">&quot;Customer&quot;</span> &gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;useActualColumnNames&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">generatedKey</span> <span class="attr">column</span>=<span class="string">&quot;ID&quot;</span> <span class="attr">sqlStatement</span>=<span class="string">&quot;DB2&quot;</span> <span class="attr">identity</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">columnOverride</span> <span class="attr">column</span>=<span class="string">&quot;DATE_FIELD&quot;</span> <span class="attr">property</span>=<span class="string">&quot;startDate&quot;</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">ignoreColumn</span> <span class="attr">column</span>=<span class="string">&quot;FRED&quot;</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">columnOverride</span> <span class="attr">column</span>=<span class="string">&quot;LONG_VARCHAR_FIELD&quot;</span> <span class="attr">jdbcType</span>=<span class="string">&quot;VARCHAR&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;/<span class="name">context</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">generatorConfiguration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>元素详解</code>：</p>
+<h2 id="4-1、-lt-generatorConfiguration-gt"><a href="#4-1、-lt-generatorConfiguration-gt" class="headerlink" title="4.1、&lt;generatorConfiguration&gt;"></a>4.1、&lt;generatorConfiguration&gt;</h2><p>作用：配置文件顶层元素。<br>示例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">generatorConfiguration</span> <span class="keyword">PUBLIC</span></span></span><br><span class="line"><span class="meta">  <span class="string">&quot;-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN&quot;</span></span></span><br><span class="line"><span class="meta">  <span class="string">&quot;http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-2、-lt-classPathEntry-gt"><a href="#4-2、-lt-classPathEntry-gt" class="headerlink" title="4.2、&lt;classPathEntry&gt;"></a>4.2、&lt;classPathEntry&gt;</h2><p>作用：用于将额外需要的依赖包加入到类路径中。<br>属性列表：</p>
+<table>
+<thead>
+<tr>
+<th align="left">属性名</th>
+<th align="left">是否必须</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">location</td>
+<td align="left">Y</td>
+<td align="left">添加的依赖包的完全限定名</td>
+</tr>
+</tbody></table>
+<p>示例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">classPathEntry</span> <span class="attr">location</span>=<span class="string">&quot;/Program Files/IBM/SQLLIB/java/db2java.zip&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-3、-lt-context-gt"><a href="#4-3、-lt-context-gt" class="headerlink" title="4.3、&lt;context&gt;"></a>4.3、&lt;context&gt;</h2><p>作用：用于指定根据数据库表生成实体类对象的环境，不可或缺。可以有多个。<br>属性列表：</p>
+<table>
+<thead>
+<tr>
+<th align="left">属性名</th>
+<th align="left">是否必须</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">id</td>
+<td align="left">Y</td>
+<td align="left">唯一标识该上下文</td>
+</tr>
+<tr>
+<td align="left"><a id="defaultModelType"></a>defaultModelType</td>
+<td align="left">N</td>
+<td align="left">此属性用于为生成的模型类型设置默认值（只在 MyBatis3 下该属性才有效），该属性支持以下值：①condition（默认值）；②flat，该模型只生成一个 Record 类；③hierarchical，该模型生成一个 Record 类、一个主键类、一个 Record With BLOB 类（最后还是合并为一个类展现）</td>
+</tr>
+<tr>
+<td align="left">targetRuntime</td>
+<td align="left">N</td>
+<td align="left">指定生成代码的运行时环境，有四种取值：①MyBatis3DynamicSql；②MyBatis3Kotlin；③MyBatis3；④MyBatis3Simple</td>
+</tr>
+<tr>
+<td align="left">introspectedColumnImpl</td>
+<td align="left">N</td>
+<td align="left">用于扩展 MBG 的功能，必须继承<code>org.mybatis.generator.api.IntrospectedColumn</code></td>
+</tr>
+</tbody></table>
+<p>子元素有：</p>
+<ul>
+<li>&lt;property&gt; (0..N)</li>
+<li>&lt;plugin&gt; (0..N)</li>
+<li>&lt;commentGenerator&gt; (0 or 1)</li>
+<li>&lt;connectionFactory&gt; (either connectionFactory or jdbcConnection is Required)</li>
+<li>&lt;jdbcConnection&gt; (either connectionFactory or jdbcConnection is Required)</li>
+<li>&lt;javaTypeResolver&gt; (0 or 1)</li>
+<li>&lt;javaModelGenerator&gt; (1 Required)</li>
+<li>&lt;sqlMapGenerator&gt; (0 or 1)</li>
+<li>&lt;javaClientGenerator&gt; (0 or 1)</li>
+<li>&lt;table&gt; (1..N)</li>
+</ul>
+<p>子元素&lt;property&gt;中还可用如下属性：</p>
+<table>
+<thead>
+<tr>
+<th align="left">属性名</th>
+<th align="left">是否必须</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">autoDelimitKeywords</td>
+<td align="left">N</td>
+<td align="left">自动给 SQL 关键字添加分隔符，如表名为 table A，中间有空格，那么执行 SQL 语句会报错，该属性会加上一个单引号’table A’</td>
+</tr>
+<tr>
+<td align="left">beginningDelimiter</td>
+<td align="left">N</td>
+<td align="left">配置前置分隔符，默认值为”</td>
+</tr>
+<tr>
+<td align="left">endingDelimiter</td>
+<td align="left">N</td>
+<td align="left">配置后置分隔符，默认值为”</td>
+</tr>
+<tr>
+<td align="left">javaFileEncoding</td>
+<td align="left">N</td>
+<td align="left">指定处理 Java 文件时使用的编码</td>
+</tr>
+<tr>
+<td align="left">javaFormatter</td>
+<td align="left">N</td>
+<td align="left">指定用来格式化 Java 程序的类，必须是全限定名，该类必须实现<code>org.mybatis.generator.api.javaformatter</code>，并且必须有一个默认无参构造函数。默认的Java格式化程序是<code>org.mybatis.generator.api.dom.defaultjavaformatter</code></td>
+</tr>
+<tr>
+<td align="left">xmlFormatter</td>
+<td align="left">N</td>
+<td align="left">指定用来格式化 xml 文件的类，该类必须实现<code>org. mybatis.generator.api.xmlformatter</code>，并且必须有一个默认无参构造函数。默认的XML格式化程序是<code>org.mybatis.generator.api.dom.defaultxmlformatter</code></td>
+</tr>
+</tbody></table>
+<p>示例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;autoDelimitKeywords&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;beginningDelimiter&quot;</span> <span class="attr">value</span>=<span class="string">&quot;`&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;endingDelimiter&quot;</span> <span class="attr">value</span>=<span class="string">&quot;`&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;javaFileEncoding&quot;</span> <span class="attr">value</span>=<span class="string">&quot;UTF-8&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;javaFormatter&quot;</span> <span class="attr">value</span>=<span class="string">&quot;org.mybatis.generator.api.dom.DefaultJavaFormatter&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;xmlFormatter&quot;</span> <span class="attr">value</span>=<span class="string">&quot;org.mybatis.generator.api.dom.DefaultXmlFormatter&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="4-4、-lt-columnOverride-gt"><a href="#4-4、-lt-columnOverride-gt" class="headerlink" title="4.4、&lt;columnOverride&gt;"></a>4.4、&lt;columnOverride&gt;</h2><p>作用：修改数据库中某些列对应的实体类属性值。如列名为 Java 关键字时就需要修改对应的实体类的属性值。<br>属性列表：</p>
+<table>
+<thead>
+<tr>
+<th align="left">属性名</th>
+<th align="left">是否必须</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">column</td>
+<td align="left">Y</td>
+<td align="left">列名</td>
+</tr>
+<tr>
+<td align="left">property</td>
+<td align="left">N</td>
+<td align="left">修改后的实体类对象属性名</td>
+</tr>
+<tr>
+<td align="left">javaType</td>
+<td align="left">N</td>
+<td align="left">类属性的 Java 数据类型，需要是全限定名</td>
+</tr>
+<tr>
+<td align="left">jdbcType</td>
+<td align="left">N</td>
+<td align="left">列的 JDBC 类型(INTEGER, DECIMAL, NUMERIC, VARCHAR等)</td>
+</tr>
+<tr>
+<td align="left">typeHandler</td>
+<td align="left">N</td>
+<td align="left">用于指定用户自定义的类型处理程序。这应该是实现 MyBatis 的 TypeHandler 接口的类的完全限定名。如果未指定，或者为空，那么 MyBatis 将使用默认类型。重要提示：MBG 不验证此类型处理程序是否存在或是否有效，MBG 只是将该值插入生成的 Mapper 配置文件中的适当位置</td>
+</tr>
+<tr>
+<td align="left">delimitedColumnName</td>
+<td align="left">N</td>
+<td align="left">指定生成的映射文件中是否需要将对应的列用分隔符（默认为”）来明确标示出来，如列名为 column A，中间有空格，那么执行 SQL 语句会报错，该属性会加上一个双引号”column A”</td>
+</tr>
+<tr>
+<td align="left">isGeneratedAlways</td>
+<td align="left">N</td>
+<td align="left">指定该列在数据库中是否为 GENERATED ALWAYS 列。如果列是 GENERATED ALWAYS，那么 MBG 将不会在插入或更新语句中引用该列</td>
+</tr>
+</tbody></table>
+<p>子元素&lt;property&gt;中属性：</p>
+<table>
+<thead>
+<tr>
+<th align="left">属性名</th>
+<th align="left">是否必须</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">forceJavaTypeIntoMapping</td>
+<td align="left">N</td>
+<td align="left">当为 true 时，该属性将把 JavaType 添加到元素中</td>
+</tr>
+<tr>
+<td align="left">trimStrings</td>
+<td align="left">N</td>
+<td align="left">若数据库返回的字段中有空白部分，此属性可以对其进行特别填充</td>
+</tr>
+</tbody></table>
+<p>示例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--结果应为实体类的name属性被命名为name1, club被用&quot;&quot;明确标示出来，在插入或更新语句中没有nationality字段--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">tableName</span>=<span class="string">&quot;fb_player&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">columnOverride</span> <span class="attr">column</span>=<span class="string">&quot;name&quot;</span> <span class="attr">property</span>=<span class="string">&quot;name1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">columnOverride</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">columnOverride</span> <span class="attr">column</span>=<span class="string">&quot;club&quot;</span> <span class="attr">delimitedColumnName</span>=<span class="string">&quot;true&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">columnOverride</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">columnOverride</span> <span class="attr">column</span>=<span class="string">&quot;nationality&quot;</span> <span class="attr">isGeneratedAlways</span>=<span class="string">&quot;true&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">columnOverride</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+<p><img src="https://cdn.staticaly.com/gh/lisj98/image-hosting@master/MyBatis/columnOverride%E4%BD%BF%E7%94%A82.64o6v50qxvs0.webp" alt="columnOverride使用2"></p>
+<p><img src="https://cdn.staticaly.com/gh/lisj98/image-hosting@master/MyBatis/columnOverride%E4%BD%BF%E7%94%A8.15l29rknbzek.webp" alt="columnOverride使用"></p>
+<h2 id="4-5、-lt-ignoreColumnsByRegex-gt"><a href="#4-5、-lt-ignoreColumnsByRegex-gt" class="headerlink" title="4.5、&lt;ignoreColumnsByRegex&gt;"></a>4.5、&lt;ignoreColumnsByRegex&gt;</h2><p>作用：通过正则表达式指定哪些列不需要包含在生成的 SQL 语句中。<br>属性列表：</p>
+<table>
+<thead>
+<tr>
+<th align="left">属性名</th>
+<th align="left">是否必须</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">pattern</td>
+<td align="left">Y</td>
+<td align="left">正则表达式，指定匹配规则</td>
+</tr>
+</tbody></table>
+<p>子元素&lt;except&gt;中属性：</p>
+<table>
+<thead>
+<tr>
+<th align="left">属性名</th>
+<th align="left">是否必须</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">column</td>
+<td align="left">Y</td>
+<td align="left">列名</td>
+</tr>
+<tr>
+<td align="left">delimitedColumnName</td>
+<td align="left">N</td>
+<td align="left">①如果为 true，匹配列时会区分大小写；②如果为 false，匹配列时不区分大小写</td>
+</tr>
+</tbody></table>
+<p>示例：</p>
+<p>表结构：</p>
+<p><img src="https://cdn.staticaly.com/gh/lisj98/image-hosting@master/MyBatis/ignorecolumns%E8%A1%A8%E7%BB%93%E6%9E%84.3qybu4lr5xy0.webp" alt="ignorecolumns表结构"></p>
+<p>generatorConfig.xml 配置：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">tableName</span>=<span class="string">&quot;ignorecolumns&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ignoreColumnsByRegex</span> <span class="attr">pattern</span>=<span class="string">&quot;column.*&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">except</span> <span class="attr">column</span>=<span class="string">&quot;column2&quot;</span> <span class="attr">delimitedColumnName</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">except</span> <span class="attr">column</span>=<span class="string">&quot;column3&quot;</span> <span class="attr">delimitedColumnName</span>=<span class="string">&quot;false&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ignoreColumnsByRegex</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>最后结果中只会包含 column2 和 column3 列。</p>
+<p><img src="https://cdn.staticaly.com/gh/lisj98/image-hosting@master/MyBatis/ignoreColumnsByRegex%E7%A4%BA%E4%BE%8B.2n56o1oktwe0.webp" alt="ignoreColumnsByRegex示例"></p>
+<h2 id="4-6、-lt-ignoreColumn-gt"><a href="#4-6、-lt-ignoreColumn-gt" class="headerlink" title="4.6、&lt;ignoreColumn&gt;"></a>4.6、&lt;ignoreColumn&gt;</h2><p>作用：直接通过列名指定哪些列不需要包含在生成的 SQL 语句中。<br>属性列表：</p>
+<table>
+<thead>
+<tr>
+<th align="left">属性名</th>
+<th align="left">是否必须</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">column</td>
+<td align="left">Y</td>
+<td align="left">列名</td>
+</tr>
+<tr>
+<td align="left">delimitedColumnName</td>
+<td align="left">N</td>
+<td align="left">①如果为 true，匹配列时会区分大小写；②如果为 false，匹配列时不区分大小写</td>
+</tr>
+</tbody></table>
+<p>示例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">tableName</span>=<span class="string">&quot;ignorecolumns&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ignoreColumn</span> <span class="attr">column</span>=<span class="string">&quot;column2&quot;</span> <span class="attr">delimitedColumnName</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>最后结果中只会包含 column1 和 column3 列。</p>
+<p><img src="https://cdn.staticaly.com/gh/lisj98/image-hosting@master/MyBatis/ignoreColumn%E7%A4%BA%E4%BE%8B.34w0pi7ovsg0.webp" alt="ignoreColumn示例"></p>
+<h2 id="4-7、-lt-columnRenamingRule-gt"><a href="#4-7、-lt-columnRenamingRule-gt" class="headerlink" title="4.7、&lt;columnRenamingRule&gt;"></a>4.7、&lt;columnRenamingRule&gt;</h2><p>作用：类属性重命名规则，根据列生成类属性时先修改列名称（并不是真的把数据库里的列名改了）。适用于表中的列都有公用前缀的时候，为简化代码，生成的类属性可以消除这些前缀。根据 &lt;table&gt; 属性 useActualColumnNames 的取值不同有不同的表现。通过<code>java.util.regex.Matcher.replaceAll</code>方法实现。<br>属性列表：</p>
+<table>
+<thead>
+<tr>
+<th align="left">属性名</th>
+<th align="left">是否必须</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">searchString</td>
+<td align="left">Y</td>
+<td align="left">这是一个正则表达式，它定义了要替换的字符串</td>
+</tr>
+<tr>
+<td align="left">replaceString</td>
+<td align="left">N</td>
+<td align="left">用于替换的字符串，未指定则用空字符串替换</td>
+</tr>
+</tbody></table>
+<p>示例：<br>表结构为：</p>
+<p><img src="https://cdn.staticaly.com/gh/lisj98/image-hosting@master/MyBatis/columnrenamingrule%E8%A1%A8%E7%BB%93%E6%9E%84.57pi39cx70w0.webp" alt="columnrenamingrule表结构"></p>
+<p>generatorConfig.xml 文件定义：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">tableName</span>=<span class="string">&quot;columnrenamingrule&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;useActualColumnNames&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">columnRenamingRule</span> <span class="attr">searchString</span>=<span class="string">&quot;^CUST_&quot;</span> <span class="attr">replaceString</span>=<span class="string">&quot;&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>当 useActualColumnNames 属性为 true 时，结果为：</p>
+<p><img src="https://cdn.staticaly.com/gh/lisj98/image-hosting@master/MyBatis/columnrenamingrule%E4%BD%BF%E7%94%A81.kcs9zu8gdfk.webp" alt="columnrenamingrule使用1"></p>
+<p>当 useActualColumnNames 属性为 false 时，结果为：</p>
+<p><img src="https://cdn.staticaly.com/gh/lisj98/image-hosting@master/MyBatis/columnrenamingrule%E4%BD%BF%E7%94%A82.khvymbx1co.webp" alt="columnrenamingrule使用2"></p>
+<h2 id="4-8、-lt-domainObjectRenamingRule-gt"><a href="#4-8、-lt-domainObjectRenamingRule-gt" class="headerlink" title="4.8、&lt;domainObjectRenamingRule&gt;"></a>4.8、&lt;domainObjectRenamingRule&gt;</h2><p>作用：类重命名规则，根据表名生成类时先修改表名（并不是真的把数据库的表名改了）。适用于多张表有公用前缀的时候，为简化代码，生成的类可以消除这些前缀。通过<code>java.util.regex.Matcher.replaceAll</code>方法实现。<br>属性列表：</p>
+<table>
+<thead>
+<tr>
+<th align="left">属性名</th>
+<th align="left">是否必须</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">searchString</td>
+<td align="left">Y</td>
+<td align="left">这是一个正则表达式，它定义了要替换的字符串</td>
+</tr>
+<tr>
+<td align="left">replaceString</td>
+<td align="left">N</td>
+<td align="left">用于替换的字符串，未指定则用空字符串替换</td>
+</tr>
+</tbody></table>
+<p>示例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">tableName</span>=<span class="string">&quot;sys_user&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">domainObjectRenamingRule</span> <span class="attr">searchString</span>=<span class="string">&quot;^Sys&quot;</span> <span class="attr">replaceString</span>=<span class="string">&quot;&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>当表名为 sys_user 时，默认生成的实体类名为 SysUser；当设置了 domainObjectRenamingRule 规则并定义了替换规则时，生成的实体类名为 User：</p>
+<p><img src="https://cdn.staticaly.com/gh/lisj98/image-hosting@master/MyBatis/domainObjectRenamingRule%E4%BD%BF%E7%94%A8.3mydh9boh2g0.webp" alt="domainObjectRenamingRule使用"></p>
+<h2 id="4-9、-lt-commentGenerator-gt"><a href="#4-9、-lt-commentGenerator-gt" class="headerlink" title="4.9、&lt;commentGenerator&gt;"></a>4.9、&lt;commentGenerator&gt;</h2><p>作用：commentGenerator，顾名思义，为注释生成器，即用来自定义注释。默认实现为<code>org.mybatis.generator.internal.DefaultCommentGenerator</code>。可以用来为字段添加注解，如用到 Swagger 时添加 @ApiModelProperty。<br>属性列表：</p>
+<table>
+<thead>
+<tr>
+<th align="left">属性名</th>
+<th align="left">是否必须</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">type</td>
+<td align="left">N</td>
+<td align="left">自定义的注释生成器的类型，必须实现<code>org.mybatis.generator.api.CommentGenerator</code>接口，并且要有一个公共的默认构造函数</td>
+</tr>
+</tbody></table>
+<p>子元素&lt;property&gt;中属性：</p>
+<table>
+<thead>
+<tr>
+<th align="left">属性名</th>
+<th align="left">是否必须</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">suppressAllComments</td>
+<td align="left">N</td>
+<td align="left">此属性用于指定 MBG 是否将在生成的代码中包含任何注释。该属性支持以下值：①为 true 时任何生成的元素都不会添加注释；②为 false 或不指定时，所有生成的元素都会添加注释。默认值为 false</td>
+</tr>
+<tr>
+<td align="left">suppressDate</td>
+<td align="left">N</td>
+<td align="left">此属性用于指定 MBG 是否将在生成的注释中包含生成时间戳。该属性支持以下值：①为 true 时生成的注释中不会添加时间戳；②为 false 或不指定时，所有生成的注释将包括生成元素时的时间戳。默认值为 false</td>
+</tr>
+<tr>
+<td align="left">addRemarkComments</td>
+<td align="left">N</td>
+<td align="left">此属性用于指定 MBG 是否将在生成的注释中包括数据库中表和列的备注。该属性支持以下值：①为 true 时，表和列的备注将被添加到生成的注释中；②为 false 或未指定时，所有生成的注释在生成元素时将不包括表和列的备注。默认值为 false。如果 suppressAllComments 选项为 true，则该选项将被忽略</td>
+</tr>
+<tr>
+<td align="left">dateFormat</td>
+<td align="left">N</td>
+<td align="left">在将日期写入生成的注释时使用的日期格式字符串。这个字符串将被用来构造一个<code>java.text.SimpleDateFormat</code>对象，该对象的任何有效格式字符串都可以在这里指定。默认情况下，日期字符串将来自<code>java.util.Date</code>上的 toString() 方法。如果 suppressAllComments 选项或者 suppressDate 选项为 true，该选项将被忽略</td>
+</tr>
+</tbody></table>
+<p>示例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--MyCommentGenerator继承了DefaultCommentGenerator类--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">commentGenerator</span> <span class="attr">type</span>=<span class="string">&quot;MyCommentGenerator&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;addRemarkComments&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;suppressDate&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">commentGenerator</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-10、-lt-connectionFactory-gt"><a href="#4-10、-lt-connectionFactory-gt" class="headerlink" title="4.10、&lt;connectionFactory&gt;"></a>4.10、&lt;connectionFactory&gt;</h2><p>作用：用于指定一个连接工厂来维持数据库连接。<br>属性列表：</p>
+<table>
+<thead>
+<tr>
+<th align="left">属性名</th>
+<th align="left">是否必须</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">type</td>
+<td align="left">N</td>
+<td align="left">用来指定连接工厂的类型。自定义类型必须实现接口<code>org.mybatis.generator.api.connectionfactory</code>，并且必须有一个公共默认构造函数</td>
+</tr>
+</tbody></table>
+<p>子元素&lt;property&gt;中属性：</p>
+<table>
+<thead>
+<tr>
+<th align="left">属性名</th>
+<th align="left">是否必须</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">driverClass</td>
+<td align="left">N</td>
+<td align="left">数据库驱动</td>
+</tr>
+<tr>
+<td align="left">connectionURL</td>
+<td align="left">N</td>
+<td align="left">数据库地址</td>
+</tr>
+<tr>
+<td align="left">userId</td>
+<td align="left">N</td>
+<td align="left">数据库用户名</td>
+</tr>
+<tr>
+<td align="left">password</td>
+<td align="left">N</td>
+<td align="left">数据库密码</td>
+</tr>
+</tbody></table>
+<p>示例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">connectionFactory</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;driverClass&quot;</span> <span class="attr">value</span>=<span class="string">&quot;com.mysql.cj.jdbc.Driver&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;connectionURL&quot;</span> <span class="attr">value</span>=<span class="string">&quot;jdbc:mysql://localhost:3306/mbg?useUnicode=true<span class="symbol">&amp;amp;</span>characterEncoding=utf-8<span class="symbol">&amp;amp;</span>serverTimezone=Asia/Shanghai&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;userId&quot;</span> <span class="attr">value</span>=<span class="string">&quot;root&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">value</span>=<span class="string">&quot;root&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">connectionFactory</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-11、-lt-jdbcConnection-gt"><a href="#4-11、-lt-jdbcConnection-gt" class="headerlink" title="4.11、&lt;jdbcConnection&gt;"></a>4.11、&lt;jdbcConnection&gt;</h2><p>作用：指定数据库连接方式。<br>属性列表：</p>
+<table>
+<thead>
+<tr>
+<th align="left">属性名</th>
+<th align="left">是否必须</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">driverClass</td>
+<td align="left">Y</td>
+<td align="left">数据库驱动</td>
+</tr>
+<tr>
+<td align="left">connectionURL</td>
+<td align="left">Y</td>
+<td align="left">数据库地址</td>
+</tr>
+<tr>
+<td align="left">userId</td>
+<td align="left">N</td>
+<td align="left">数据库用户名</td>
+</tr>
+<tr>
+<td align="left">password</td>
+<td align="left">N</td>
+<td align="left">数据库密码</td>
+</tr>
+</tbody></table>
+<p>示例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">jdbcConnection</span> <span class="attr">driverClass</span>=<span class="string">&quot;$&#123;jdbc.driverClass&#125;&quot;</span></span></span><br><span class="line"><span class="tag">                <span class="attr">connectionURL</span>=<span class="string">&quot;$&#123;jdbc.connectionURL&#125;&quot;</span></span></span><br><span class="line"><span class="tag">                <span class="attr">userId</span>=<span class="string">&quot;$&#123;jdbc.userId&#125;&quot;</span></span></span><br><span class="line"><span class="tag">                <span class="attr">password</span>=<span class="string">&quot;$&#123;jdbc.password&#125;&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">jdbcConnection</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：&lt;connectionFactory&gt; 和 &lt;jdbcConnection&gt; 只能有一个。</p>
+<h2 id="4-12、-lt-generatedKey-gt"><a href="#4-12、-lt-generatedKey-gt" class="headerlink" title="4.12、&lt;generatedKey&gt;"></a>4.12、&lt;generatedKey&gt;</h2><p>作用：用于为数据库表中自动生成 id 的字段指定属性（identity 字段或者 sequences 序列）。如果该元素被指定，那么在 &lt;insert&gt; 元素中将包含一个 &lt;selectKey&gt; 子元素。<br>属性列表：</p>
+<table>
+<thead>
+<tr>
+<th align="left">属性名</th>
+<th align="left">是否必须</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">column</td>
+<td align="left">Y</td>
+<td align="left">列名</td>
+</tr>
+<tr>
+<td align="left">sqlStatement</td>
+<td align="left">Y</td>
+<td align="left">语句类型。取值有：Cloudscape、DB2、DB2_MF、Derby、HSQLDB、Informix、MySql、SqlServer、SYBASE、JDBC</td>
+</tr>
+<tr>
+<td align="left">identity</td>
+<td align="left">N</td>
+<td align="left">①如果为 true，则该列被标记为 identity 列，&lt;selectKey&gt; 元素将放置在 &lt;insert&gt; 元素之后；②如果为 false，则 &lt;selectKey&gt; 元素将放置在 &lt;insert&gt; 元素之前（通常用于 sequences 序列）。默认值为 false</td>
+</tr>
+<tr>
+<td align="left">type</td>
+<td align="left">N</td>
+<td align="left">如果指定了，那么这个值将被添加到 &lt;selectKey&gt; 中。值为”pre”或”post”。如果为该属性指定了值，则生成的 &lt;selectKey&gt; 元素将始终放在 &lt;insert&gt; 元素之前</td>
+</tr>
+</tbody></table>
+<p><code>备注：&lt;selectKey&gt; 用来获取自增 id 值，自增 id 由数据库管理，而有时插入等操作需要用到这个 id 值，这时 &lt;selectKey&gt; 就起作用了。</code><br>示例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">tableName</span>=<span class="string">&quot;fb_player&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">generatedKey</span> <span class="attr">column</span>=<span class="string">&quot;name&quot;</span> <span class="attr">sqlStatement</span>=<span class="string">&quot;MySql&quot;</span> <span class="attr">identity</span>=<span class="string">&quot;true&quot;</span> <span class="attr">type</span>=<span class="string">&quot;post&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>结果：</p>
+<p><img src="https://cdn.staticaly.com/gh/lisj98/image-hosting@master/MyBatis/generatedKey%E7%A4%BA%E4%BE%8B.6mc2kbgcvo40.webp" alt="generatedKey示例"></p>
+<h2 id="4-13、-lt-javaClientGenerator-gt"><a href="#4-13、-lt-javaClientGenerator-gt" class="headerlink" title="4.13、&lt;javaClientGenerator&gt;"></a>4.13、&lt;javaClientGenerator&gt;</h2><p>作用：用于配置 Mapper 接口信息。<br>属性列表：</p>
+<table>
+<thead>
+<tr>
+<th align="left">属性名</th>
+<th align="left">是否必须</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">type</td>
+<td align="left">Y</td>
+<td align="left">Mapper 使用类型，决定是 XML 形式还是注解形式。①targetRuntime 为MyBatis3DynamicSql 和 MyBatis3Kotlin 时可忽略；②为 MyBatis3 时有 ANNOTATEDMAPPER、MIXEDMAPPER 和 XMLMAPPER 三种取值；③为 MyBatis3Simple 时有 ANNOTATEDMAPPER 和 XMLMAPPER 两种取值</td>
+</tr>
+<tr>
+<td align="left">targetPackage</td>
+<td align="left">Y</td>
+<td align="left">指定 Mapper 接口所在包</td>
+</tr>
+<tr>
+<td align="left">targetProject</td>
+<td align="left">N</td>
+<td align="left">指定 Mapper 接口所在项目路径</td>
+</tr>
+</tbody></table>
+<p>子元素&lt;property&gt;中属性：</p>
+<table>
+<thead>
+<tr>
+<th align="left">属性名</th>
+<th align="left">是否必须</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">dynamicSqlSupportPackage</td>
+<td align="left">N</td>
+<td align="left">指定 MyBatis 动态 SQL Support 类的所在包</td>
+</tr>
+<tr>
+<td align="left">enableSubPackages</td>
+<td align="left">N</td>
+<td align="left">指定是否根据表目录和模式来为接口生成包</td>
+</tr>
+<tr>
+<td align="left">rootInterface</td>
+<td align="left">N</td>
+<td align="left">为所有生成的 Mapper 接口指定一个父接口</td>
+</tr>
+</tbody></table>
+<p>示例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">javaClientGenerator</span> <span class="attr">type</span>=<span class="string">&quot;XMLMAPPER&quot;</span> <span class="attr">targetPackage</span>=<span class="string">&quot;com.lsj.mapper&quot;</span> <span class="attr">targetProject</span>=<span class="string">&quot;src/main/java&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-14、-lt-javaModelGenerator-gt"><a href="#4-14、-lt-javaModelGenerator-gt" class="headerlink" title="4.14、&lt;javaModelGenerator&gt;"></a>4.14、&lt;javaModelGenerator&gt;</h2><p>作用：用于配置实体类信息。<br>属性列表：</p>
+<table>
+<thead>
+<tr>
+<th align="left">属性名</th>
+<th align="left">是否必须</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">targetPackage</td>
+<td align="left">Y</td>
+<td align="left">指定实体类所在包</td>
+</tr>
+<tr>
+<td align="left">targetProject</td>
+<td align="left">N</td>
+<td align="left">指定实体类所在项目路径</td>
+</tr>
+</tbody></table>
+<p>子元素&lt;property&gt;中属性：</p>
+<table>
+<thead>
+<tr>
+<th align="left">属性名</th>
+<th align="left">是否必须</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">constructorBased</td>
+<td align="left">N</td>
+<td align="left">指定是否为类生成构造函数。若该属性被指定，则对象将通过构造函数构建，而不通过 setter 方法。如果”immutable”属性设置为”true”，则该属性将被忽略(并强制为”true”)</td>
+</tr>
+<tr>
+<td align="left">enableSubPackages</td>
+<td align="left">N</td>
+<td align="left">指定是否根据表目录和模式来为实体类生成包</td>
+</tr>
+<tr>
+<td align="left">exampleTargetPackage</td>
+<td align="left">N</td>
+<td align="left">用于为生成的 Example 类指定不同的包。如果没有指定，Example 类将与实体类在同一个包中生成。注意：这个属性在基于 MyBatis 动态 SQL 的运行时被忽略</td>
+</tr>
+<tr>
+<td align="left">exampleTargetProject</td>
+<td align="left">N</td>
+<td align="left">用于为生成的 Example 类指定不同的项目路径。如果没有指定，Example 类将与实体类在同一个项目路径中生成。注意：这个属性在基于 MyBatis 动态 SQL 的运行时被忽略</td>
+</tr>
+<tr>
+<td align="left">immutable</td>
+<td align="left">N</td>
+<td align="left">用于选择 MBG 是否会生成不可变的实体类——这意味着类将没有“setter”方法，构造函数将接受类中每个字段的值。如果为真，这将强制使用参数化构造函数构建实体类，而不管“constructorBased”属性的值是多少</td>
+</tr>
+<tr>
+<td align="left">rootClass</td>
+<td align="left">N</td>
+<td align="left">为所有生成的实体类指定一个父类</td>
+</tr>
+<tr>
+<td align="left">trimStrings</td>
+<td align="left">N</td>
+<td align="left">若数据库返回的字段中有空白部分，此属性可以对其进行特别填充</td>
+</tr>
+</tbody></table>
+<p>示例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">javaModelGenerator</span> <span class="attr">targetPackage</span>=<span class="string">&quot;com.lsj.model&quot;</span> <span class="attr">targetProject</span>=<span class="string">&quot;src/main/java&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;enableSubPackages&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;immutable&quot;</span> <span class="attr">value</span>=<span class="string">&quot;false&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">javaModelGenerator</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-15、-lt-sqlMapGenerator-gt"><a href="#4-15、-lt-sqlMapGenerator-gt" class="headerlink" title="4.15、&lt;sqlMapGenerator&gt;"></a>4.15、&lt;sqlMapGenerator&gt;</h2><p>作用：用于配置 Mapper 映射文件信息。</p>
+<p>属性列表：</p>
+<table>
+<thead>
+<tr>
+<th align="left">属性名</th>
+<th align="left">是否必须</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">targetPackage</td>
+<td align="left">Y</td>
+<td align="left">指定 Mapper 映射文件所在包</td>
+</tr>
+<tr>
+<td align="left">targetProject</td>
+<td align="left">N</td>
+<td align="left">指定 Mapper 映射文件所在项目路径</td>
+</tr>
+</tbody></table>
+<p>子元素&lt;property&gt;中属性：</p>
+<table>
+<thead>
+<tr>
+<th align="left">属性名</th>
+<th align="left">是否必须</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">enableSubPackages</td>
+<td align="left">N</td>
+<td align="left">指定是否根据表目录和模式来为 Mapper 映射文生成包</td>
+</tr>
+</tbody></table>
+<p>示例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">sqlMapGenerator</span> <span class="attr">targetPackage</span>=<span class="string">&quot;com.lsj.mapper&quot;</span> <span class="attr">targetProject</span>=<span class="string">&quot;src/main/resources&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-16、-lt-javaTypeResolver-gt"><a href="#4-16、-lt-javaTypeResolver-gt" class="headerlink" title="4.16、&lt;javaTypeResolver&gt;"></a>4.16、&lt;javaTypeResolver&gt;</h2><p>作用：用于指定 JDBC 类型和 Java 类型的转换规则。</p>
+<p>属性列表：</p>
+<table>
+<thead>
+<tr>
+<th align="left">属性名</th>
+<th align="left">是否必须</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">type</td>
+<td align="left">N</td>
+<td align="left">指定用户自定义的 Java 类型解析器，必须实现<code>org.mybatis.generator.api.JavaTypeResolver</code>接口，并且必须有一个公共的默认构造函数</td>
+</tr>
+</tbody></table>
+<p>子元素&lt;property&gt;中属性：</p>
+<table>
+<thead>
+<tr>
+<th align="left">属性名</th>
+<th align="left">是否必须</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">forceBigDecimals</td>
+<td align="left">N</td>
+<td align="left">此属性用于指定 MBG 是否应该强制使用<code>java.math.BigDecimal</code>用于 DECIMAL 和 NUMERIC 字段，而不是在可能的情况下替换整型</td>
+</tr>
+<tr>
+<td align="left">useJSR310Types</td>
+<td align="left">N</td>
+<td align="left">此属性用于指定 MBG 是否应该强制对 DATE、TIME和 TIMESTAMP 字段使用 JSR-310 数据类型，而不是使用<code>java.util.Date</code></td>
+</tr>
+</tbody></table>
+<p>示例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">javaTypeResolver</span> <span class="attr">type</span>=<span class="string">&quot;com.lsj.config.MyTypeResolver&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;forceBigDecimals&quot;</span> <span class="attr">value</span>=<span class="string">&quot;false&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;useJSR310Types&quot;</span> <span class="attr">value</span>=<span class="string">&quot;false&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">javaTypeResolver</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-17、-lt-plugin-gt"><a href="#4-17、-lt-plugin-gt" class="headerlink" title="4.17、&lt;plugin&gt;"></a>4.17、&lt;plugin&gt;</h2><p>作用：用于定义一个插件来扩展或修改 MBG。</p>
+<p>属性列表：</p>
+<table>
+<thead>
+<tr>
+<th align="left">属性名</th>
+<th align="left">是否必须</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">type</td>
+<td align="left">N</td>
+<td align="left">自定义插件类的完全限定名。这个类必须实现<code>org.mybatis.generator.api.Plugin</code>接口，必须有一个公共默认构造函数。注意，扩展适配器类<code>org.mybatis.generator.api.PluginAdapter</code>要比实现整个接口容易得多</td>
+</tr>
+</tbody></table>
+<h2 id="4-18、-lt-properties-gt"><a href="#4-18、-lt-properties-gt" class="headerlink" title="4.18、&lt;properties&gt;"></a>4.18、&lt;properties&gt;</h2><p>作用：用于指定外部配置文件。</p>
+<p>属性列表：</p>
+<table>
+<thead>
+<tr>
+<th align="left">属性名</th>
+<th align="left">是否必须</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">resource</td>
+<td align="left">Y</td>
+<td align="left">外部配置文件的全限定名，当指定资源时，将在类路径中搜索属性文件</td>
+</tr>
+<tr>
+<td align="left">url</td>
+<td align="left">Y</td>
+<td align="left">外部配置文件的地址</td>
+</tr>
+</tbody></table>
+<p>示例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">properties</span> <span class="attr">resource</span>=<span class="string">&quot;generator.properties&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-19、-lt-property-gt"><a href="#4-19、-lt-property-gt" class="headerlink" title="4.19、&lt;property&gt;"></a>4.19、&lt;property&gt;</h2><p>作用：用作子元素，配置具体属性。<br>属性列表：</p>
+<table>
+<thead>
+<tr>
+<th align="left">属性名</th>
+<th align="left">是否必须</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">name</td>
+<td align="left">Y</td>
+<td align="left">属性名（区分大小写）</td>
+</tr>
+<tr>
+<td align="left">url</td>
+<td align="left">Y</td>
+<td align="left">属性值（不区分大小写）</td>
+</tr>
+</tbody></table>
+<p>示例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;forceBigDecimals&quot;</span> <span class="attr">value</span>=<span class="string">&quot;false&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-20、-lt-table-gt"><a href="#4-20、-lt-table-gt" class="headerlink" title="4.20、&lt;table&gt;"></a>4.20、&lt;table&gt;</h2><p>作用：用于配置需要生成代码的数据库表信息。</p>
+<p>属性列表：</p>
+<table>
+<thead>
+<tr>
+<th align="left">属性名</th>
+<th align="left">是否必须</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">tableName</td>
+<td align="left">Y</td>
+<td align="left">表名</td>
+</tr>
+<tr>
+<td align="left">schema</td>
+<td align="left">N</td>
+<td align="left">数据库模式</td>
+</tr>
+<tr>
+<td align="left">catalog</td>
+<td align="left">N</td>
+<td align="left">数据库目录</td>
+</tr>
+<tr>
+<td align="left">alias</td>
+<td align="left">N</td>
+<td align="left">为表和列起别名</td>
+</tr>
+<tr>
+<td align="left">domainObjectName</td>
+<td align="left">N</td>
+<td align="left">指定生成的实体类名称</td>
+</tr>
+<tr>
+<td align="left">mapperName</td>
+<td align="left">N</td>
+<td align="left">指定 Mapper 接口和映射文件名称</td>
+</tr>
+<tr>
+<td align="left">sqlProviderName</td>
+<td align="left">N</td>
+<td align="left">SQL 提供程序类的名称</td>
+</tr>
+<tr>
+<td align="left">enableInsert、enableSelectByPrimaryKey、enableSelectByExample、enableUpdateByPrimaryKey、enableDeleteByPrimaryKey、enableDeleteByExample、enableCountByExample、enableUpdateByExample、selectByPrimaryKeyQueryId、selectByExampleQueryId</td>
+<td align="left">N</td>
+<td align="left">指定是否需要生成这些方法</td>
+</tr>
+<tr>
+<td align="left">modelType</td>
+<td align="left">N</td>
+<td align="left">指定如何生成类，是只生成一个主键类，还是需要生成 BLOB 类、 Record 类，取值有：①conditional；②flat；③hierarchical（参考<a href="#defaultModelType">defaultModelType</a>）</td>
+</tr>
+<tr>
+<td align="left">escapeWildcards</td>
+<td align="left">N</td>
+<td align="left">表示在搜索列时，模式和表名中的 SQL 通配符(‘_’和’%’)是否应该转义。如果模式或表名包含一个 SQL 通配符(例如，如果表名是 MY_TABLE，一些驱动程序要求将下划线字符转义)，那么这是必需的</td>
+</tr>
+<tr>
+<td align="left">delimitIdentifiers</td>
+<td align="left">N</td>
+<td align="left">指定是否需要在生成的 SQL 中为标识符（类似于 Java 关键字）添加分隔符</td>
+</tr>
+<tr>
+<td align="left">delimitAllColumns</td>
+<td align="left">N</td>
+<td align="left">指定是否需要在生成的 SQL 中为所有列添加分隔符</td>
+</tr>
+</tbody></table>
+<p>子元素有：</p>
+<ul>
+<li>&lt;property&gt; (0..N)</li>
+<li>&lt;generatedKey&gt; (0 or 1)</li>
+<li>&lt;domainObjectRenamingRule&gt; (0 or 1)</li>
+<li>&lt;columnRenamingRule&gt; (0 or 1)</li>
+<li>&lt;columnOverride&gt; (0..N)</li>
+<li>&lt;ignoreColumn&gt; (0..N)</li>
+</ul>
+<p>子元素&lt;property&gt;中还有如下属性：</p>
+<table>
+<thead>
+<tr>
+<th align="left">属性名</th>
+<th align="left">是否必须</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">constructorBased</td>
+<td align="left">N</td>
+<td align="left">指定是否为类生成构造函数。若该属性被指定，则对象将通过构造函数构建，而不通过 setter 方法。如果”immutable”属性设置为”true”，则该属性将被忽略(并强制为”true”)</td>
+</tr>
+<tr>
+<td align="left">dynamicSqlSupportClassName</td>
+<td align="left">N</td>
+<td align="left">MyBatis 动态 SQL Support 类的名称</td>
+</tr>
+<tr>
+<td align="left">dynamicSqlTableObjectName</td>
+<td align="left">N</td>
+<td align="left">MyBatis 动态 SQL Support 类中生成的内部类所使用的名称</td>
+</tr>
+<tr>
+<td align="left">ignoreQualifiersAtRuntime</td>
+<td align="left">N</td>
+<td align="left">如果为 true，则 MBG 不会将模式或目录添加到生成的 SQL 中的表名前面。如果你在多个模式中有相同名称的表，这很有用——你可以使用 MBG 基于一个模式中的表生成对象，但不包括运行时的模式</td>
+</tr>
+<tr>
+<td align="left">immutable</td>
+<td align="left">N</td>
+<td align="left">用于选择 MBG 是否会生成不可变的实体类——这意味着类将没有“setter”方法，构造函数将接受类中每个字段的值。如果为真，这将强制使用参数化构造函数构建实体类，而不管“constructorBased”属性的值是多少</td>
+</tr>
+<tr>
+<td align="left">modelOnly</td>
+<td align="left">N</td>
+<td align="left">用于配置是否只生成实体类，不生成 Mapper 接口和映射文件</td>
+</tr>
+<tr>
+<td align="left">rootClass</td>
+<td align="left">N</td>
+<td align="left">为所有生成的实体类指定一个父类</td>
+</tr>
+<tr>
+<td align="left">rootInterface</td>
+<td align="left">N</td>
+<td align="left">为所有生成的 Mapper 接口指定一个父接口</td>
+</tr>
+<tr>
+<td align="left">runtimeCatalog</td>
+<td align="left">N</td>
+<td align="left">如果为该属性指定一个值，那么 MBG 将使用该值作为生成的 SQL 中的目录，而不是原数据库目录。如果你希望针对一个目录生成代码，但又希望在运行时使用不同的目录，那么这很有用</td>
+</tr>
+<tr>
+<td align="left">runtimeSchema</td>
+<td align="left">N</td>
+<td align="left">如果为该属性指定一个值，那么 MBG 将使用该值作为生成的 SQL 中的模式，而不是原数据库模式。如果你希望针对一个模式生成代码，但又希望在运行时使用不同的模式，那么这很有用</td>
+</tr>
+<tr>
+<td align="left">runtimeTableName</td>
+<td align="left">N</td>
+<td align="left">如果为该属性指定一个值，那么 MBG 将使用该值作为生成的 SQL 中的表名，而不是原数据库表名</td>
+</tr>
+<tr>
+<td align="left">selectAllOrderByClause</td>
+<td align="left">N</td>
+<td align="left">该属性值会追加到 selectAll 方法后的 SQL 中，直接与 order by 拼接后添加到 SQL 末尾</td>
+</tr>
+<tr>
+<td align="left">trimStrings</td>
+<td align="left">N</td>
+<td align="left">若数据库返回的字段中有空白部分，此属性可以对其进行特别填充</td>
+</tr>
+<tr>
+<td align="left">useActualColumnNames</td>
+<td align="left">N</td>
+<td align="left">指定是否用真实的列名而不加修改</td>
+</tr>
+<tr>
+<td align="left">useColumnIndexes</td>
+<td align="left">N</td>
+<td align="left">如果为 true，MBG 生成 resultMap 时会使用列的索引，而不是结果中列名的顺序</td>
+</tr>
+<tr>
+<td align="left">useCompoundPropertyNames</td>
+<td align="left">N</td>
+<td align="left">如果为 true，MBG 生成属性名的时候会将列名和列备注结合起来</td>
+</tr>
+</tbody></table>
+<p>示例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">tableName</span>=<span class="string">&quot;MYTABLE&quot;</span> <span class="attr">schema</span>=<span class="string">&quot;MYSCHEMA&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">ignoreColumn</span> <span class="attr">column</span>=<span class="string">&quot;fred&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">columnOverride</span> <span class="attr">column</span>=<span class="string">&quot;BEG_DATE&quot;</span> <span class="attr">property</span>=<span class="string">&quot;startDate&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：MyBatisGenerator使用</li>
+        <li>Post author：Lisj</li>
+        <li>Create time：2022-09-08 23:29:19</li>
+        <li>
+            Post link：https://lisj98.github.io/2022/09/08/MyBatisGenerator使用/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/MyBatisGenerator/">#MyBatisGenerator</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/MyBatis/">#MyBatis</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2022/09/09/Linux%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE%EF%BC%88NAT%E6%A8%A1%E5%BC%8F%EF%BC%89/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Linux网络配置（NAT模式）</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/09/08/MyBatisGenerator%E7%AE%80%E4%BB%8B/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">MyBatisGenerator简介</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Lisj</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1%E3%80%81%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B"><span class="nav-text">1、快速开始</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2%E3%80%81%E8%BF%90%E8%A1%8C-MBG"><span class="nav-text">2、运行 MBG</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1%E3%80%81Maven-%E6%8F%92%E4%BB%B6%E6%96%B9%E5%BC%8F"><span class="nav-text">2.1、Maven 插件方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2%E3%80%81Java-%E4%BB%A3%E7%A0%81%E6%96%B9%E5%BC%8F"><span class="nav-text">2.2、Java 代码方式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3%E3%80%81%E7%94%9F%E6%88%90%E4%BB%A3%E7%A0%81%E8%BF%87%E7%A8%8B%E8%AF%A6%E8%A7%A3"><span class="nav-text">3、生成代码过程详解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1%E3%80%81%E4%BD%BF%E7%94%A8-MyBatis-Dynamic-SQL-%E7%94%9F%E6%88%90%E5%AF%B9%E8%B1%A1"><span class="nav-text">3.1、使用 MyBatis Dynamic SQL 生成对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-1%E3%80%81Support-%E7%B1%BB%E7%9A%84%E5%BD%A2%E5%BC%8F"><span class="nav-text">3.1.1、Support 类的形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-2%E3%80%81Mapper-%E6%8E%A5%E5%8F%A3%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-text">3.1.2、Mapper 接口的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-5%E3%80%81%E6%96%B0%E6%8F%92%E4%BB%B6"><span class="nav-text">3.1.5、新插件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2%E3%80%81%E4%BD%BF%E7%94%A8%E4%BC%A0%E7%BB%9F%E6%96%B9%E5%BC%8F%E7%94%9F%E6%88%90%E5%AF%B9%E8%B1%A1"><span class="nav-text">3.2、使用传统方式生成对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-1%E3%80%81%E5%AE%9E%E4%BD%93%E7%B1%BB"><span class="nav-text">3.2.1、实体类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-1%E3%80%81%E4%B8%BB%E9%94%AE%E7%B1%BB"><span class="nav-text">3.2.1.1、主键类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-2%E3%80%81Record-%E7%B1%BB"><span class="nav-text">3.2.1.2、Record 类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-3%E3%80%81Record-With-BLOBs-%E7%B1%BB"><span class="nav-text">3.2.1.3、Record With BLOBs 类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-4%E3%80%81Example-%E7%B1%BB"><span class="nav-text">3.2.1.4、Example 类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-2%E3%80%81Mapper-%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6"><span class="nav-text">3.2.2、Mapper 映射文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2-1%E3%80%81Result-Map"><span class="nav-text">3.2.2.1、Result Map</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2-2%E3%80%81%E5%B8%A6-BLOB-%E5%AD%97%E6%AE%B5%E7%9A%84-Result-Map"><span class="nav-text">3.2.2.2、带 BLOB 字段的 Result Map</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2-3%E3%80%81where-%E5%AD%90%E5%8F%A5"><span class="nav-text">3.2.2.3、where 子句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2-4%E3%80%81Select-By-Primary-Key%E3%80%81Select-by-Example%E3%80%81Select-by-Example-With-BLOBs%E3%80%81Insert%E3%80%81Insert-Selective%E3%80%81Update-By-Primary-Key%E3%80%81Update-By-Primary-Key-With-BLOBs%E3%80%81Update-By-Primary-Key-Selective%E3%80%81Delete-By-Primary-Key%E3%80%81Delete-By-Example%E3%80%81Count-By-Example%E3%80%81Update-By-Example%E3%80%81Update-By-Example-With-BLOBs%E3%80%81Update-By-Example-Selective"><span class="nav-text">3.2.2.4、Select By Primary Key、Select by Example、Select by Example With BLOBs、Insert、Insert Selective、Update By Primary Key、Update By Primary Key With BLOBs、Update By Primary Key Selective、Delete By Primary Key、Delete By Example、Count By Example、Update By Example、Update By Example With BLOBs、Update By Example Selective</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-3%E3%80%81Mapper-%E6%8E%A5%E5%8F%A3"><span class="nav-text">3.2.3、Mapper 接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-4%E3%80%81Example-%E7%B1%BB%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-text">3.2.4、Example 类的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-4-1%E3%80%81%E7%AE%80%E5%8D%95%E6%9F%A5%E8%AF%A2"><span class="nav-text">3.2.4.1、简单查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-4-2%E3%80%81%E5%A4%8D%E6%9D%82%E6%9F%A5%E8%AF%A2"><span class="nav-text">3.2.4.2、复杂查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-4-3%E3%80%81%E5%B7%AE%E5%BC%82%E6%9F%A5%E8%AF%A2"><span class="nav-text">3.2.4.3、差异查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-4-4%E3%80%81Criteria-%E7%B1%BB"><span class="nav-text">3.2.4.4、Criteria 类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-5%E3%80%81%E6%89%A9%E5%B1%95-Example-%E7%B1%BB"><span class="nav-text">3.2.5、扩展 Example 类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-5-1%E3%80%81Simple-String-Substitution%EF%BC%88%E7%AE%80%E5%8D%95%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9B%BF%E6%8D%A2%EF%BC%89"><span class="nav-text">3.2.5.1、Simple String Substitution（简单字符串替换）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-5-2%E3%80%81Single-Parameter-Predicates%EF%BC%88%E5%8D%95%E4%B8%80%E5%8F%82%E6%95%B0%E8%B0%93%E8%AF%8D%EF%BC%89"><span class="nav-text">3.2.5.2、Single Parameter Predicates（单一参数谓词）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-5-3%E3%80%81List-Predicates%EF%BC%88%E5%88%97%E8%A1%A8%E8%B0%93%E8%AF%8D%EF%BC%89"><span class="nav-text">3.2.5.3、List Predicates（列表谓词）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-5-3%E3%80%81Between-Predicates%EF%BC%88%E5%8C%BA%E9%97%B4%E8%B0%93%E8%AF%8D%EF%BC%89"><span class="nav-text">3.2.5.3、Between Predicates（区间谓词）</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4%E3%80%81XML-%E9%85%8D%E7%BD%AE%E5%8F%82%E8%80%83"><span class="nav-text">4、XML 配置参考</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1%E3%80%81-lt-generatorConfiguration-gt"><span class="nav-text">4.1、&lt;generatorConfiguration&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2%E3%80%81-lt-classPathEntry-gt"><span class="nav-text">4.2、&lt;classPathEntry&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3%E3%80%81-lt-context-gt"><span class="nav-text">4.3、&lt;context&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4%E3%80%81-lt-columnOverride-gt"><span class="nav-text">4.4、&lt;columnOverride&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-5%E3%80%81-lt-ignoreColumnsByRegex-gt"><span class="nav-text">4.5、&lt;ignoreColumnsByRegex&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-6%E3%80%81-lt-ignoreColumn-gt"><span class="nav-text">4.6、&lt;ignoreColumn&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-7%E3%80%81-lt-columnRenamingRule-gt"><span class="nav-text">4.7、&lt;columnRenamingRule&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-8%E3%80%81-lt-domainObjectRenamingRule-gt"><span class="nav-text">4.8、&lt;domainObjectRenamingRule&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-9%E3%80%81-lt-commentGenerator-gt"><span class="nav-text">4.9、&lt;commentGenerator&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-10%E3%80%81-lt-connectionFactory-gt"><span class="nav-text">4.10、&lt;connectionFactory&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-11%E3%80%81-lt-jdbcConnection-gt"><span class="nav-text">4.11、&lt;jdbcConnection&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-12%E3%80%81-lt-generatedKey-gt"><span class="nav-text">4.12、&lt;generatedKey&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-13%E3%80%81-lt-javaClientGenerator-gt"><span class="nav-text">4.13、&lt;javaClientGenerator&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-14%E3%80%81-lt-javaModelGenerator-gt"><span class="nav-text">4.14、&lt;javaModelGenerator&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-15%E3%80%81-lt-sqlMapGenerator-gt"><span class="nav-text">4.15、&lt;sqlMapGenerator&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-16%E3%80%81-lt-javaTypeResolver-gt"><span class="nav-text">4.16、&lt;javaTypeResolver&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-17%E3%80%81-lt-plugin-gt"><span class="nav-text">4.17、&lt;plugin&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-18%E3%80%81-lt-properties-gt"><span class="nav-text">4.18、&lt;properties&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-19%E3%80%81-lt-property-gt"><span class="nav-text">4.19、&lt;property&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-20%E3%80%81-lt-table-gt"><span class="nav-text">4.20、&lt;table&gt;</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

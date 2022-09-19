@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Java、数据结构">
+    <meta name="description" content="所见即所得">
+    <meta name="author" content="Lisj">
+    
+    <title>
+        
+            精通SpringMVC(三)-处理方法的数据绑定 |
+        
+        BlogOfLisj
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/l-solid.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"lisj98.github.io","root":"/","language":"en","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#FF00FF","avatar":"/images/Neymar.jpg","favicon":"/images/l-solid.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"What you see is what you get."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"trigger":"auto","unescape":false,"preload":true},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":true},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 6.0.0"><link rel="alternate" href="/atom.xml" title="BlogOfLisj" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                BlogOfLisj
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                TAGS
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">CATEGORIES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">TAGS</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">精通SpringMVC(三)-处理方法的数据绑定</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/Neymar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Lisj</span>
+                        
+                            <span class="author-label">中忍</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-04-07 22:23:32</span>
+        <span class="mobile">2022-04-07 22:23</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/SpringMVC/">SpringMVC</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>7.3k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>30 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>本系列笔记所有代码地址：<a class="link"   target="_blank" rel="noopener" href="https://github.com/lisj98/SpringMVCSource.git" >https://github.com/lisj98/SpringMVCSource.git<i class="fas fa-external-link-alt"></i></a></p>
+<p>经过之前两节练习之后，现在请求消息已经到达真正需要调用的方法处了，但是 Spring MVC 还有很多工作要做，包括数据转换、数据格式化及数据校验等。</p>
+<h4 id="3-1-数据绑定流程剖析"><a href="#3-1-数据绑定流程剖析" class="headerlink" title="3.1 数据绑定流程剖析"></a>3.1 数据绑定流程剖析</h4><p>Spring MVC 通过反射机制对目标处理方法的签名进行分析，将请求消息绑定到处理方法的入参中。数据绑定的核心部件是 <strong>DataBinder</strong>。其运行机制为：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/DataBinder%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6.2fnhpv9xi6ck.webp" alt="DataBinder运行机制"></p>
+<p>Spring MVC 主框架将 ServletRequest 对象及处理方法的入参对象实例传递给 DataBinder，DataBinder 首先调用装配在 Spring Web 上下文（smart-servlet.xml）中的 <strong>ConversionService</strong> 组件进行数据类型转换、数据格式化等工作，然后将 ServletRequest 中的消息填充到入参对象中，接下来调用 <strong>Validator</strong> 组件对已经绑定了请求消息数据的入参对象进行数据合法性校验，最后生成数据绑定结果 <strong>BindingResult</strong> 对象。BindingResult 包含了已完成数据绑定的入参对象，还包含相应的校验错误对象。Spring MVC 抽取 BindingResult 中的入参对象及校验错误对象，将它们赋给处理方法的相应入参。最后的入参对象是根据 BindingResult 中的信息来赋值的，包含之前 ServletRequest 中的消息以及错误校验信息等。</p>
+<h4 id="3-2-数据转换"><a href="#3-2-数据转换" class="headerlink" title="3.2 数据转换"></a>3.2 数据转换</h4><p>Java 标准的装配自定义属性编辑器需要用到 <strong>PropertyEditor</strong> ，它的核心功能是将一个字符串转换为一个 Java 对象，以便根据界面的输入或配置文件中的配置字符串构造出一个 JVM 内部的 Java 对象。</p>
+<p>但是 PropertyEditor 存在以下不足：</p>
+<ul>
+<li>只能用于字符串到 Java 对象的转换，不适用于两个任意 Java 类型对象之间的转换。</li>
+<li>对源对象及目标对象所在的上下文信息（如注解、所在宿主类（即相对于内部类的外部类）的结构等）不敏感，在类型转换时不能利用这些上下文信息实施高级的转换逻辑。</li>
+</ul>
+<p>鉴于此，Spring 在核心模型中添加了一个通用的类型转换模块，该模块位于 <code>org.springframework.core.convert</code> 包中。Spring 既支持该类型转换体系，同时也支持基于 PropertyEditor 的转换体系。</p>
+<h5 id="1-ConversionService"><a href="#1-ConversionService" class="headerlink" title="1. ConversionService"></a>1. ConversionService</h5><p><strong>ConversionService</strong> 是 Spring 类型转换体系的核心接口，位于 <code>org.springframework.core.convert</code> 包中，该接口定义了 4 个方法：</p>
+<ul>
+<li>boolean canConvert(Class&lt;?&gt; sourceType, Class&lt;?&gt; targetType)：判断是否可以将一个 Java 类转换为另一个 Java 类。</li>
+<li>boolean canConvert(TypeDescriptor sourceType, TypeDescriptor  targetType)：需转换的类将以成员变量的方式出现在宿主类中。TypeDescriptor 不但描述了需转换类的信息，还描述了从宿主类的上下文信息，如成员变量上的注解，成员变量是否以数组、集合或 Map 的方式呈现等。</li>
+<li>&lt;T&gt; T convert(Object source, Class&lt;T&gt; targetType)：将原类型对象转换为目标类型对象。</li>
+<li>Object convert(Object source, TypeDescriptor sourceType, TypeDescriptor  targetType)：将对象从原类型对象转换为目标类型对象，此时往往会用到所在宿主类的上下文信息。</li>
+</ul>
+<p>可以利用 <code>org.springframework.context.support.ConversionServiceFactoryBean</code> 在 Spring 的上下文中定义一个 ConversionService。Spring 将自动识别上下文中的 ConversionService，并在 Bean 属性配置和 Spring MVC 处理方法入参绑定等场合使用它进行数据转换。如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;conversionService&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.context.support.ConversionServiceFactoryBean&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>该 FactoryBean 创建 ConversionService 的过程中内建了很多转换器，可以完成大多数 Java 类型的转换工作。</p>
+<p><strong>ConversionServiceFactoryBean</strong> 的源码如下，其中包含了一个 <strong>converters</strong> 属性，用来注册自定义的类型转换器。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConversionServiceFactoryBean</span> <span class="keyword">implements</span> <span class="title class_">FactoryBean</span>&lt;ConversionService&gt;, InitializingBean &#123;</span><br><span class="line">    <span class="keyword">private</span> Set&lt;?&gt; converters;</span><br><span class="line">    <span class="keyword">private</span> GenericConversionService conversionService;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">ConversionServiceFactoryBean</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setConverters</span><span class="params">(Set&lt;?&gt; converters)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.converters = converters;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">afterPropertiesSet</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.conversionService = <span class="built_in">this</span>.createConversionService();</span><br><span class="line">        ConversionServiceFactory.registerConverters(<span class="built_in">this</span>.converters, <span class="built_in">this</span>.conversionService);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> GenericConversionService <span class="title function_">createConversionService</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">DefaultConversionService</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> ConversionService <span class="title function_">getObject</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.conversionService;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Class&lt;? <span class="keyword">extends</span> <span class="title class_">ConversionService</span>&gt; getObjectType() &#123;</span><br><span class="line">        <span class="keyword">return</span> GenericConversionService.class;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isSingleton</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过 ConversionServiceFactoryBean 的 converters 属性注册自定义的类型转换器，代码如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;conversionService&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.context.support.ConversionServiceFactoryBean&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;converters&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">list</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;com.smart.MyCustomConverter1&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;com.smart.MyCustomConverter2&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">list</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在 Spring 中，通过 <strong>CustomEditorConfigurer</strong> 注册的自定义属性编辑器必须实现 PropertyEditor 接口。那么注册到 ConversionServiceFactoryBean 中的自定义转换器必须实现哪些接口，并满足哪些约定呢？继续往下看。</p>
+<h5 id="2-Spring-支持哪些转换器"><a href="#2-Spring-支持哪些转换器" class="headerlink" title="2. Spring 支持哪些转换器"></a>2. Spring 支持哪些转换器</h5><p>Spring 在 <code>org.springframework.core.convert.converter</code> 包中定义了 3 种类型的转换器接口，实现任意一个都可以作为自定义转换器注册到 ConversionServiceFactoryBean 中。这 3 中类型的转换器接口为：</p>
+<ul>
+<li>Converter&lt;S,T&gt;</li>
+<li>GenericConverter</li>
+<li>ConverterFactory</li>
+</ul>
+<p><strong>Converter</strong> 接口是 Spring 中最简单的一个转换器接口，其定义如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.springframework.core.convert.converter;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Converter</span>&lt;S, T&gt; &#123;</span><br><span class="line">    T <span class="title function_">convert</span><span class="params">(S var1)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>T convert(S var1) 负责将 S 类型的对象转换为 T 类型的对象。如果希望将一种类型的对象转换为另一种类型及其子类的对象，例如将 String 转换为 Number 及 Number 的子类（Integer、Long、Double等）对象，就需要一系列的 Converter，如 StringToInteger、StringToLong 及 StringToDouble 等。</p>
+<p>为了解决上述问题，Spring 提供了一个将相同系列多个“同质” Converter 封装在一起的 <strong>ConverterFactory</strong> 接口，其定义如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.springframework.core.convert.converter;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ConverterFactory</span>&lt;S, R&gt; &#123;</span><br><span class="line">    &lt;T <span class="keyword">extends</span> <span class="title class_">R</span>&gt; Converter&lt;S, T&gt; <span class="title function_">getConverter</span><span class="params">(Class&lt;T&gt; var1)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>S 为转换的原类型，R 为目标类型的基类，T 为继承于 R 的目标类型。如 Spring 的 StringToNumberConverterFactory 就实现了 ConverterFactory 接口，封装了 String 转换到各种数据类型的 Converter。</p>
+<p>Converter 只负责将一个类型的对象转换为另一个类型的对象，并没有考虑类型对象所造宿主类上下文的信息，因此并不能完成“复杂”类型转换工作。<strong>GenericConverter</strong> 接口会根据源类对象及目标类对象所在宿主类的上下文信息进行类型转换工作，其定义如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.springframework.core.convert.converter;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Set;</span><br><span class="line"><span class="keyword">import</span> org.springframework.core.convert.TypeDescriptor;</span><br><span class="line"><span class="keyword">import</span> org.springframework.util.Assert;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">GenericConverter</span> &#123;</span><br><span class="line">    Set&lt;GenericConverter.ConvertiblePair&gt; getConvertibleTypes();</span><br><span class="line"></span><br><span class="line">    Object <span class="title function_">convert</span><span class="params">(Object var1, TypeDescriptor var2, TypeDescriptor var3)</span>;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>ConvertiblePair</strong> 封装了源类型和目标类型，组成一对。而 <strong>TypeDescriptor</strong> 包含了需转换类型对象所在宿主类的信息，因此 GenericConverter 的 convert() 接口方法可以利用这些上下文信息进行类型转换工作。</p>
+<p><strong>ConditionalGenericConverter</strong> 继承于 GenericConverter 接口，并添加了一个方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">boolean</span> <span class="title function_">matches</span><span class="params">(TypeDescriptor sourceType, TypeDescriptor targetType)</span></span><br></pre></td></tr></table></figure>
+
+<p>该接口方法根据源类型和目标类型所在宿主类的上下文信息决定是否要进行类型转换，只有该方法返回 true 时，才调用 convert() 方法完成类型转换。正是因为在转换前有一个判断的动作，所以该接口命名为 ConditionalGenericConverter，即带”条件“的通用转换器。</p>
+<p>ConversionServiceFactoryBean 的 converters 属性可接受 Converter、ConverterFactory、GenericConverter 、ConditionalGenericConverter 接口的实现类，并把这些转换器的转换逻辑统一封装到一个 ConversionService 实例对象中。Spring 在 Bean 属性配置及 Spring MVC 请求消息绑定时将利用这个 ConversionService 实例完成类型转换工作。过程图解如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/ConversionService%E5%88%9B%E5%BB%BA%E8%BF%87%E7%A8%8B%E7%A4%BA%E4%BE%8B%E5%9B%BE.2ptoh1f2iki0.webp" alt="ConversionService创建过程示例图"></p>
+<h5 id="3-在Spring-MVC-中使用-ConversionService"><a href="#3-在Spring-MVC-中使用-ConversionService" class="headerlink" title="3. 在Spring MVC 中使用 ConversionService"></a>3. 在Spring MVC 中使用 ConversionService</h5><p>举一个例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.smart.domain;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.core.convert.converter.Converter;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 将 &lt;userName&gt;:&lt;password&gt;:&lt;realName&gt; 的格式化串转换为 User 对象</span></span><br><span class="line"><span class="comment"> * 1、实现 Converter 接口</span></span><br><span class="line"><span class="comment"> * 2、重写 convert() 方法，在方法里重写转换逻辑</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">StringToUserConverter</span> <span class="keyword">implements</span> <span class="title class_">Converter</span>&lt;String, User&gt; &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> User <span class="title function_">convert</span><span class="params">(String source)</span> &#123;</span><br><span class="line">        <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line">        <span class="keyword">if</span>(source != <span class="literal">null</span>)&#123;</span><br><span class="line">            String[] items = source.split(<span class="string">&quot;:&quot;</span>);</span><br><span class="line">            user.setUserName(items[<span class="number">0</span>]);</span><br><span class="line">            user.setPassword(items[<span class="number">1</span>]);</span><br><span class="line">            user.setRealName(items[<span class="number">2</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> user;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编写好 StringToUserConverter 类后，需要将它装配到 Spring 上下文中：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E5%B0%86StringToUserConverter%E8%A3%85%E9%85%8D%E5%88%B0Spring%E4%B8%8A%E4%B8%8B%E6%96%87%E4%B8%AD.51rxmetp4dc0.webp" alt="将StringToUserConverter装配到Spring上下文中"></p>
+<p>&lt;mvc:annotation-driven&gt; 标签会自动创建一个默认的 DefaultHandlerMapping 和 RequestMappingHandlerAdapter 以及一个默认的 ConversionService，即 <strong>FormattingConversionServiceFactoryBean</strong> 以满足大多数类型转换的需求，因此如果需要用到自定义的 ConversionService 实现，就需要在 &lt;mvc:annotation-driven&gt; 标签中显式指定 conversion-service 属性的值来覆盖掉默认的 ConversionService 实现。</p>
+<p>装配好 StringToUserConverter 后，就可以在任何控制器的任何方法中使用这个转换器了，例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserController</span> &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/handle81&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">handle81</span><span class="params">(<span class="meta">@RequestParam(&quot;user&quot;)</span> User user, ModelMap modelMap)</span>&#123;</span><br><span class="line">        modelMap.put(<span class="string">&quot;user&quot;</span>, user);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;user/showUser&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>启动 Web 容器，发送一个 <code>http://localhost:8080/springmvc3/user/handle81.html?user=tom:1234:tomson</code> 请求，在控制器方法中打个断点，可以看到user请求参数的 tom:\1234:tomson 的值会被 StringToUserConverter 转换并绑定到 handle81() 的 User 入参中。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/StringToUserConverter%E8%BD%AC%E6%8D%A2%E6%95%B0%E6%8D%AE%E6%88%90%E5%8A%9F.36eddp43twe0.webp" alt="StringToUserConverter转换数据成功"></p>
+<h5 id="4-使用-InitBinder-和-WebBindingInitializer-装配自定义编辑器"><a href="#4-使用-InitBinder-和-WebBindingInitializer-装配自定义编辑器" class="headerlink" title="4. 使用 @InitBinder 和 WebBindingInitializer 装配自定义编辑器"></a>4. 使用 @InitBinder 和 WebBindingInitializer 装配自定义编辑器</h5><p><strong>@InitBinder</strong> 可以用来添加自定义的编辑器，只对当前控制器有效。</p>
+<p><strong>WebBindingInitializer</strong> 用于装配在全局范围内使用的编辑器，对所有控制器都有效。</p>
+<p>@InitBinder 示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@InitBinder</span> <span class="comment">//该注解在控制器初始化时调用</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">initBinder</span><span class="params">(WebDataBinder binder)</span>&#123;</span><br><span class="line">    binder.registerCustomEditor(User.class, <span class="keyword">new</span> <span class="title class_">MyCustomConverter1</span>());	<span class="comment">//自定义编辑器</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BC%96%E8%BE%91%E5%99%A8%E5%AE%9E%E7%8E%B0PropertyEditor%E6%8E%A5%E5%8F%A3.1j1b4dkyxna8.webp" alt="自定义编辑器实现PropertyEditor接口"></p>
+<p>Spring MVC 使用 <strong>WebDataBinder</strong> 处理请求消息和处理方法入参的绑定工作。<strong>registerCustomEditor()</strong> 方法为 User 注册一个自定义的编辑器，MyCustomConverter1 是 PropertyEditor 接口的实现类。</p>
+<p>还可以使用 <strong>addCustomFormatter()</strong> 方法指定格式化程序实现，这样就不用实现 PropertyEditor 接口了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@InitBinder</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">initBinder2</span><span class="params">(WebDataBinder binder)</span>&#123;</span><br><span class="line">    binder.addCustomFormatter(<span class="keyword">new</span> <span class="title class_">DateFormatter</span>(<span class="string">&quot;yyyy-MM-dd&quot;</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果希望在全局范围内使用 MyCustomConverter1 编辑器，则可实现 WebBindingInitializer 接口并在该实现类中注册 MyCustomConverter1。如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyBindingInitializer</span> <span class="keyword">implements</span> <span class="title class_">WebBindingInitializer</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">initBinder</span><span class="params">(WebDataBinder binder, WebRequest request)</span> &#123;</span><br><span class="line">        binder.registerCustomEditor(User.class, <span class="keyword">new</span> <span class="title class_">MyCustomConverter1</span>());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来在 Spring 上下文中装配 MyBindingInitializer，Spring 通过 RequestMappingHandlerAdapter 来装配 MyBindingInitializer：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;webBindingInitializer&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;com.smart.MyBindingInitializer&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>对于同一个类型对象来说，如果既在 ConversionService 中装配了自定义转换器，又通过 WebBindingInitializer 装配了自定义转换器，同时还在控制器中通过 @InitBinder 装配了自定义转换器，那么 Spring MVC 将按照如下顺序查找对应类型的编辑器：</p>
+<ol>
+<li>@InitBinder</li>
+<li>ConversionService</li>
+<li>WebBindingInitializer</li>
+</ol>
+<h4 id="3-3-数据格式化"><a href="#3-3-数据格式化" class="headerlink" title="3.3 数据格式化"></a>3.3 数据格式化</h4><p>Spring 使用转换器进行源类型对象到目标类型对象的转换，Spring 的转换器并不提供输入及输出信息格式化的工作。从客户端传来的数据一般都具有一定的格式，如何从这些格式化的数据中获取真正的数据以完成数据绑定，并将处理完的数据输出为格式化的数据，是 Spring 格式化框架要解决的重要问题。</p>
+<p>Spring 引入了一个格式化框架，这个框架位于 <code>org.springframework.format</code> 包中，其中最重要的一个接口为 <strong>Formatter&lt;T&gt;</strong> 接口。</p>
+<h5 id="1-Formatter-lt-T-gt-接口"><a href="#1-Formatter-lt-T-gt-接口" class="headerlink" title="1. Formatter&lt;T&gt;接口"></a>1. Formatter&lt;T&gt;接口</h5><p>其定义如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.springframework.format;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Formmater</span>&lt;T&gt; <span class="keyword">extends</span> <span class="title class_">Printer</span>&lt;T&gt;, Parser&lt;T&gt;&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Printer&lt;T&gt;</strong> 负责对象的格式化输出，Parser&lt;T&gt; 负责对象的格式化输入。</p>
+<p>Printer&lt;T&gt; 的接口方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//用于将对象格式化为字符串然后输出</span></span><br><span class="line">String <span class="title function_">print</span><span class="params">(T fieldValue, Locale locale)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>Parser&lt;T&gt; 的接口方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//用于将格式化字符串转换为对象进而输入</span></span><br><span class="line">T <span class="title function_">parse</span><span class="params">(String clientValue, Locale locale)</span> <span class="keyword">throws</span> ParseException;</span><br></pre></td></tr></table></figure>
+
+<p>Spring 的 <code>org.springframework.format.datetime</code> 包中提供了一个用于时间对象格式化的现类：</p>
+<ul>
+<li><strong>DateFormatter</strong></li>
+</ul>
+<p><code>org.springframework.format.number</code> 包中提供了 3 个用于数字对象格式化的实现类：</p>
+<ul>
+<li><strong>NumberFormatter</strong>：用于数字类型对象的格式化。</li>
+<li><strong>CurrencyFormatter</strong>：用于货币类型对象的格式化。</li>
+<li><strong>PercentFormatter</strong>：用于百分数数字类型对象的格式化。</li>
+</ul>
+<p>可以手工调用这些接口实现类进行对象数据输入&#x2F;输出的格式化工作。</p>
+<p>同时，Spring 还提供了注解驱动的属性对象格式化功能，可在 Bean 属性设置、Spring MVC 处理方法入参数据绑定、模型数据输出时自动通过注解应用格式化功能。</p>
+<h5 id="2-注解驱动格式化的重要接口"><a href="#2-注解驱动格式化的重要接口" class="headerlink" title="2. 注解驱动格式化的重要接口"></a>2. 注解驱动格式化的重要接口</h5><p>为了让注解和格式化的属性类型关联起来，Spring 在 Formatter&lt;T&gt; 所在的包中提供了一个 AnnotationFormatterFactory&lt;A extends Annotaion&gt; 接口，该接口有以下几个方法：</p>
+<ul>
+<li>Set&lt;Class&lt;?&gt;&gt; getFieldTypes()：注解 A 的应用范围，即哪些属性类可以标注 A 注解。</li>
+<li>Parser&lt;?&gt; getParser(A annotation, Class&lt;?&gt; fieldType)：根据注解 A 获取特定属性类型的 Parser。</li>
+<li>Printer&lt;?&gt; getPrinter(A annotation, Class&lt;?&gt; fieldType)：根据注解 A 获取特定属性类型的 Printer。</li>
+</ul>
+<p>Spring 提供了两个内建的实现类：</p>
+<ul>
+<li><strong>NumberFormatAnnotationFormatterFactory</strong>：支持数字类型的属性使用 <strong>@NumberFormat</strong> 注解。</li>
+<li><strong>JodaDateTimeFormatAnnotationFormatterFactory</strong>：支持对日期类型的属性使用 <strong>@DateTimeFormat</strong> 注解。</li>
+</ul>
+<p>如何在 Spring 上下文中启用这个基于注解驱动的格式化模块，并在实际应用中使用格式化功能呢？</p>
+<h5 id="3-启动注解驱动格式化功能"><a href="#3-启动注解驱动格式化功能" class="headerlink" title="3. 启动注解驱动格式化功能"></a>3. 启动注解驱动格式化功能</h5><p>Spring 在格式化模块中定义了一个实现 ConversionService 接口的 FormattingConversionService 实现类，该实现类扩展了 GenericConversionService ，因此它既具有类型转换功能，又具有格式化功能。</p>
+<p>相对于 ConversionService 的 ConversionServiceFactoryBean 工厂类，FormattingConversionService 也有一个对应的 FormattingConversionServiceFactoryBean 工厂类，用于在 Spring 上下文中构造一个 FormattingConversionService，通过这个工厂类，既可以注册自定义的转换器，还可以注册自定义的注解驱动逻辑。</p>
+<p>由于 FormattingConversionServiceFactoryBean 在内部自动注册了 NumberFormatAnnotationFormatterFactory 和 JodaDateTimeFormatAnnotationFormatterFactory，因此，在装配了 FormattingConversionServiceFactoryBean 后，就可以直接使用对应的两个注解完成格式化功能了。</p>
+<p>在 Spring 上下文中装配 FormattingConversionServiceFactoryBean：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;conversionService&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.format.support.FormattingConversionServiceFactoryBean&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;converters&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">list</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;com.smart.domain.StringToUserConverter&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">list</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>注意，&lt;mvc:annotation-driven&gt; 内部创建的默认 ConversionService 实例就是一个 FormattingConversionServiceFactoryBean。</p>
+<h5 id="4-注解驱动格式化实例"><a href="#4-注解驱动格式化实例" class="headerlink" title="4. 注解驱动格式化实例"></a>4. 注解驱动格式化实例</h5><p>在 User 中添加两个新属性，并标注格式化注解：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> String userId;</span><br><span class="line">    <span class="keyword">private</span> String userName;</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line">    <span class="keyword">private</span> String realName;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//可将形如2022-04-08的字符串转换到Date类型的birthday属性中</span></span><br><span class="line">    <span class="meta">@DateTimeFormat(pattern = &quot;yyyy-MM-dd&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Date birthday;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//可将形如9999.99的字符串转换到long类型的salary属性中</span></span><br><span class="line">    <span class="meta">@NumberFormat(pattern = &quot;#,###.##&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">long</span> salary;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>@DateTimeFormat 有几个互斥的属性（就是不能同时存在）：</p>
+<ul>
+<li><strong>iso</strong>，类型为 DateTimeFormat.ISO，有几个常用的可选值：<ul>
+<li>DateTimeFormat.ISO.DATE：格式为 yyyy-MM-dd。</li>
+<li>DateTimeFormat.ISO.DATE_TIME：格式为 yyyy-MM-dd hh:mm:ss.SSSZ。</li>
+<li>DateTimeFormat.ISO.TIME：格式为 hh:mm:ss.SSSZ。</li>
+<li>DateTimeFormat.ISO.NONE：表示不应该使用 ISO 格式的时间。</li>
+</ul>
+</li>
+<li><strong>pattern</strong>：类型为 String，使用自定义的时间格式化串，如 yyyy&#x2F;mm&#x2F;dd hh:mm:ss。</li>
+<li><strong>style</strong>：类型为 String，通过样式指定日期&#x2F;时间的格式，由两位字符组成。第一位表示日期的样式，第二位表示时间的样式，以下是几个常用的可选值：<ul>
+<li>S：短日期&#x2F;时间的样式。</li>
+<li>M：中日期&#x2F;时间的样式。</li>
+<li>L：长日期&#x2F;时间的样式。</li>
+<li>F：完整日期&#x2F;时间的样式。</li>
+<li>-：忽略日期或时间的样式。</li>
+</ul>
+</li>
+</ul>
+<p>@NumberFormat有两个互斥的属性（就是不能同时存在）：</p>
+<ul>
+<li><strong>pattern</strong>：类型为 String，使用自定义的数字格式化串，如 “##,###.##”。</li>
+<li><strong>style</strong>：类型为 NumberFormat.Style，以下是几个常用的可选值：<ul>
+<li>NumberFormat.Style.CURRENCY：货币类型。</li>
+<li>NumberFormat.Style.NUMBER：正常数字类型。</li>
+<li>NumberFormat.Style.PERCENT：百分数类型。</li>
+</ul>
+</li>
+</ul>
+<p>举例说明：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testHandle82</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="type">RestTemplate</span> <span class="variable">restTemplate</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">RestTemplate</span>();</span><br><span class="line">    LinkedMultiValueMap&lt;String, String&gt; form = <span class="keyword">new</span> <span class="title class_">LinkedMultiValueMap</span>&lt;&gt;();</span><br><span class="line">    form.add(<span class="string">&quot;userName&quot;</span>, <span class="string">&quot;tom&quot;</span>);</span><br><span class="line">    form.add(<span class="string">&quot;password&quot;</span>, <span class="string">&quot;123456&quot;</span>);</span><br><span class="line">    form.add(<span class="string">&quot;age&quot;</span>, <span class="string">&quot;23&quot;</span>);</span><br><span class="line">    form.add(<span class="string">&quot;birthday&quot;</span>, <span class="string">&quot;2022-04-08&quot;</span>);</span><br><span class="line">    form.add(<span class="string">&quot;salary&quot;</span>, <span class="string">&quot;10,000.00&quot;</span>);</span><br><span class="line">    <span class="type">String</span> <span class="variable">html</span> <span class="operator">=</span> restTemplate.postForObject(<span class="string">&quot;http://localhost:8080/springmvc3/user/handle82.html&quot;</span>, form, String.class);</span><br><span class="line">    Assert.assertNotNull(html);</span><br><span class="line">    Assert.assertTrue(html.indexOf(<span class="string">&quot;tom&quot;</span>)&gt;-<span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果希望在视图页面中将模型属性数据也以格式化的方式渲染，则可通过 Spring 的页面标签（即&lt;%@taglib uri&#x3D;”<a class="link"   target="_blank" rel="noopener" href="http://java.sun.com/jsp/jstl/core&quot;" >http://java.sun.com/jsp/jstl/core&quot;<i class="fas fa-external-link-alt"></i></a> prefix&#x3D;”c” %&gt; ，&lt;%@ taglib prefix&#x3D;”form” uri&#x3D;”<a class="link"   target="_blank" rel="noopener" href="http://www.springframework.org/tags/form&quot;" >http://www.springframework.org/tags/form&quot;<i class="fas fa-external-link-alt"></i></a> %&gt; 等）显式模型数据来达到目的。</p>
+<h4 id="3-4-数据校验"><a href="#3-4-数据校验" class="headerlink" title="3.4 数据校验"></a>3.4 数据校验</h4><p>应用程序在执行业务逻辑前，必须通过数据校验保证接收到的输入数据是正确合法的。</p>
+<h5 id="1-JSR-303"><a href="#1-JSR-303" class="headerlink" title="1. JSR-303"></a>1. JSR-303</h5><p>JSR-303 是 Java 为 Bean 数据合法性校验所提供的标准框架。它定义了一套可标注在成员变量、属性方法上的校验注解：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/JSR-303%E6%B3%A8%E8%A7%A3.43m7t8vsixi0.webp" alt="JSR-303注解"></p>
+<p>Hibernate Validator 是 JSR-303 的一个参考实现，它扩充了如下注解：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/Hibernate-Validator%E6%B3%A8%E8%A7%A3.6vl9u6r5twg0.webp" alt="Hibernate-Validator注解"></p>
+<h5 id="2-Spring-校验框架"><a href="#2-Spring-校验框架" class="headerlink" title="2. Spring 校验框架"></a>2. Spring 校验框架</h5><p>Spring 拥有自己独立的校验框架，且支持 JSR-303 框架。Spring 的 DataBinder 在进行数据绑定时，可同时调用校验框架完成数据校验工作。在 Spring MVC 中，则可直接通过注解驱动的方式进行数据校验。</p>
+<p>Spring 的 <code>org.springframework.validation</code> 是校验框架所在的包。包含几个重要接口：</p>
+<ul>
+<li><strong>Validator</strong>。拥有两个方法：<ul>
+<li>boolean supports(Class&lt;?&gt; clazz)：能够对 clazz 类型的对象进行校验。</li>
+<li>void validate(Object target, Errors errors)：对目标类 target 进行校验，并将校验错误记录在 errors 中。</li>
+</ul>
+</li>
+</ul>
+<p><strong>LocalValidatorFactoryBean</strong> 既实现了 Spring 的 Validator 接口，也实现了 JSR-303 的 Validator 接口，只要在 Spring 容器中定义一个 LocalValidatorFactoryBean，即可将其注入需要数据校验的 Bean 中。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;validator&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.validation.beanvalidation.LocalValidatorFactoryBean&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是 Spring 本身没有提供 JSR-303 的实现，因此需要添加 JSR-303 的实现者（如hibernate-validator）的相关依赖。 </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.hibernate<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hibernate-validator<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>8.0.0.Alpha3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="3-Spring-MVC-数据校验"><a href="#3-Spring-MVC-数据校验" class="headerlink" title="3. Spring MVC 数据校验"></a>3. Spring MVC 数据校验</h5><p>&lt;mvc:annotation-driven&gt; 默认会装配一个 LocalValidatorFactoryBean，通过在处理方法的入参上标注 <strong>@Valid</strong> 注解，即可让 Spring MVC 在完成数据绑定后执行数据校验工作。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> String userId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//通过正则表达式进行校验，匹配4-30个包含数字、字母及下划线的字符</span></span><br><span class="line">    <span class="meta">@Pattern(regexp = &quot;w(4,30)&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String userName;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//通过正则表达式进行校验，匹配6-30个非空白的字符</span></span><br><span class="line">    <span class="meta">@Pattern(regexp = &quot;S(6,30)&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//这是hibernate-validator的扩展度，将属性值的长度限制在2-100之间</span></span><br><span class="line">    <span class="meta">@Length(min = 2,max = 100)</span></span><br><span class="line">    <span class="keyword">private</span> String realName;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//时间必须是一个过去的时间</span></span><br><span class="line">    <span class="meta">@Past</span></span><br><span class="line">    <span class="comment">//可将形如2022-04-08的字符串转换到Date类型的birthday属性中</span></span><br><span class="line">    <span class="meta">@DateTimeFormat(pattern = &quot;yyyy-MM-dd&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Date birthday;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//数据必须在1000.00-100000.00之间</span></span><br><span class="line">    <span class="meta">@DecimalMin(value = &quot;1000.00&quot;)</span></span><br><span class="line">    <span class="meta">@DecimalMax(value = &quot;100000.00&quot;)</span></span><br><span class="line">    <span class="comment">//可将形如9999.99的字符串转换到long类型的salary属性中</span></span><br><span class="line">    <span class="meta">@NumberFormat(pattern = &quot;#,###.##&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">long</span> salary;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在实体类属性上标注注解后，接下来的问题是如何在 Spring MVC 中使用注解所声明的限制规则进行数据校验。</p>
+<p>对处理方法的入参数据进行校验：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E5%AF%B9%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95%E7%9A%84%E5%85%A5%E5%8F%82%E6%95%B0%E6%8D%AE%E8%BF%9B%E8%A1%8C%E6%A0%A1%E9%AA%8C.5hljqhy28xs0.webp" alt="对处理方法的入参数据进行校验"></p>
+<p>关键问题是，校验产生的校验结果保存在什么地方？又如何传递给请求处理方法？</p>
+<p>Spring MVC 是通过对处理方法签名的规约来保存校验结果的：前一个表单&#x2F;命令对象的校验结果保存在其后的入参中，这个保存校验结果的入参必须为 <strong>BindingResult</strong> 或 <strong>Errors</strong> 类型。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C%E6%97%B6%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95%E5%85%A5%E5%8F%82%E7%9A%84%E7%AD%BE%E5%90%8D%E8%A7%84%E7%BA%A6.7i6on0ubntg0.webp" alt="数据校验时处理方法入参的签名规约"></p>
+<p>Errors 接口提供了获取错误信息的方法，而 BindingResult 接口扩展了 Errors 接口，既可以对数据进行校验，还可以获取数据绑定结果对象的信息。</p>
+<h5 id="4-如何获取校验结果"><a href="#4-如何获取校验结果" class="headerlink" title="4. 如何获取校验结果"></a>4. 如何获取校验结果</h5><p>在表单&#x2F;命令对象类（User）的属性中标注校验注解，在处理方法对应的入参前添加 @Valid，Spring MVC 就会实施校验并将校验结果保存在被校验入参对象之后的 BindingResult 或 Errors 入参中。在处理方法内部可以通过 BindingResult 或 Errors 入参对象获取错误信息，还可以通过接口方法获取更多的信息，接口方法请看源码。</p>
+<h5 id="5-如何在页面中显式错误"><a href="#5-如何在页面中显式错误" class="headerlink" title="5. 如何在页面中显式错误"></a>5. 如何在页面中显式错误</h5><p>由于表单&#x2F;命令对象所对应的请求一般是从客户端网页中传过来的，因此，如果发生了错误，则必须通过网页显示错误，提示用户更正错误。</p>
+<p>Spring MVC 除了将表单&#x2F;命令对象的校验结果保存在相应的 BindingResult 或 Errors 中外，还将所有的校验结果保存到“隐含模型”（隐含模型的概念贱 2.5 节）中。也就是说，即使处理方法的签名中没有对应表单&#x2F;命令对象的校验结果入参，校验结果也不会丢失，它们始终可以从“隐含模型”对象中获取。校验结果对象和被校验的表单&#x2F;命令对象是一对一的关系，但“隐含模型”除了存储模型数据外，还保存了所有被校验的表单&#x2F;命令对象的校验结果。隐含模型中的所有数据最终将通过 HttpServletRequest 的属性列表暴露给 JSP 视图对象，因此我们可以在 JSP 视图对象中获取校验错误信息。</p>
+<p>抛开 Spring MVC 的所有组件，我们单从输入&#x2F;输出的层面分析 Spring MVC 框架的数据流：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/Spring-MVC%E7%9A%84%E6%95%B0%E6%8D%AE%E6%B5%81%E5%9B%BE.5g7j0y5wg5g0.webp" alt="Spring-MVC的数据流图"></p>
+<ol>
+<li>HTTP 请求报文到达 Web 服务器，Web 服务器将其封装成一个 HttpServletRequest 对象。</li>
+<li>Spring MVC 框架截获这个 HttpServletRequest 对象。</li>
+<li>Spring MVC 创建一个隐含模型对象，作为处理本次请求的上下文数据存放处。</li>
+<li>Spring MVC 将 HttpServletRequest  对象数据绑定到处理方法的入参对象中（即表单&#x2F;命令对象）。</li>
+<li>将绑定错误信息、校验错误信息都保存到隐含模型中。</li>
+<li>将本次请求的对应隐含模型数据存放到 HttpServletRequest 属性列表中，暴露给视图对象。</li>
+<li>视图对象对已经存放在 HttpServletRequest 属性列表中的模型数据进行渲染。</li>
+<li>将渲染后的 HTTP 响应报文发送给客户端。</li>
+</ol>
+<p>可通过 Spring 的 &lt;form:errors path&#x3D;”propName”&gt; 标签在 JSP 页面中显示错误信息：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span> pageEncoding=<span class="string">&quot;UTF-8&quot;</span> %&gt;</span><br><span class="line">&lt;%<span class="meta">@taglib</span> uri=<span class="string">&quot;http://java.sun.com/jsp/jstl/core&quot;</span> prefix=<span class="string">&quot;c&quot;</span> %&gt;</span><br><span class="line">&lt;%@ taglib prefix=<span class="string">&quot;form&quot;</span> uri=<span class="string">&quot;http://www.springframework.org/tags/form&quot;</span> %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;新增用户&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;form:form modelAttribute=<span class="string">&quot;user&quot;</span> action=<span class="string">&quot;/springmvc3/user/handle91.html&quot;</span>&gt;</span><br><span class="line">    &lt;form:errors path=<span class="string">&quot;*&quot;</span>/&gt;</span><br><span class="line">    &lt;table&gt;</span><br><span class="line">        &lt;tr&gt;</span><br><span class="line">            &lt;td&gt;ID：&lt;/td&gt;</span><br><span class="line">            &lt;td&gt;</span><br><span class="line">				&lt;form:errors path=<span class="string">&quot;userId&quot;</span> cssClass=<span class="string">&quot;errorClass&quot;</span>/&gt;</span><br><span class="line">				&lt;form:input path=<span class="string">&quot;userId&quot;</span>/&gt;</span><br><span class="line">			&lt;/td&gt;</span><br><span class="line">        &lt;/tr&gt;</span><br><span class="line">        &lt;tr&gt;</span><br><span class="line">            &lt;td&gt;用户名：&lt;/td&gt;</span><br><span class="line">            &lt;td&gt;</span><br><span class="line">				&lt;form:errors path=<span class="string">&quot;userName&quot;</span> cssClass=<span class="string">&quot;errorClass&quot;</span>/&gt;</span><br><span class="line">				&lt;form:input path=<span class="string">&quot;userName&quot;</span>/&gt;</span><br><span class="line">			&lt;/td&gt;</span><br><span class="line">        &lt;/tr&gt;</span><br><span class="line">        &lt;tr&gt;</span><br><span class="line">            &lt;td&gt;密码：&lt;/td&gt;</span><br><span class="line">            &lt;td&gt;&lt;form:errors path=<span class="string">&quot;password&quot;</span> cssClass=<span class="string">&quot;errorClass&quot;</span>/&gt;</span><br><span class="line">				&lt;form:input path=<span class="string">&quot;password&quot;</span>/&gt;</span><br><span class="line">			&lt;/td&gt;</span><br><span class="line">        &lt;/tr&gt;</span><br><span class="line">        &lt;tr&gt;</span><br><span class="line">            &lt;td&gt;姓名：&lt;/td&gt;</span><br><span class="line">            &lt;td&gt;</span><br><span class="line">				&lt;form:errors path=<span class="string">&quot;realName&quot;</span> cssClass=<span class="string">&quot;errorClass&quot;</span>/&gt;</span><br><span class="line">				&lt;form:input path=<span class="string">&quot;realName&quot;</span>/&gt;</span><br><span class="line">			&lt;/td&gt;</span><br><span class="line">        &lt;/tr&gt;</span><br><span class="line">        &lt;tr&gt;</span><br><span class="line">            &lt;td&gt;生日：&lt;/td&gt;</span><br><span class="line">            &lt;td&gt;&lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;birthday&quot;</span> value=<span class="string">&quot;$&#123;user.birthday&#125;&quot;</span>/&gt;&lt;/td&gt;</span><br><span class="line">        &lt;/tr&gt;</span><br><span class="line">        &lt;tr&gt;</span><br><span class="line">            &lt;td&gt;薪水：&lt;/td&gt;</span><br><span class="line">            &lt;td&gt;</span><br><span class="line">				&lt;form:errors path=<span class="string">&quot;salary&quot;</span> cssClass=<span class="string">&quot;errorClass&quot;</span>/&gt;</span><br><span class="line">				&lt;form:input path=<span class="string">&quot;salary&quot;</span>/&gt;</span><br><span class="line">			&lt;/td&gt;</span><br><span class="line">        &lt;/tr&gt;</span><br><span class="line">        &lt;tr&gt;</span><br><span class="line">            &lt;td colspan=<span class="string">&quot;2&quot;</span>&gt;&lt;input type=<span class="string">&quot;submit&quot;</span> name=<span class="string">&quot;提交&quot;</span>/&gt;&lt;/td&gt;</span><br><span class="line">        &lt;/tr&gt;</span><br><span class="line">    &lt;/table&gt;</span><br><span class="line">&lt;/form:form&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>启动 Web 服务，输入 <code>http://localhost:8080/user/handle91.html</code> 显示错误信息如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%E4%B8%8EJSP%E5%AF%B9%E5%BA%94%E5%85%B3%E7%B3%BB.2kik7ajpzwo0.webp" alt="错误信息与JSP对应关系"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%E4%B8%8E%E5%AE%9E%E4%BD%93%E7%B1%BB%E5%AF%B9%E5%BA%94%E5%85%B3%E7%B3%BB.4mnbv3m0l5e0.webp" alt="错误信息与实体类对应关系"></p>
+<h5 id="6-通过国际化资源显示错误信息"><a href="#6-通过国际化资源显示错误信息" class="headerlink" title="6. 通过国际化资源显示错误信息"></a>6. 通过国际化资源显示错误信息</h5><p>每个属性在数据绑定和数据校验发生错误时，都会生成一个对应的 FieldError 对象。该对象实现了 <code>org.springframework.context.MessageSourceResolvable</code> 接口，<strong>MessageSourceResolvable</strong> 顾名思义是可用国际化资源进行解析的对象，它拥有 3 个接口方法：</p>
+<ul>
+<li>Object[] getArguments()：返回一组参数对象。</li>
+<li>String[] getCodes()：返回一组消息代码，每个代码对应一个资源属性。可以使用 getArguments() 方法返回的参数对资源属性值进行参数替换。</li>
+<li>String getDefaultMessage()：默认的消息。</li>
+</ul>
+<p>当一个属性校验失败后，校验框架会为该属性生成4个消息代码，这些消息代码以校验注解类名为前缀，结合类名、属性名及属性类型名生成多个对应的消息代码。</p>
+<p>如 User 类的 password 属性标注了一个 @Pattern 注解，当该属性值不满足 @Pattern 所定义的限制规则时，就会产生以下 4 个错误代码：</p>
+<ul>
+<li>Pattern.user.password：根据类型、属性名产生的错误代码。</li>
+<li>Pattern.password：根据属性名产生的错误代码。</li>
+<li>Pattern.java.lang.String：根据属性类型产生的错误代码。</li>
+<li>Pattern：根据验证注解名产生的错误代码。</li>
+</ul>
+<p>当使用 Spring MVC 标签显示错误信息时，Spring MVC 会查看 Web 上下文是否装配了对应的国际化消息，如果没有，则显示默认的错误信息；否则使用国际化消息对错误代码进行翻译。</p>
+<p>如果在数据类型转换或数据格式转换时发生错误，或者该有的参数不存在，或调用处理方法时发生错误，则都会在隐含模型中创建错误信息，其错误代码前缀如下：</p>
+<ul>
+<li><strong>required</strong>：必要的参数不存在。</li>
+<li><strong>typeMisMatch</strong>：数据绑定时类型不匹配。</li>
+<li><strong>methodInvocation</strong>：Spring MVC 在调用处理方法时发生了错误。</li>
+</ul>
+<p>例如，如果将“aaa”的非数值参数传递给 User 对象的 salary 属性，就会发生数据转换错误，错误代码如下：</p>
+<ul>
+<li>typeMisMatch.user.salary</li>
+<li>typeMisMatch.salary</li>
+<li>typeMisMatch.long</li>
+<li>typeMisMatch</li>
+</ul>
+<p>如果需要自定义错误代码，则可通过 DataBinder 的 <strong>setMessageCodesResolver()</strong> 方法注入一个自定义的 <strong>MessageCodesResolver</strong> 对象来调整，不过一般情况下使用默认的就足够了。</p>
+<p>在知道错误对象的错误代码时对应国际化消息的键名后，接下来的工作就简单了：定义一个国际化资源，在国际化资源文件中为错误代码定义相应的本地化信息。</p>
+<p>我们在 i18n&#x2F; 下添加基名为 messages 的国际化资源，一个是默认的 messages.properties，另一个是对应中国大陆的 messages_zh_CN.properties。定义 messages_zh_CN.properties 的内容：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">required.user.userName</span>=<span class="string">用户名不正确，必须是4-30个英数及_的字符</span></span><br><span class="line"><span class="attr">Pattern.user.password</span>=<span class="string">密码不正确，必须是6-30个字符，不允许空格</span></span><br><span class="line"><span class="attr">Length.user.realName</span>=<span class="string">姓名不合法，长度必须是2-100个字符</span></span><br><span class="line"><span class="attr">Past.user.birthday</span>=<span class="string">日期格式不正确，必须是一个过去的日期</span></span><br><span class="line"><span class="attr">DecimalMin.user.salary</span>=<span class="string">工资必须在1000-100000之间</span></span><br><span class="line"><span class="attr">DecimalMax.user.salary</span>=<span class="string">$&#123;DecimalMin.user.salary&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后在 smart-servlet.xml 中装配好这个国际化资源：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;messageSource&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.context.support.ResourceBundleMessageSource&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">p:basename</span>=<span class="string">&quot;i18n/messages&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以通过 <strong>ResourceBundleMessageSource</strong> 的 <strong>basename</strong> 属性指定一个国际化资源，还可以通过 <strong>basenames</strong> 属性指定多个国际化资源。重新启动容器，当发生错误时，错误页面如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/lisj98/image-hosting@master/SpringMVC/%E4%B8%AD%E6%96%87%E5%9B%BD%E9%99%85%E5%8C%96%E4%BF%A1%E6%81%AF.59126en8uo80.webp" alt="中文国际化信息"></p>
+<h5 id="7-自定义校验规则"><a href="#7-自定义校验规则" class="headerlink" title="7. 自定义校验规则"></a>7. 自定义校验规则</h5><p>如何给请求处理类装配一个自定义的 Validator，或者直接在处理方法中使用自定义的 Validator 对入参进行校验？</p>
+<p>可以在 UserController 中标注 @InitBinder 注解的 <strong>initBinder()</strong> 方法中装配自定义的 MyValidator。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@InitBinder</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">initBinder</span><span class="params">(WebDataBinder binder)</span>&#123;</span><br><span class="line">    <span class="comment">//指定进行数据绑定时使用的校验器</span></span><br><span class="line">    <span class="comment">//通过binder.setValidator()方法设置自定义的Validator后，Spring MVC将使用它对入参对象进行校验，而不再使用Spring MVC框架默认的Validator进行校验</span></span><br><span class="line">    binder.setValidator(<span class="keyword">new</span> <span class="title class_">UserValidator</span>());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>还可以借助请求处理方法的签名传递一个 Errors 或 BindingResult 对象进来，然后在处理方法中直接校验。如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/handle92&quot;)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">handle92</span><span class="params">(<span class="meta">@ModelAttribute(&quot;user&quot;)</span> User user, BindingResult bindingResult)</span>&#123;</span><br><span class="line">    <span class="comment">//使用校验工具类进行校验</span></span><br><span class="line">    ValidationUtils.rejectIfEmptyOrWhitespace(bindingResult, <span class="string">&quot;userName&quot;</span>, <span class="string">&quot;required&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span>(<span class="string">&quot;aaaa&quot;</span>.equalsIgnoreCase(user.getUserName()))&#123;</span><br><span class="line">        <span class="comment">//手工生成一条错误信息</span></span><br><span class="line">        bindingResult.rejectValue(<span class="string">&quot;userName&quot;</span>, <span class="string">&quot;reserved&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(bindingResult.hasErrors())&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;user/register3&quot;</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;user/showUser&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以从错误代码组中任选一个错误代码，并在国际化资源文件中定义错误代码对应的信息内容，这样，当发生错误时，就会显示自定义的错误信息。</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：精通SpringMVC(三)-处理方法的数据绑定</li>
+        <li>Post author：Lisj</li>
+        <li>Create time：2022-04-07 22:23:32</li>
+        <li>
+            Post link：https://lisj98.github.io/2022/04/07/精通SpringMVC-三-处理方法的数据绑定/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2022/04/09/%E7%B2%BE%E9%80%9ASpringMVC-%E5%9B%9B-%E8%A7%86%E5%9B%BE%E5%92%8C%E8%A7%86%E5%9B%BE%E8%A7%A3%E6%9E%90%E5%99%A8/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">精通SpringMVC(四)-视图和视图解析器</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/04/06/%E7%B2%BE%E9%80%9ASpringMVC-%E4%BA%8C-%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E7%9A%84%E6%8E%A7%E5%88%B6%E5%99%A8/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">精通SpringMVC(二)-注解驱动的控制器</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Lisj</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A%E6%B5%81%E7%A8%8B%E5%89%96%E6%9E%90"><span class="nav-text">3.1 数据绑定流程剖析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2"><span class="nav-text">3.2 数据转换</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-ConversionService"><span class="nav-text">1. ConversionService</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-Spring-%E6%94%AF%E6%8C%81%E5%93%AA%E4%BA%9B%E8%BD%AC%E6%8D%A2%E5%99%A8"><span class="nav-text">2. Spring 支持哪些转换器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-%E5%9C%A8Spring-MVC-%E4%B8%AD%E4%BD%BF%E7%94%A8-ConversionService"><span class="nav-text">3. 在Spring MVC 中使用 ConversionService</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-%E4%BD%BF%E7%94%A8-InitBinder-%E5%92%8C-WebBindingInitializer-%E8%A3%85%E9%85%8D%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BC%96%E8%BE%91%E5%99%A8"><span class="nav-text">4. 使用 @InitBinder 和 WebBindingInitializer 装配自定义编辑器</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="nav-text">3.3 数据格式化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-Formatter-lt-T-gt-%E6%8E%A5%E5%8F%A3"><span class="nav-text">1. Formatter&lt;T&gt;接口</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E6%A0%BC%E5%BC%8F%E5%8C%96%E7%9A%84%E9%87%8D%E8%A6%81%E6%8E%A5%E5%8F%A3"><span class="nav-text">2. 注解驱动格式化的重要接口</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-%E5%90%AF%E5%8A%A8%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%8A%9F%E8%83%BD"><span class="nav-text">3. 启动注解驱动格式化功能</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-%E6%B3%A8%E8%A7%A3%E9%A9%B1%E5%8A%A8%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AE%9E%E4%BE%8B"><span class="nav-text">4. 注解驱动格式化实例</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C"><span class="nav-text">3.4 数据校验</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-JSR-303"><span class="nav-text">1. JSR-303</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-Spring-%E6%A0%A1%E9%AA%8C%E6%A1%86%E6%9E%B6"><span class="nav-text">2. Spring 校验框架</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-Spring-MVC-%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C"><span class="nav-text">3. Spring MVC 数据校验</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-%E5%A6%82%E4%BD%95%E8%8E%B7%E5%8F%96%E6%A0%A1%E9%AA%8C%E7%BB%93%E6%9E%9C"><span class="nav-text">4. 如何获取校验结果</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-%E5%A6%82%E4%BD%95%E5%9C%A8%E9%A1%B5%E9%9D%A2%E4%B8%AD%E6%98%BE%E5%BC%8F%E9%94%99%E8%AF%AF"><span class="nav-text">5. 如何在页面中显式错误</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-%E9%80%9A%E8%BF%87%E5%9B%BD%E9%99%85%E5%8C%96%E8%B5%84%E6%BA%90%E6%98%BE%E7%A4%BA%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF"><span class="nav-text">6. 通过国际化资源显示错误信息</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%A1%E9%AA%8C%E8%A7%84%E5%88%99"><span class="nav-text">7. 自定义校验规则</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>
