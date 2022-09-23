@@ -357,6 +357,7 @@
 <li>execute()只能接受Runnable任务参数，submit()既可以接受Runnable任务参数也可以接受Callable任务参数；</li>
 <li>execute()没有返回值，submit()返回Future类型对象。</li>
 </ul>
+<p>实际上submit()内部还是执行的execute()方法，只不过它既执行了任务还添加了一个返回值。</p>
 <h1 id="29-如果提交任务时，线程池队列已满，这时会发生什么？"><a href="#29-如果提交任务时，线程池队列已满，这时会发生什么？" class="headerlink" title="29. 如果提交任务时，线程池队列已满，这时会发生什么？"></a>29. 如果提交任务时，线程池队列已满，这时会发生什么？</h1><p>非定长的队列会先扩容，扩容到不能再扩容了就调用拒绝策略，定长的线程池队列会直接调用拒绝策略。</p>
 <h1 id="30-线程池的类型？"><a href="#30-线程池的类型？" class="headerlink" title="30. 线程池的类型？"></a>30. 线程池的类型？</h1><p><img src="https://cdn.staticaly.com/gh/lisj98/image-hosting@master/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84%E7%B1%BB%E5%9E%8B.48aamkpke2g0.webp" alt="线程池的类型"><br><code>补充</code>：7.默认线程池修改<br><code>ThreadPool threadPoolExecutor = new ThreadPoolExecutor(参数);</code></p>
 <h1 id="31-线程池的几个重要参数？"><a href="#31-线程池的几个重要参数？" class="headerlink" title="31. 线程池的几个重要参数？"></a>31. 线程池的几个重要参数？</h1><p><img src="https://cdn.staticaly.com/gh/lisj98/image-hosting@master/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84%E5%87%A0%E4%B8%AA%E9%87%8D%E8%A6%81%E5%8F%82%E6%95%B0.3wr65k37cns0.webp" alt="线程池的几个重要参数"></p>
