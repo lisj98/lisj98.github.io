@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Java、数据结构">
+    <meta name="description" content="所见即所得">
+    <meta name="author" content="Lisj">
+    
+    <title>
+        
+            Runnable和Callable详解 |
+        
+        BlogOfLisj
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/l-solid.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"lisj98.github.io","root":"/","language":"en","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#FF00FF","avatar":"/images/Neymar.jpg","favicon":"/images/l-solid.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"What you see is what you get."},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"trigger":"auto","unescape":false,"preload":true},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":true},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 6.0.0"><link rel="alternate" href="/atom.xml" title="BlogOfLisj" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                BlogOfLisj
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                TAGS
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">CATEGORIES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">TAGS</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Runnable和Callable详解</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/Neymar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Lisj</span>
+                        
+                            <span class="author-label">中忍</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-09-24 15:30:19</span>
+        <span class="mobile">2022-09-24 15:30</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Runnable/">Runnable</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Callable/">Callable</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>1.5k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>6 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="1-Runnable和Callable到底是干什么的？它们有什么区别？"><a href="#1-Runnable和Callable到底是干什么的？它们有什么区别？" class="headerlink" title="1. Runnable和Callable到底是干什么的？它们有什么区别？"></a>1. Runnable和Callable到底是干什么的？它们有什么区别？</h1><p>先来看看JDK1.8中Runnable和Callable的源码：</p>
+<hr>
+<p>Runnable：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Runnable</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对Runnable这个接口的注释是这样说的：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">The Runnable interface should be implemented by any class whose instances are intended to be executed by a thread.</span><br><span class="line">The class must define a method of no arguments called run.</span><br></pre></td></tr></table></figure>
+
+<p>翻译过来就是：</p>
+<p>当一个类的实例想要被线程执行时，它必须实现Runnable接口，并且必须定义一个无参的run方法。</p>
+<p>换句话说，Runnable就是要执行的任务，而线程是任务的实际承载者，run方法就是任务的具体执行逻辑。注意run方法是没有返回值的。</p>
+<p>再来看Callable：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Callable</span>&lt;V&gt; &#123;</span><br><span class="line">    V <span class="title function_">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对Callable接口的注释中有这样一段话：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The Callable interface is similar to Runnable, in that both are designed for classes whose instances are potentially executed by another thread. A Runnable, however, does not return a result and cannot throw a checked exception.</span><br></pre></td></tr></table></figure>
+
+<p>Callable和Runnable是极其相似的，都是代表线程要执行的任务，但是Runnable不会返回结果也不会抛出异常，而Callable既能返回结果也能抛异常。Callable中不是run方法，而是call方法，call方法才是任务的具体执行逻辑，并且它有一个方法返回值。</p>
+<h1 id="2-Future和FutureTask是什么？"><a href="#2-Future和FutureTask是什么？" class="headerlink" title="2. Future和FutureTask是什么？"></a>2. Future和FutureTask是什么？</h1><p>先来看看线程类Thread的构造函数：</p>
+<p><img src="https://cdn.staticaly.com/gh/lisj98/image-hosting@master/%E5%A4%9A%E7%BA%BF%E7%A8%8B/Runnable%E5%92%8CCallable/Thread%E7%B1%BB%E7%9A%84%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0.1p818wu8gb0g.webp" alt="Thread类的构造函数"></p>
+<p>可以看到构造函数中只接受Runnable类型的参数，那么Callable类型的任务该如何让线程执行呢？答案就是通过Future这个接口，一般是通过FutureTask这个Future接口的实现类。</p>
+<p>先看一下FutureTask的继承体系：</p>
+<p><img src="https://cdn.staticaly.com/gh/lisj98/image-hosting@master/%E5%A4%9A%E7%BA%BF%E7%A8%8B/Runnable%E5%92%8CCallable/FutureTask%E7%BB%A7%E6%89%BF%E4%BD%93%E7%B3%BB.2w8dpxk5vk80.webp" alt="FutureTask继承体系"></p>
+<p>可以看出FutureTask实际上就是一个Runnable，也就是说FutureTask可以被线程执行，那FutureTask和Callable有什么关系呢？</p>
+<p>FutureTask类中有一个Callable属性：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> Callable&lt;V&gt; callable;</span><br></pre></td></tr></table></figure>
+
+<p>FutureTask的构造函数会初始化这个Callable属性，如果我们传入的构造函数参数就是一个Callable，那么自然是直接赋值：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="title function_">FutureTask</span><span class="params">(Callable&lt;V&gt; callable)</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> (callable == <span class="literal">null</span>)</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">NullPointerException</span>();</span><br><span class="line">	<span class="built_in">this</span>.callable = callable;</span><br><span class="line">	<span class="built_in">this</span>.state = NEW;callable</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>而如果我们传入的是一个Runnable，也会将这个Runnable封装成Callable再赋值：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="title function_">FutureTask</span><span class="params">(Runnable runnable, V result)</span> &#123;</span><br><span class="line">	<span class="built_in">this</span>.callable = Executors.callable(runnable, result);</span><br><span class="line">	<span class="built_in">this</span>.state = NEW;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Executors.callable(runnable, result)这个方法的解释可以参考本系列文章中的<a href="https://lisj98.github.io/2022/09/19/Executors%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">Executors源码解析</a>。</p>
+<p>也就是说，我们要执行Callable型任务，要看到任务执行结果，因为这是Runnable任务无法实现的，它没有任务返回值，但是线程不能直接执行Callable任务，怎么办呢？可以把Callable封装到FutureTask中，再让线程来执行这个FutureTask，因为FutureTask本身是一个Runnable，线程可以直接执行，线程现在能执行这个FutureTask了，我们再通过FutureTask来执行Callable的任务逻辑，也就是call方法，不就达到了线程执行Callable型任务的目的了吗。</p>
+<h1 id="3-run方法和call方法的具体执行时机？"><a href="#3-run方法和call方法的具体执行时机？" class="headerlink" title="3. run方法和call方法的具体执行时机？"></a>3. run方法和call方法的具体执行时机？</h1><p>任务的具体逻辑是依靠run方法和call方法来实现的。</p>
+<p>run方法好说，线程启动的时候会去寻找Runnable实现类中重写后的run方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title function_">start</span><span class="params">()</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> (threadStatus != <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalThreadStateException</span>();</span><br><span class="line"></span><br><span class="line">	group.add(<span class="built_in">this</span>);</span><br><span class="line"></span><br><span class="line">	<span class="type">boolean</span> <span class="variable">started</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		start0();</span><br><span class="line">		started = <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">finally</span> &#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> (!started) &#123;</span><br><span class="line">				group.threadStartFailed(<span class="built_in">this</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Throwable ignore) &#123;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>就是在start0()这个本地方法中会去执行重写的run方法。</p>
+<p>那call方法在什么时候执行呢？任务执行结果又是怎么返回的呢？</p>
+<p>回到FutureTask，我们之前说过线程要执行Callable任务必须通过FutureTask这个中介，那么也就是说线程启动时会执行FutureTask中的run方法，FutureTask中有没有run方法呢，果不其然，有它自定义的逻辑：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> (state != NEW ||</span><br><span class="line">	        !UNSAFE.compareAndSwapObject(<span class="built_in">this</span>, runnerOffset,</span><br><span class="line">	                                     <span class="literal">null</span>, Thread.currentThread()))</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		Callable&lt;V&gt; c = callable;</span><br><span class="line">		<span class="keyword">if</span> (c != <span class="literal">null</span> &amp;&amp; state == NEW) &#123;</span><br><span class="line">			V result;</span><br><span class="line">			<span class="type">boolean</span> ran;</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				result = c.call();</span><br><span class="line">				ran = <span class="literal">true</span>;</span><br><span class="line">			&#125; <span class="keyword">catch</span> (Throwable ex) &#123;</span><br><span class="line">				result = <span class="literal">null</span>;</span><br><span class="line">				ran = <span class="literal">false</span>;</span><br><span class="line">				setException(ex);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (ran)</span><br><span class="line">				set(result);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">finally</span> &#123;</span><br><span class="line">		runner = <span class="literal">null</span>;</span><br><span class="line">		<span class="type">int</span> <span class="variable">s</span> <span class="operator">=</span> state;</span><br><span class="line">		<span class="keyword">if</span> (s &gt;= INTERRUPTING)</span><br><span class="line">			handlePossibleCancellationInterrupt(s);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>看到<code>result = c.call();</code>这个语句没，没错，这就是call方法真正执行的时机。</p>
+<p>也就是说，线程执行Runnable任务时，会直接通过本地方法start0()执行重写后的run方法；而执行Callable任务时，会先执行FutureTask的run方法，再通过这个run方法来执行call方法。</p>
+<p>好，call方法的执行时机搞定了，任务执行结果怎么返回的呢？</p>
+<p>还是在这个方法中，有<code>set(result)</code>这个操作，这个操作具体是什么呢：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">set</span><span class="params">(V v)</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> (UNSAFE.compareAndSwapInt(<span class="built_in">this</span>, stateOffset, NEW, COMPLETING)) &#123;</span><br><span class="line">		outcome = v;</span><br><span class="line">		UNSAFE.putOrderedInt(<span class="built_in">this</span>, stateOffset, NORMAL);</span><br><span class="line">		finishCompletion();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>具体就是将result赋值给outcome这个值，outcome是什么呢？是FutureTask类的一个属性：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> Object outcome;</span><br></pre></td></tr></table></figure>
+
+<p>也就是说，任务执行结果会赋值给这个outcome，怎么获取呢？通过get()方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> V <span class="title function_">get</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException, ExecutionException &#123;</span><br><span class="line">	<span class="type">int</span> <span class="variable">s</span> <span class="operator">=</span> state;</span><br><span class="line">	<span class="keyword">if</span> (s &lt;= COMPLETING)</span><br><span class="line">		s = awaitDone(<span class="literal">false</span>, <span class="number">0L</span>);</span><br><span class="line">	<span class="keyword">return</span> report(s);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> V <span class="title function_">report</span><span class="params">(<span class="type">int</span> s)</span> <span class="keyword">throws</span> ExecutionException &#123;</span><br><span class="line">	<span class="type">Object</span> <span class="variable">x</span> <span class="operator">=</span> outcome;</span><br><span class="line">	<span class="keyword">if</span> (s == NORMAL)</span><br><span class="line">		<span class="keyword">return</span> (V)x;</span><br><span class="line">	<span class="keyword">if</span> (s &gt;= CANCELLED)</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">CancellationException</span>();</span><br><span class="line">	<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">ExecutionException</span>((Throwable)x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样不就得到任务执行结果了吗。</p>
+<h1 id="4-代码示例"><a href="#4-代码示例" class="headerlink" title="4. 代码示例"></a>4. 代码示例</h1><ol>
+<li>Runnable</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyThread</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">Thread</span> <span class="variable">t</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">5</span>;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">                <span class="keyword">while</span>(i&gt;<span class="number">0</span>) &#123;</span><br><span class="line">                    System.out.println(<span class="string">&quot;Thread:&quot;</span>+i--);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        t.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Thread:<span class="number">5</span></span><br><span class="line">Thread:<span class="number">4</span></span><br><span class="line">Thread:<span class="number">3</span></span><br><span class="line">Thread:<span class="number">2</span></span><br><span class="line">Thread:<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>Callable</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.concurrent.Callable;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.FutureTask;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyThread</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        FutureTask&lt;String&gt; ft = <span class="keyword">new</span> <span class="title class_">FutureTask</span>&lt;&gt;(<span class="keyword">new</span> <span class="title class_">Callable</span>&lt;String&gt;() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> String <span class="title function_">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="string">&quot;Thread.call()&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="type">Thread</span> <span class="variable">t</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(ft);</span><br><span class="line">        t.start();</span><br><span class="line">        System.out.println(<span class="string">&quot;Callable返回值:&quot;</span>+ft.get());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Callable返回值:Thread.call()</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：Runnable和Callable详解</li>
+        <li>Post author：Lisj</li>
+        <li>Create time：2022-09-24 15:30:19</li>
+        <li>
+            Post link：https://lisj98.github.io/2022/09/24/Runnable和Callable详解/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/Runnable/">#Runnable</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/Callable/">#Callable</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/09/23/ThreadPoolExecutor%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">ThreadPoolExecutor源码解析</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Lisj</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Runnable%E5%92%8CCallable%E5%88%B0%E5%BA%95%E6%98%AF%E5%B9%B2%E4%BB%80%E4%B9%88%E7%9A%84%EF%BC%9F%E5%AE%83%E4%BB%AC%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-text">1. Runnable和Callable到底是干什么的？它们有什么区别？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Future%E5%92%8CFutureTask%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-text">2. Future和FutureTask是什么？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-run%E6%96%B9%E6%B3%95%E5%92%8Ccall%E6%96%B9%E6%B3%95%E7%9A%84%E5%85%B7%E4%BD%93%E6%89%A7%E8%A1%8C%E6%97%B6%E6%9C%BA%EF%BC%9F"><span class="nav-text">3. run方法和call方法的具体执行时机？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B"><span class="nav-text">4. 代码示例</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>
