@@ -210,12 +210,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fas fa-file-word"></i>&nbsp;<span>1.5k Words</span>
+            <i class="fas fa-file-word"></i>&nbsp;<span>1.7k Words</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fas fa-clock"></i>&nbsp;<span>6 Mins</span>
+            <i class="fas fa-clock"></i>&nbsp;<span>7 Mins</span>
         </span>
     
     
@@ -291,6 +291,19 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> V <span class="title function_">report</span><span class="params">(<span class="type">int</span> s)</span> <span class="keyword">throws</span> ExecutionException &#123;</span><br><span class="line">	<span class="type">Object</span> <span class="variable">x</span> <span class="operator">=</span> outcome;</span><br><span class="line">	<span class="keyword">if</span> (s == NORMAL)</span><br><span class="line">		<span class="keyword">return</span> (V)x;</span><br><span class="line">	<span class="keyword">if</span> (s &gt;= CANCELLED)</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">CancellationException</span>();</span><br><span class="line">	<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">ExecutionException</span>((Throwable)x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>这样不就得到任务执行结果了吗。</p>
+<p>还有一个问题，既然FutureTask还接受Runnable类型参数，那么我把Runnable参数传进去之后怎么执行它自己的run方法呢？一步一步来：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="title function_">FutureTask</span><span class="params">(Runnable runnable, V result)</span> &#123;</span><br><span class="line">	<span class="built_in">this</span>.callable = Executors.callable(runnable, result);</span><br><span class="line">	<span class="built_in">this</span>.state = NEW;callable</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; Callable&lt;T&gt; <span class="title function_">callable</span><span class="params">(Runnable task, T result)</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> (task == <span class="literal">null</span>)</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">NullPointerException</span>();</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">RunnableAdapter</span>&lt;T&gt;(task, result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">RunnableAdapter</span>&lt;T&gt; <span class="keyword">implements</span> <span class="title class_">Callable</span>&lt;T&gt; &#123;</span><br><span class="line">	<span class="keyword">final</span> Runnable task;</span><br><span class="line">	<span class="keyword">final</span> T result;</span><br><span class="line">	RunnableAdapter(Runnable task, T result) &#123;</span><br><span class="line">		<span class="built_in">this</span>.task = task;</span><br><span class="line">		<span class="built_in">this</span>.result = result;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> T <span class="title function_">call</span><span class="params">()</span> &#123;</span><br><span class="line">		task.run();</span><br><span class="line">		<span class="keyword">return</span> result;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，最后还是得到了一个Callable，并且将Runnable封装进了RunnableAdapter这个Callable中，也就是FutureTask类的callable属性这时指向的是RunnableAdapter这个对象，所以线程这时的执行顺序是：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1. FutureTask.run</span></span><br><span class="line">result = c.call();</span><br><span class="line"></span><br><span class="line"><span class="comment">//2. Executors.RunnableAdapter.call</span></span><br><span class="line"><span class="keyword">public</span> T <span class="title function_">call</span><span class="params">()</span> &#123;</span><br><span class="line">	task.run();</span><br><span class="line">	<span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后还是调用的最初传进来的Runnable任务的run方法。</p>
 <h1 id="4-代码示例"><a href="#4-代码示例" class="headerlink" title="4. 代码示例"></a>4. 代码示例</h1><ol>
 <li>Runnable</li>
 </ol>
